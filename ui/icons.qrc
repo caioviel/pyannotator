@@ -1,0 +1,24 @@
+<RCC>
+  <qresource prefix="i">
+    <file>file_upload.png</file>
+    <file>notepad.png</file>
+    <file>sub_blue_delete.png</file>
+    <file>save.png</file>
+    <file>comment_accept.png</file>
+    <file>comment_add.png</file>
+    <file>comment_delete.png</file>
+    <file>comment_edit.png</file>
+    <file>folder_open.png</file>
+    <file>folder.png</file>
+    <file>button_blue_play.png</file>
+    <file>button_blue_stop.png</file>
+    <file>button_blue_pause.png</file>
+  </qresource>
+  <qresource prefix="m">
+    <file>audio.png</file>
+    <file>html.png</file>
+    <file>video.png</file>
+    <file>image.png</file>
+    <file>plain_text.png</file>
+  </qresource>
+</RCC>

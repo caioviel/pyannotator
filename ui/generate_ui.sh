@@ -1,0 +1,6 @@
+pyside-rcc icons.qrc > icons_rc.py
+pyside-uic PreviewWidget.ui > ui_PreviewWidget.py
+pyside-uic AnnotationListItem.ui > ui_AnnotationListItem.py
+pyside-uic MainProjectWidget.ui > ui_MainProjectWidget.py
+pyside-uic InformationAnnotationWidget.ui > ui_InformationAnnotationWidget.py
+
