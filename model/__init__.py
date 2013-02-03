@@ -18,7 +18,18 @@ class EnhancedMedia(object):
         self.last_modification = last_modification
         self.user_name = user_name
         self.main_media = main_media
-        self.__annotations = []
+        self.annotations = []
+    
+    def remove_annotation(self, annotation):
+        if not isinstance(annotation, Annotation):
+            raise TypeError('The argument annotation must be an instance of Annotation.')
+        
+        #Its a new annotation
+        try:
+            self.annotations.remove(annotation)
+        except:
+            return False
+        return True    
         
         
     def add_annotation(self, annotation):
@@ -26,9 +37,8 @@ class EnhancedMedia(object):
             raise TypeError('The argument annotation must be an instance of Annotation.')
         
         #Its a new annotation
-        if annotation not in self.__annotations:
-            self.__annotations.append(annotation)
-            self.__annotations_by_timestamp[annotation.timestamp] = annotation
+        if annotation not in self.annotations:
+            self.annotations.append(annotation)
         else:
             raise Exception('This annotation is already inserted.')            
 
@@ -95,16 +105,11 @@ class Annotation(object):
     def id(self):
         return self.__id
     
-    @property
-    def timestamp(self):
-        return self.__timestamp
+    def get_timestamp(self):
+        return None
     
-    @timestamp.setter
-    def timestamp(self, new_timestap):
-        if not isinstance(new_timestap, float):
-            raise TypeError('The argument new_timestap must be an instance of float.')
-        
-        self.__timestamp = new_timestap
+    def get_name(self):
+        return 'Generic Annotation'
         
 class AnnotationFactory(object):
     

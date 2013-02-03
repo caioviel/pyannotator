@@ -17,8 +17,11 @@ class InformationAnnotation(Annotation):
         self.information_media_timestamp = None
         self.information_media_duration = None
         
-        
-
+    def get_timestamp(self):
+        return self.notification_icon_timestamp.toString()
+    
+    def get_name(self):
+        return u'Informação Simples'
         
     
 class InformationAnnotationWidget(QtGui.QDialog):
@@ -29,34 +32,122 @@ class InformationAnnotationWidget(QtGui.QDialog):
         self.ui.setupUi(self)
         self.annotation = annotation
         self.target = target
+        
+        self.content_type = None
+        self.content_path = None
+        self.icon_path = None
+        
         if self.annotation == None:
             self.annotation = InformationAnnotation("MyId")
-        else:
-            self.load_annotation()
         
         self.init_ui()
-        
         self.__original_size = self.size()
         
         import os
         self.home_directory =  os.getenv('USERPROFILE') or os.getenv('HOME')
         
+        self.load_annotation()
         self.show()
+    
+    @QtCore.Slot()
+    def save_annotation(self):
+        if not self.icon_path:
+            QtGui.QMessageBox.information(self, u"Informações Insuficientes", 
+                              u"Por favor, selecione o ícone de notificação desejado.")
+            return
+        
+        
+        if self.content_type == None or self.content_path == None:
+            QtGui.QMessageBox.information(self, u"Informações Insuficientes", 
+                              u"Por favor, selecione o conteúdo que deseja adicionar")
+            return
+        
+        annotation = self.annotation
+        annotation.notification_icon_file = self.icon_path
+        try:
+            annotation.notification_icon_duration = int(self.ui.cmb_icon_duration.currentText())
+        except:
+            QtGui.QMessageBox.Warning(self, u"Informações Incorretas", 
+                              u"O tempo de duração do ícone de notificação deve ser um número inteiro")
+            return
+        
+        annotation.notification_icon_timestamp = self.ui.time_icon.time()
+        annotation.type = self.content_type
+        annotation.information_media = self.content_path
+        try:
+            text = self.ui.cmb_content_durartion.currentText()
+            if text == "":
+                annotation.information_media_duration = None
+            else:
+                annotation.information_media_duration = int(text)
+        except:
+            QtGui.QMessageBox.Warning(self, u"Informações Incorretas", 
+                              u"O tempo de duração do conteúdo deve ser vázio ou um número inteiro")
+            return
+        
+        annotation.information_media_timestamp = self.ui.time_content.time()
+        self.target.save_annotation(self, annotation)
+        self.close()
+        
+    
+    @QtCore.Slot()
+    def cancel_annotation(self):
+        if self.target:
+            self.target.cancel_annotation(self)
+            
+        self.close()
         
     def load_annotation(self):
-        print 'load_annotation'
+        if self.annotation.notification_icon_file:
+            self.icon_path = self.annotation.notification_icon_file
+            pixelmap = QtGui.QPixmap(self.annotation.notification_icon_file)
+            pixelmap.scaledToHeight(self.ui.lbl_icon_display.height())
+            self.ui.lbl_icon_display.setPixmap(pixelmap)
+            self.ui.lbl_icon_display.setScaledContents(True)
+            
         if self.annotation.notification_icon_timestamp:
-            self.ui.time_icon.setTime(self.annotation.notification_icon_timestamp)
+            self.ui.time_icon.setTime(self.annotation.notification_icon_timestamp)     
+            
+        if self.annotation.notification_icon_duration:
+            self.ui.cmb_icon_duration.setEditText(str(self.annotation.notification_icon_duration))
+            
+        if self.annotation.information_media:
+            self.content_type = self.annotation.type
+            self.content_path = self.annotation.information_media
+            
+            self.ui.cmb_content_type.setCurrentIndex(self.annotation.type)
+            self.occult_content_displays()
+        
+            self.ui.txt_content.clear()
+            self.ui.txt_content.appendPlainText(self.annotation.information_media)
+        
+            if self.annotation.type == Annotation.IMAGE:
+                self.open_image(self.annotation.information_media)
+            elif self.annotation.type == Annotation.AUDIO:
+                self.open_music(self.annotation.information_media)
+            elif self.annotation.type == Annotation.VIDEO:
+                self.open_video(self.annotation.information_media)
+            elif self.annotation.type == Annotation.HTML:
+                self.open_html(self.annotation.information_media)
+            
+        if self.annotation.information_media_timestamp:
+            self.ui.time_content.setTime(self.annotation.information_media_timestamp)
+            
+        if self.annotation.information_media_duration:
+            print 'information_media_duration', self.annotation.information_media_duration
+            self.ui.cmb_content_durartion.setEditText(
+                                    str(self.annotation.information_media_duration))
         
     def init_ui(self):
         self.ui.btn_choose_icon.clicked.connect(self.choose_icon)
         self.ui.btn_choose_content.clicked.connect(self.choose_content)
-        self.occult_content_displays()
-        
-        
+        self.ui.btn_save.clicked.connect(self.save_annotation)
+        self.ui.btn_cancel.clicked.connect(self.cancel_annotation)
         self.ui.btn_play.clicked.connect(self.start_playback)
         self.ui.btn_stop.clicked.connect(self.stop_playback)
         self.ui.btn_pause.clicked.connect(self.pause_playback)
+        
+        self.occult_content_displays()
     
     @QtCore.Slot()
     def start_playback(self):
@@ -103,6 +194,7 @@ class InformationAnnotationWidget(QtGui.QDialog):
                                                  self.home_directory,
                                                  CONTENT_TYPES[Annotation.IMAGE])
         if path != None:            
+            self.icon_path = path
             pixelmap = QtGui.QPixmap(path)
             pixelmap.scaledToHeight(self.ui.lbl_icon_display.height())
             self.ui.lbl_icon_display.setPixmap(pixelmap)
@@ -126,6 +218,9 @@ class InformationAnnotationWidget(QtGui.QDialog):
         self.ui.txt_content.clear()
         self.ui.txt_content.appendPlainText(path)
         
+        self.content_type = file_type
+        self.content_path = path
+        
         if file_type == Annotation.IMAGE:
             self.open_image(path)
         elif file_type == Annotation.AUDIO:
@@ -144,6 +239,7 @@ class InformationAnnotationWidget(QtGui.QDialog):
         #self.ui.setScaledContents(True)
         
     def open_video(self, path):
+        print 'open_video'
         player = self.ui.video_player
         
         media_source = Phonon.MediaSource(path)

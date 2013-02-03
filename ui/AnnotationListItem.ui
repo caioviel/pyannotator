@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>AnnotationListItem</class>
+ <widget class="QWidget" name="AnnotationListItem">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>272</width>
-    <height>53</height>
+    <height>54</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
     <rect>
      <x>70</x>
      <y>30</y>
-     <width>191</width>
+     <width>66</width>
      <height>17</height>
     </rect>
    </property>

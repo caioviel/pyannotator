@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'InformationAnnotationWidget.ui'
 #
-# Created: Sun Feb  3 12:30:30 2013
+# Created: Sun Feb  3 15:09:41 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -32,7 +32,7 @@ class Ui_InformationAnnotationWidget(object):
         self.label_6.setGeometry(QtCore.QRect(10, 170, 81, 17))
         self.label_6.setObjectName("label_6")
         self.label_7 = QtGui.QLabel(InformationAnnotationWidget)
-        self.label_7.setGeometry(QtCore.QRect(310, 200, 161, 17))
+        self.label_7.setGeometry(QtCore.QRect(320, 200, 161, 17))
         self.label_7.setObjectName("label_7")
         self.cmb_content_type = QtGui.QComboBox(InformationAnnotationWidget)
         self.cmb_content_type.setGeometry(QtCore.QRect(140, 130, 161, 27))
@@ -49,7 +49,8 @@ class Ui_InformationAnnotationWidget(object):
         self.time_content.setGeometry(QtCore.QRect(180, 190, 118, 27))
         self.time_content.setObjectName("time_content")
         self.cmb_content_durartion = QtGui.QComboBox(InformationAnnotationWidget)
-        self.cmb_content_durartion.setGeometry(QtCore.QRect(480, 190, 51, 31))
+        self.cmb_content_durartion.setGeometry(QtCore.QRect(480, 190, 61, 31))
+        self.cmb_content_durartion.setEditable(True)
         self.cmb_content_durartion.setObjectName("cmb_content_durartion")
         self.cmb_content_durartion.addItem("")
         self.cmb_content_durartion.setItemText(0, "")
@@ -64,7 +65,8 @@ class Ui_InformationAnnotationWidget(object):
         self.label_9.setGeometry(QtCore.QRect(580, 60, 71, 17))
         self.label_9.setObjectName("label_9")
         self.cmb_icon_duration = QtGui.QComboBox(InformationAnnotationWidget)
-        self.cmb_icon_duration.setGeometry(QtCore.QRect(520, 50, 51, 31))
+        self.cmb_icon_duration.setGeometry(QtCore.QRect(520, 50, 61, 31))
+        self.cmb_icon_duration.setEditable(True)
         self.cmb_icon_duration.setObjectName("cmb_icon_duration")
         self.cmb_icon_duration.addItem("")
         self.cmb_icon_duration.addItem("")
