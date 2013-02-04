@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
-encoding//model/InformationAnnotation.py=utf-8
 encoding//model/MainProjectWidget.py=utf-8
 encoding//model/__init__.py=utf-8
+encoding//plugins/InformationAnnotation.py=utf-8
 encoding//test/__init__.py=utf-8
 encoding//ui/icons_rc.py=utf-8
 encoding//ui/ui_InformationAnnotationWidget.py=utf-8

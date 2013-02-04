@@ -4,25 +4,7 @@
 from model import Annotation, CONTENT_TYPES
 from PySide import QtGui, QtCore
 from PySide.phonon import Phonon
-from ui.ui_InformationAnnotationWidget import Ui_InformationAnnotationWidget
-
-class InformationAnnotation(Annotation):
-    def __init__(self, mid):
-        Annotation.__init__(self, mid)
-        
-        self.notification_icon_file = None
-        self.notification_icon_timestamp = None
-        self.notification_icon_duration = None
-        self.information_media = None
-        self.information_media_timestamp = None
-        self.information_media_duration = None
-        
-    def get_timestamp(self):
-        return self.notification_icon_timestamp.toString()
-    
-    def get_name(self):
-        return u'Informação Simples'
-        
+from ui.ui_InformationAnnotationWidget import Ui_InformationAnnotationWidget 
     
 class InformationAnnotationWidget(QtGui.QDialog):
     
@@ -300,7 +282,56 @@ class InformationAnnotationWidget(QtGui.QDialog):
         return types
         
         
+class InformationAnnotation(Annotation):
+    TYPE = "InformationAnnotation"
+    
+    def __init__(self, mid):
+        Annotation.__init__(self, mid, 
+                            name=u"Informação Simples",
+                            mtype=InformationAnnotation.TYPE)
         
+        self.notification_icon_file = None
+        self.notification_icon_duration = None
+        self.information_media = None
+        self.information_media_timestamp = None
+        self.information_media_duration = None
+    
+    def code_json(self):
+        json_annotation = {}
+        json_object = {"Annotation" : json_annotation}
+        json_annotation['id'] = self.id
+        json_annotation['content_type'] = Annotation.str_to_type[self.content_type]
+        json_annotation['timestamp'] = self.timestamp.toString()
+        json_annotation['type'] = self.type
+        json_annotation['notification_icon_file'] = self.notification_icon_file
+        json_annotation['notification_icon_duration'] = self.notification_icon_duration
+        json_annotation['information_media'] = self.information_media
+        json_annotation['information_media_timestamp'] = self.information_media_timestamp
+        json_annotation['information_media_duration'] = self.information_media_duration
+        return json_object
+    
+    @staticmethod
+    def parse_json(json_object):
+        json_annotation = json_object['Annotation']
+        mid = json_annotation['id']
+        mtype = json_annotation['type']
+        if mtype != InformationAnnotation.TYPE:
+            raise ValueError('The annotatoin is not a ' + InformationAnnotation.TYPE)
+        
+        annotation = InformationAnnotation(mid)
+        annotation.content_type = Annotation.str_to_type[json_annotation['content_type']]
+        annotation.timestamp = QtCore.QTime.fromString(json_annotation['timestamp'])
+        
+        annotation.notification_icon_file = json_annotation['notification_icon_file']
+        annotation.notification_icon_duration = json_annotation['notification_icon_duration']
+        annotation.information_media = json_annotation['information_media']
+        annotation.information_media_timestamp = json_annotation['information_media_timestamp']
+        annotation.information_media_duration = json_annotation['information_media_duration']
+        return annotation
+    
+    @staticmethod
+    def get_widget_class():
+        return InformationAnnotationWidget
         
 def test():
     import sys

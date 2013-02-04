@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+from PySide import QtCore
 
 def invert_type_maps(original):
     inverted = {}
@@ -10,14 +11,15 @@ def invert_type_maps(original):
             
     return inverted
 
-class EnhancedMedia(object):
-    def __init__(self, mid, name, main_media=None, description=None, last_modification=None, user_name=None):
+class AnnotationProject(object):
+    def __init__(self, mid, name, main_media=None, description=None, last_modification=None, username=None):
         self.id = mid
         self.name = name
+        self.main_media = main_media
         self.description = description
         self.last_modification = last_modification
-        self.user_name = user_name
-        self.main_media = main_media
+        self.username = username
+        
         self.annotations = []
     
     def remove_annotation(self, annotation):
@@ -33,8 +35,8 @@ class EnhancedMedia(object):
         
         
     def add_annotation(self, annotation):
-        if not isinstance(annotation, Annotation):
-            raise TypeError('The argument annotation must be an instance of Annotation.')
+        #if not isinstance(annotation, Annotation):
+        #    raise TypeError('The argument annotation must be an instance of Annotation.')
         
         #Its a new annotation
         if annotation not in self.annotations:
@@ -85,58 +87,54 @@ class Annotation(object):
     
     str_to_type = invert_type_maps(type_to_str)
     
-    def __init__(self, mid):
+    def __init__(self, mid, content_type=AUDIO, timestamp=QtCore.QTime(), 
+                 name="Generic Annotation", mtype="Annotation"):
+        
         self.__id = mid
-        self.__type = Annotation.AUDIO
+        self.__content_type = Annotation.AUDIO
+        self.__timestamp = QtCore.QTime()
+        self.__name = name
+        self.__type = mtype
         
     @property
-    def type(self):
+    def timestamp(self):
+        return self.__timestamp
+    
+    @timestamp.setter
+    def timestamp(self, value):
+        if not isinstance(value, QtCore.QTime):
+            raise ValueError('The argument is a invalid timestamp')
+        
+        self.__timestamp = value
+        
+    @property
+    def content_type(self):
         return self.__type
     
-    @type.setter
-    def type(self, value):
+    @content_type.setter
+    def content_type(self, value):
         if not Annotation.type_to_str.has_key(value):
             raise ValueError('The argument is a invalid Annotation type')
         
         self.__type = value
-            
         
     @property
     def id(self):
         return self.__id
     
-    def get_timestamp(self):
-        return None
+    @property
+    def name(self):
+        return self.__name
     
-    def get_name(self):
-        return 'Generic Annotation'
-        
-class AnnotationFactory(object):
+    def get_files(self):
+        raise NotImplemented("Please implement this method")
     
-    def __init__(self):
-        self.__annotation_types = {}
-        
-    def add_annotation_type(self, ann_type, file_name=None, class_name=None):
-        if self.__annotation_types.has_key(ann_type):
-            raise Exception("There is another annotation with this type known.")
-        
-        if file_name == None:
-            file_name = ann_type
-        if class_name == None:
-            class_name = ann_type
-            
-        self.__annotation_types[ann_type] = (file_name, class_name)
+    def code_json(self):
+        raise NotImplemented("Please implement this method")
     
-    def create_annotation(self, ann_type, mid):
-        
-        if not self.__annotation_types.has_key(ann_type):
-            raise IndexError('There is no %s type of annotation known' % ann_type)
-        
-        file_name, class_name = self.__annotation_types[ann_type]
-        __import__('model.' + file_name)
-        mymodule = sys.modules['model.' + file_name]
-        myclass = mymodule.__dict__[class_name]
-        return myclass(mid)
+    @property
+    def type(self):
+        return self.__type
     
 
 CONTENT_TYPES = {Annotation.AUDIO : u'Áudio (*.wav *.mp3 *.ogg *.oga)',
@@ -147,16 +145,30 @@ CONTENT_TYPES = {Annotation.AUDIO : u'Áudio (*.wav *.mp3 *.ogg *.oga)',
         
 
 def test():
-    ann_factory = AnnotationFactory()
-    ann_factory.add_annotation_type('InformationAnnotation')
-    annotation = ann_factory.create_annotation('InformationAnnotation', 'note 1')
-    #annotation.test()
+    from plugins import PluginsManager
+    from model.serialization import ProjectSerializator
     
-    annotation = ann_factory.create_annotation('InformationAnnotation', 'note 2')
-    #annotation.test()
+    plugins_manager = PluginsManager()
+    plugins_manager.load_file('../plugins/plugins.xml')
+    project = AnnotationProject('myId', 'myName', 'video.mp4', 
+                                 'Teste do Serializator', None, 'Kamila')
+    
+    annotation_class = plugins_manager.get_annotation_class('InformationAnnotation')
+    annotation = annotation_class('anotation1')
+    project.add_annotation(annotation)
+    
+    serializator = ProjectSerializator(plugins_manager)
+    json_str = serializator.code_json(project)
+    print json_str
+    
+    json_str = serializator.code_json(project)
+    print json_str
     
     
-    print Annotation.str_to_type
+    
+       
+    
+    
 
 if __name__ == "__main__":
     test()
