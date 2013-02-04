@@ -45,6 +45,8 @@ class InformationAnnotationWidget(QtGui.QDialog):
             return
         
         annotation = self.annotation
+        print annotation.type
+        
         annotation.notification_icon_file = self.icon_path
         try:
             annotation.notification_icon_duration = int(self.ui.cmb_icon_duration.currentText())
@@ -53,8 +55,8 @@ class InformationAnnotationWidget(QtGui.QDialog):
                               u"O tempo de duração do ícone de notificação deve ser um número inteiro")
             return
         
-        annotation.notification_icon_timestamp = self.ui.time_icon.time()
-        annotation.type = self.content_type
+        annotation.timestamp = self.ui.time_icon.time()
+        annotation.content_type = self.content_type
         annotation.information_media = self.content_path
         try:
             text = self.ui.cmb_content_durartion.currentText()
@@ -68,6 +70,7 @@ class InformationAnnotationWidget(QtGui.QDialog):
             return
         
         annotation.information_media_timestamp = self.ui.time_content.time()
+        print annotation.type
         self.target.save_annotation(self, annotation)
         self.close()
         
@@ -87,29 +90,29 @@ class InformationAnnotationWidget(QtGui.QDialog):
             self.ui.lbl_icon_display.setPixmap(pixelmap)
             self.ui.lbl_icon_display.setScaledContents(True)
             
-        if self.annotation.notification_icon_timestamp:
-            self.ui.time_icon.setTime(self.annotation.notification_icon_timestamp)     
+        if self.annotation.timestamp:
+            self.ui.time_icon.setTime(self.annotation.timestamp)     
             
         if self.annotation.notification_icon_duration:
             self.ui.cmb_icon_duration.setEditText(str(self.annotation.notification_icon_duration))
             
         if self.annotation.information_media:
-            self.content_type = self.annotation.type
+            self.content_type = self.annotation.content_type
             self.content_path = self.annotation.information_media
             
-            self.ui.cmb_content_type.setCurrentIndex(self.annotation.type)
+            self.ui.cmb_content_type.setCurrentIndex(self.annotation.content_type)
             self.occult_content_displays()
         
             self.ui.txt_content.clear()
             self.ui.txt_content.appendPlainText(self.annotation.information_media)
         
-            if self.annotation.type == Annotation.IMAGE:
+            if self.annotation.content_type == Annotation.IMAGE:
                 self.open_image(self.annotation.information_media)
-            elif self.annotation.type == Annotation.AUDIO:
+            elif self.annotation.content_type == Annotation.AUDIO:
                 self.open_music(self.annotation.information_media)
-            elif self.annotation.type == Annotation.VIDEO:
+            elif self.annotation.content_type == Annotation.VIDEO:
                 self.open_video(self.annotation.information_media)
-            elif self.annotation.type == Annotation.HTML:
+            elif self.annotation.content_type == Annotation.HTML:
                 self.open_html(self.annotation.information_media)
             
         if self.annotation.information_media_timestamp:
@@ -300,13 +303,13 @@ class InformationAnnotation(Annotation):
         json_annotation = {}
         json_object = {"Annotation" : json_annotation}
         json_annotation['id'] = self.id
-        json_annotation['content_type'] = Annotation.str_to_type[self.content_type]
+        json_annotation['content_type'] = Annotation.type_to_str[self.content_type]
         json_annotation['timestamp'] = self.timestamp.toString()
         json_annotation['type'] = self.type
         json_annotation['notification_icon_file'] = self.notification_icon_file
         json_annotation['notification_icon_duration'] = self.notification_icon_duration
         json_annotation['information_media'] = self.information_media
-        json_annotation['information_media_timestamp'] = self.information_media_timestamp
+        json_annotation['information_media_timestamp'] = self.information_media_timestamp.toString()
         json_annotation['information_media_duration'] = self.information_media_duration
         return json_object
     
@@ -325,7 +328,7 @@ class InformationAnnotation(Annotation):
         annotation.notification_icon_file = json_annotation['notification_icon_file']
         annotation.notification_icon_duration = json_annotation['notification_icon_duration']
         annotation.information_media = json_annotation['information_media']
-        annotation.information_media_timestamp = json_annotation['information_media_timestamp']
+        annotation.information_media_timestamp = QtCore.QTime.fromString(json_annotation['information_media_timestamp'])
         annotation.information_media_duration = json_annotation['information_media_duration']
         return annotation
     

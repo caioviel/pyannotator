@@ -1,26 +1,19 @@
 import model
 import json
 
-
-class AnnotationSerializator:
-    def parse_json(self, annotation):
-        pass
-    
-    def code_json(self, annotation):
-        pass
-
 class ProjectSerializator:
     def __init__(self, plugins_manager):
         self.plugins_manager = plugins_manager
     
     def parse_file(self, filename):
-        #open file, get the code
-        json_str = ''
+        myfile = open(filename, 'r')
+        json_str = myfile.read()
         return self.parse_json(json_str)
     
     def dump_file(self, project, filename):
         json_str = self.code_json(project)
-        #Create file and write
+        myfile = open(filename, 'w+')
+        myfile.write(json_str)
     
     def code_json(self, project):
         #if not isinstance(project, model.AnnotationProject):
@@ -38,7 +31,10 @@ class ProjectSerializator:
         json_project['description'] = project.description
         
         #if project.last_modification:
-        json_project['last_modification'] = project.last_modification
+        if project.last_modification == None:
+            json_project['last_modification'] = project.last_modification
+        else:
+            json_project['last_modification'] = project.last_modification.isoformat()
             
         #if project.username:
         json_project['username'] = project.username
@@ -46,12 +42,12 @@ class ProjectSerializator:
         json_annotations = []
         json_project['annotations'] = json_annotations
         
-        note_serializator = AnnotationSerializator()
         for annotation in project.annotations:
-            json_note = note_serializator.code_json(annotation)
+            json_note = annotation.code_json()
             json_annotations.append(json_note)
             
-        return json.dumps(json_object)
+
+        return json.dumps(json_object, sort_keys=True, indent=4, separators=(',', ': '))
         
     
     def parse_json(self, json_str):

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainProjectWidget.ui'
 #
-# Created: Sun Feb  3 15:09:41 2013
+# Created: Mon Feb  4 00:03:27 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!

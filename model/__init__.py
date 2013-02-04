@@ -109,14 +109,14 @@ class Annotation(object):
         
     @property
     def content_type(self):
-        return self.__type
+        return self.__content_type
     
     @content_type.setter
     def content_type(self, value):
         if not Annotation.type_to_str.has_key(value):
             raise ValueError('The argument is a invalid Annotation type')
         
-        self.__type = value
+        self.__content_type = value
         
     @property
     def id(self):
@@ -149,20 +149,17 @@ def test():
     from model.serialization import ProjectSerializator
     
     plugins_manager = PluginsManager()
-    plugins_manager.load_file('../plugins/plugins.xml')
-    project = AnnotationProject('myId', 'myName', 'video.mp4', 
-                                 'Teste do Serializator', None, 'Kamila')
+    plugins_manager.load_file('../plugins.xml')
+    project = AnnotationProject('area51', 'Meu nome', 'video.mp4', 
+                                 'Teste do Serializator 5', None, 'Kamila')
     
     annotation_class = plugins_manager.get_annotation_class('InformationAnnotation')
     annotation = annotation_class('anotation1')
     project.add_annotation(annotation)
     
     serializator = ProjectSerializator(plugins_manager)
-    json_str = serializator.code_json(project)
-    print json_str
-    
-    json_str = serializator.code_json(project)
-    print json_str
+    serializator.dump_file(project, 'project.json')
+
     
     
     
