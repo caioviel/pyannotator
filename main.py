@@ -3,7 +3,7 @@
 
 from plugins import PluginsManager
 from PySide import QtGui
-from ProjectChooseWidget import ProjectChooseWidget
+from widget.ProjectChooseWidget import ProjectChooseWidget
 import os
 import sys
 import getpass
@@ -21,7 +21,9 @@ username = getpass.getuser()
 
 
 def create_project_directory():
-    directory_to_create = home_directory + '/' + ProjectChooseWidget.PROJECTS_DIRECTORY
+    directory_to_create = os.path.join(home_directory, 
+                                       ProjectChooseWidget.PROJECTS_DIRECTORY)
+    
     if not os.path.exists(directory_to_create):
         os.mkdir(directory_to_create)
     elif not os.path.isdir(directory_to_create):
@@ -30,12 +32,8 @@ def create_project_directory():
     
                     
 if __name__ == "__main__":
-    
-    plugins_manager = PluginsManager()
-    plugins_manager.load_file(os.path.join(real_path, 'plugins.xml'))
-    
     create_project_directory()
     
     app = QtGui.QApplication(sys.argv)
-    widget = ProjectChooseWidget(real_path, home_directory, username, plugins_manager)
+    widget = ProjectChooseWidget(real_path, home_directory, username)
     sys.exit(app.exec_())

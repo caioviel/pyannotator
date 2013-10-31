@@ -2,14 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import sys
-from PySide import QtCore
+#from PySide import QtCore
 
-def invert_type_maps(original):
-    inverted = {}
-    for key, value in original.items():
-        inverted[value] = key
-            
-    return inverted
 
 class AnnotationProject(object):
     def __init__(self, mid, name, main_media=None, description=None, last_modification=None, username=None):
@@ -35,14 +29,84 @@ class AnnotationProject(object):
         
         
     def add_annotation(self, annotation):
-        #if not isinstance(annotation, Annotation):
-        #    raise TypeError('The argument annotation must be an instance of Annotation.')
+        if not isinstance(annotation, Annotation):
+            raise TypeError('The argument annotation must be an instance of Annotation.')
         
         #Its a new annotation
         if annotation not in self.annotations:
             self.annotations.append(annotation)
         else:
-            raise Exception('This annotation is already inserted.')            
+            raise Exception('This annotation is already inserted.')    
+        
+        
+class Media(object):
+    AUDIO = 1
+    VIDEO = 2
+    IMAGE = 3
+    TEXT = 4
+    SLIDES = 5 
+    
+    def __init__(self, myid, filename, showtime):
+        self.id = myid
+        self.filename = filename
+        
+        #time configurations
+        self.showtime = showtime
+        
+        self.begintime = None
+        self.duration = None
+        
+CONTENT_TYPES = {Media.AUDIO : u'Áudio (*.wav *.mp3 *.ogg *.oga)',
+                 Media.VIDEO : u'Vídeo (*.avi *.mp4 *.ogg *.webm *.mpeg)',
+                 Media.IMAGE : u'Imagens (*.png *.jpg *.ico *.gif)',
+                 Media.TEXT : u'Texto (*.txt *.html *.htm)',
+                 Media.SLIDES : u''}
+        
+class SpatialMedia(Media):
+    def __init__(self, myid, filename, showtime,
+                 top=None, left=None, 
+                 height=None, width=None):
+        
+        super(SpatialMedia, self).__init__(myid, filename, showtime)
+        
+        self.top = top
+        self.left = left
+        self.height = height
+        self.width = width
+        
+class Audio(Media):
+    def __init__(self, myid, filename, showtime):
+        super(Audio, self).__init__(myid, filename, showtime)
+        
+class Video(SpatialMedia):
+    def __init__(self, myid, filename, showtime):
+        super(Video, self).__init__(myid, filename, showtime)
+
+class Text(SpatialMedia):
+    def __init__(self, myid, filename, showtime, duration=5):
+        super(Text, self).__init__(myid, filename, showtime)
+        self.duration = duration
+
+class Image(SpatialMedia):
+    def __init__(self, myid, filename, showtime, duration=5):
+        super(Image, self).__init__(myid, filename, showtime)
+        self.duration = duration
+
+class Slides(SpatialMedia):
+    def __init__(self, myid, filename, showtime):
+        super(Slides, self).__init__(myid, filename, showtime)
+        self.slides = []
+        self.transition_time = 2
+        self.auto_transition = True
+    
+    def add_slide(self, image, position=None):
+        if not isinstance(image, Image):
+            raise TypeError('The argument image must be an instance of Image.')
+        
+        if position is None:
+            self.slides.append(image)
+        else:
+            self.slides.insert(position, image)
 
 class VideoStream(object):
     def __init__(self, media_source):
@@ -73,99 +137,63 @@ class VideoStream(object):
         return self.__duration
     
 class Annotation(object):
-    AUDIO = 0
-    VIDEO = 1
-    IMAGE = 2
-    PLAIN_TEXT = 3
-    HTML = 4
-    
-    type_to_str = {VIDEO : 'VIDEO',
-                   PLAIN_TEXT : 'PLAIN_TEXT',
-                   HTML : 'HTML',
-                   AUDIO : 'AUDIO',
-                   IMAGE : 'IMAGE'}
-    
-    str_to_type = invert_type_maps(type_to_str)
-    
-    def __init__(self, mid, content_type=AUDIO, timestamp=QtCore.QTime(), 
-                 name="Generic Annotation", mtype="Annotation"):
+    def __init__(self, myid, timestamp):
+        self.id = id
+        self.timestamp = timestamp
+        self.description = None
+        self.annotation_time = None
         
-        self.__id = mid
-        self.__content_type = Annotation.AUDIO
-        self.__timestamp = QtCore.QTime()
-        self.__name = name
-        self.__type = mtype
+class Icon(object):
+    #Colocar as imagens aqui no icone como variaveis
+    
+    def __init__(self, image, relative_time, position):
+        self.image = image
+        self.relative_time = relative_time
+        self.position = position
+
+class Interaction(object):
+    def __init__(self):
+        self.resize_main_video = None
+        self.compulsory = False
+        self.pause_main_video = False
+
+class ShowContent(Interaction):
+    def __init__(self):
+        super(ShowContent, self).__init__()
+        self.contents = []
         
-    @property
-    def timestamp(self):
-        return self.__timestamp
-    
-    @timestamp.setter
-    def timestamp(self, value):
-        if not isinstance(value, QtCore.QTime):
-            raise ValueError('The argument is a invalid timestamp')
         
-        self.__timestamp = value
+    def add_content(self, content):
+        if not isinstance(content, Media):
+            raise TypeError('The argument content must be an instance of Media.')
         
-    @property
-    def content_type(self):
-        return self.__content_type
-    
-    @content_type.setter
-    def content_type(self, value):
-        if not Annotation.type_to_str.has_key(value):
-            raise ValueError('The argument is a invalid Annotation type')
+        if content not in self.contents:
+            self.contents.append(content)
+        else:
+            raise Exception('This content is already inserted.')
         
-        self.__content_type = value
+    def remove_content(self, content):
+        if not isinstance(content, Media):
+            raise TypeError('The argument content must be an instance of Media.')
         
-    @property
-    def id(self):
-        return self.__id
-    
-    @property
-    def name(self):
-        return self.__name
-    
-    def get_files(self):
-        raise NotImplemented("Please implement this method")
-    
-    def code_json(self):
-        raise NotImplemented("Please implement this method")
-    
-    @property
-    def type(self):
-        return self.__type
+        self.contents.remove(content)
+                        
+class Skip(Interaction):
+    pass
+
+class Poll(Interaction):
+    pass
+
+class Replay(Interaction):
+    pass
+
+class InternalLink(Interaction):
+    pass
     
 
-CONTENT_TYPES = {Annotation.AUDIO : u'Áudio (*.wav *.mp3 *.ogg *.oga)',
-                 Annotation.VIDEO : u'Vídeo (*.avi *.mp4 *.ogg *.webm *.mpeg)',
-                 Annotation.HTML : u'Html (*.html *.htm)',
-                 Annotation.IMAGE : u'Imagens (*.png *.jpg *.ico *.gif)',
-                 Annotation.PLAIN_TEXT : u'Texto Plano (*.txt)'}
-        
 
 def test():
-    from plugins import PluginsManager
-    from model.serialization import ProjectSerializator
-    
-    plugins_manager = PluginsManager()
-    plugins_manager.load_file('../plugins.xml')
-    project = AnnotationProject('area51', 'Meu nome', 'video.mp4', 
-                                 'Teste do Serializator 5', None, 'Kamila')
-    
-    annotation_class = plugins_manager.get_annotation_class('InformationAnnotation')
-    annotation = annotation_class('anotation1')
-    project.add_annotation(annotation)
-    
-    serializator = ProjectSerializator(plugins_manager)
-    serializator.dump_file(project, 'project.json')
-
-    
-    
-    
-       
-    
-    
+    pass
 
 if __name__ == "__main__":
     test()

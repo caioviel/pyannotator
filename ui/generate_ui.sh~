@@ -5,5 +5,5 @@ pyside-uic MainProjectWidget.ui > ui_MainProjectWidget.py
 pyside-uic InformationAnnotationWidget.ui > ui_InformationAnnotationWidget.py
 pyside-uic ProjectChooseWidget.ui > ui_ProjectChooseWidget.py
 pyside-uic ProjectChooseWidget.ui > ui_ProjectChooseWidget.py
-pyside-uic WaitingDialog.ui > ui_WaitingDialog.py
+pyside-uic WaitingDialog.ui > ui_waitingDialog.py
 

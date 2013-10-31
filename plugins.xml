@@ -1,8 +1,0 @@
-<AnnotatorPlugins>
-	<AnnotationBas>
-		<Annotation type="InformationAnnotation">
-			<module>InformationAnnotation</module>
-			<class>InformationAnnotation</class>
-		</Annotation>
-	</AnnotationBas>
-</AnnotatorPlugins>

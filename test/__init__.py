@@ -25,17 +25,14 @@ class MyItem(QtGui.QWidget):
         self.setWindowTitle('Absolute')    
         self.show()
 
-
+from widget.WaitingDialog import WaitingDialog
+ 
 def test():
     import sys
     app = QtGui.QApplication(sys.argv)
-    myItem = MyItem()
-    item = QtGui.QListWidgetItem()
-    item.setSizeHint(QtCore.QSize(40,160))
-    myList = QtGui.QListWidget()
-    myList.addItem(item)
-    myList.setItemWidget(item, myItem)
-    myList.show()
+    dialog = WaitingDialog()
+    dialog.show()
+    
     
     sys.exit(app.exec_())
         

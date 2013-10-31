@@ -13,7 +13,7 @@ logger = logging.getLogger('pyannotator')
 logger.setLevel(logging.DEBUG)
 
 
-from model import Annotation, CONTENT_TYPES
+from model import Annotation
 from PySide import QtGui, QtCore
 from PySide.phonon import Phonon
 from ui.ui_MainProjectWidget import Ui_MainProjectWidget
@@ -21,15 +21,14 @@ from ui.ui_AnnotationListItem import Ui_AnnotationListItem
 import model
 
 def get_media_icon(media_type):
-    if media_type == model.Annotation.VIDEO:
+    #TODO: add icon for slides
+    if media_type == model.Media.VIDEO:
         return QtGui.QPixmap(":/m/video.png")
-    elif media_type == model.Annotation.AUDIO:
+    elif media_type == model.Media.AUDIO:
         return QtGui.QPixmap(":/m/audio.png")
-    elif media_type == model.Annotation.HTML:
-        return QtGui.QPixmap(":/m/html.png")
-    elif media_type == model.Annotation.PLAIN_TEXT:
+    elif media_type == model.Media.TEXT:
         return QtGui.QPixmap(":/m/plain_text.png")
-    elif media_type == model.Annotation.IMAGE:
+    elif media_type == model.Media.IMAGE:
         return QtGui.QPixmap(":/m/image.png")
 
 
@@ -52,7 +51,7 @@ class MainProjectWidget(QtGui.QWidget):
     
     annotation_list_chaged = QtCore.Signal()
     
-    def __init__(self, project, project_directory, serializator, plugin_manager, parent=None):
+    def __init__(self, project, project_directory, parent=None):
         super(MainProjectWidget, self).__init__(parent)
         self.ui = Ui_MainProjectWidget()
         self.ui.setupUi(self)
@@ -61,8 +60,6 @@ class MainProjectWidget(QtGui.QWidget):
         self.is_editing_time = False
         self.open_widgets = []
         self.project = project
-        self.serializator = serializator
-        self.plugin_manager = plugin_manager
 
         
         self.init_ui()
@@ -257,9 +254,11 @@ class MainProjectWidget(QtGui.QWidget):
         path, _ = QtGui.QFileDialog.getOpenFileName(self, 
                                                  u'Selecione o Vídeo Principal',
                                                  self.project_diretory,
-                                                 CONTENT_TYPES[Annotation.VIDEO])
+                                                 model.CONTENT_TYPES[model.Media.VIDEO])
         if path == None:
             return
+        
+        
         
         self.main_video_path = path           
         player = self.ui.video_player
@@ -281,8 +280,10 @@ class MainProjectWidget(QtGui.QWidget):
 
 def test():
     import sys
+    from datetime import datetime
     app = QtGui.QApplication(sys.argv)
-    widget = MainProjectWidget()
+    project = model.AnnotationProject('meu_id', 'meu_nome', None, '', datetime.now(), 'username')
+    widget = MainProjectWidget(project, '/home/caioviel/AnnotationProjects/MeuProjeto')
     sys.exit(app.exec_())
         
 if __name__ == "__main__":

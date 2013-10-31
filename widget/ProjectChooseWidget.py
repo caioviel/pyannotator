@@ -5,7 +5,6 @@ from PySide import QtGui, QtCore
 import os
 
 from ui.ui_ProjectChooseWidget import Ui_ProjectChooseWidget
-from model.serialization import ProjectSerializator
 from MainProjectWidget import MainProjectWidget
 import model
 from datetime import datetime
@@ -13,13 +12,11 @@ from datetime import datetime
 class ProjectChooseWidget(QtGui.QWidget):
     PROJECTS_DIRECTORY = "AnnotationProjects"
     
-    def __init__(self, real_path, home_directory, username, plugins_manager, parent=None):
+    def __init__(self, real_path, home_directory, username, parent=None):
         super(ProjectChooseWidget, self).__init__(parent)
         self.real_path = real_path
         self.home_directory = home_directory
         self.username = username
-        self.plugins_manager = plugins_manager        
-        self.serializator = ProjectSerializator(plugins_manager)
          
         self.ui = Ui_ProjectChooseWidget()
         self.ui.setupUi(self)
@@ -51,7 +48,8 @@ class ProjectChooseWidget(QtGui.QWidget):
             if os.path.isdir(file_path):
                 project_file = os.path.join(file_path, 'project.json')
                 if os.path.exists(project_file) and not os.path.isdir(project_file):
-                    project = self.serializator.parse_file(project_file)
+                    #project = self.serializator.parse_file(project_file)
+                    project = model.AnnotationProject('id', 'name', 'main_media', 'description', 'modification', 'username')
                     existent_projects.append(project)
                     
                     
@@ -105,7 +103,7 @@ class ProjectChooseWidget(QtGui.QWidget):
         os.mkdir(project_directory)
         project = model.AnnotationProject(project_id, project_name, None, description, datetime.now(), self.username)
         
-        self.width = MainProjectWidget(project, project_directory, self.serializator, self.plugins_manager)
+        self.width = MainProjectWidget(project, project_directory)
         self.close()
 
     

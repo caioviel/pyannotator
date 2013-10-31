@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>997</width>
-    <height>537</height>
+    <width>999</width>
+    <height>664</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -73,7 +73,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>490</y>
+     <y>620</y>
      <width>118</width>
      <height>27</height>
     </rect>
@@ -152,7 +152,7 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>480</y>
+     <y>610</y>
      <width>191</width>
      <height>41</height>
     </rect>
@@ -177,7 +177,7 @@
      <x>690</x>
      <y>10</y>
      <width>301</width>
-     <height>521</height>
+     <height>641</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -205,7 +205,7 @@
       <x>10</x>
       <y>30</y>
       <width>281</width>
-      <height>431</height>
+      <height>551</height>
      </rect>
     </property>
    </widget>
@@ -213,7 +213,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>470</y>
+      <y>590</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -236,7 +236,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>470</y>
+      <y>590</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -260,7 +260,7 @@
    <property name="geometry">
     <rect>
      <x>380</x>
-     <y>480</y>
+     <y>610</y>
      <width>151</width>
      <height>41</height>
     </rect>
@@ -283,7 +283,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>480</y>
+     <y>610</y>
      <width>151</width>
      <height>41</height>
     </rect>
@@ -309,6 +309,16 @@
      <y>60</y>
      <width>671</width>
      <height>371</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="txt_description">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>490</y>
+     <width>671</width>
+     <height>101</height>
     </rect>
    </property>
   </widget>
