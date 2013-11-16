@@ -1,37 +1,42 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'AnnotationListItem.ui'
+# Form implementation generated from reading ui file 'ui/AnnotationListItem.ui'
 #
-# Created: Thu Oct 31 20:35:42 2013
-#      by: pyside-uic 0.2.13 running on PySide 1.1.0
+# Created: Sat Nov 16 09:10:49 2013
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide import QtCore, QtGui
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    _fromUtf8 = lambda s: s
 
 class Ui_AnnotationListItem(object):
     def setupUi(self, AnnotationListItem):
-        AnnotationListItem.setObjectName("AnnotationListItem")
+        AnnotationListItem.setObjectName(_fromUtf8("AnnotationListItem"))
         AnnotationListItem.resize(272, 54)
         self.lbl_content_type = QtGui.QLabel(AnnotationListItem)
         self.lbl_content_type.setGeometry(QtCore.QRect(10, 10, 41, 41))
-        self.lbl_content_type.setText("")
-        self.lbl_content_type.setPixmap(QtGui.QPixmap(":/m/audio.png"))
+        self.lbl_content_type.setText(_fromUtf8(""))
+        self.lbl_content_type.setPixmap(QtGui.QPixmap(_fromUtf8(":/m/audio.png")))
         self.lbl_content_type.setScaledContents(True)
-        self.lbl_content_type.setObjectName("lbl_content_type")
+        self.lbl_content_type.setObjectName(_fromUtf8("lbl_content_type"))
         self.lbl_type = QtGui.QLabel(AnnotationListItem)
         self.lbl_type.setGeometry(QtCore.QRect(70, 10, 201, 17))
         font = QtGui.QFont()
-        font.setFamily("Sans Serif")
+        font.setFamily(_fromUtf8("Sans Serif"))
         font.setPointSize(12)
-        font.setWeight(75)
-        font.setItalic(False)
         font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
         self.lbl_type.setFont(font)
-        self.lbl_type.setObjectName("lbl_type")
+        self.lbl_type.setObjectName(_fromUtf8("lbl_type"))
         self.lbl_timestamp = QtGui.QLabel(AnnotationListItem)
         self.lbl_timestamp.setGeometry(QtCore.QRect(70, 30, 66, 17))
-        self.lbl_timestamp.setObjectName("lbl_timestamp")
+        self.lbl_timestamp.setObjectName(_fromUtf8("lbl_timestamp"))
 
         self.retranslateUi(AnnotationListItem)
         QtCore.QMetaObject.connectSlotsByName(AnnotationListItem)

@@ -1,25 +1,30 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'WaitingDialog.ui'
+# Form implementation generated from reading ui file 'ui/WaitingDialog.ui'
 #
-# Created: Thu Oct 31 20:35:42 2013
-#      by: pyside-uic 0.2.13 running on PySide 1.1.0
+# Created: Sat Nov 16 09:10:50 2013
+#      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide import QtCore, QtGui
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    _fromUtf8 = lambda s: s
 
 class Ui_WaitingDialog(object):
     def setupUi(self, WaitingDialog):
-        WaitingDialog.setObjectName("WaitingDialog")
+        WaitingDialog.setObjectName(_fromUtf8("WaitingDialog"))
         WaitingDialog.resize(400, 76)
         self.lbl_message = QtGui.QLabel(WaitingDialog)
         self.lbl_message.setGeometry(QtCore.QRect(30, 10, 301, 17))
-        self.lbl_message.setObjectName("lbl_message")
+        self.lbl_message.setObjectName(_fromUtf8("lbl_message"))
         self.pgb_status = QtGui.QProgressBar(WaitingDialog)
         self.pgb_status.setGeometry(QtCore.QRect(30, 40, 331, 23))
         self.pgb_status.setProperty("value", 24)
-        self.pgb_status.setObjectName("pgb_status")
+        self.pgb_status.setObjectName(_fromUtf8("pgb_status"))
 
         self.retranslateUi(WaitingDialog)
         QtCore.QMetaObject.connectSlotsByName(WaitingDialog)
