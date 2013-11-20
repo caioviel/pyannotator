@@ -13,6 +13,8 @@
     <file>button_blue_play.png</file>
     <file>button_blue_stop.png</file>
     <file>button_blue_pause.png</file>
+    <file>check.png</file>
+    <file>no.png</file>
   </qresource>
   <qresource prefix="m">
     <file>audio.png</file>

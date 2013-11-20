@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/VideoPlayer.ui'
 #
-# Created: Sat Nov 16 09:10:50 2013
+# Created: Sat Nov 16 18:39:27 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -56,7 +56,7 @@ class Ui_VideoPlayer(object):
         QtCore.QMetaObject.connectSlotsByName(VideoPlayer)
 
     def retranslateUi(self, VideoPlayer):
-        VideoPlayer.setWindowTitle(QtGui.QApplication.translate("VideoPlayer", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        VideoPlayer.setWindowTitle(QtGui.QApplication.translate("VideoPlayer", "Player de Vídeo", None, QtGui.QApplication.UnicodeUTF8))
 
 from PyQt4 import phonon
 import icons_rc

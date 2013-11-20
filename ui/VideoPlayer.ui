@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Player de Vídeo</string>
   </property>
   <widget class="Phonon::VideoPlayer" name="video_player">
    <property name="geometry">

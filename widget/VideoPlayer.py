@@ -3,9 +3,6 @@ from PyQt4 import QtGui, QtCore
 from PyQt4.phonon import Phonon
 
 class VideoPlayer(QtGui.QDialog):
-    
-    
-    
     def __init__(self, video_source=None, begin_time=None, end_time=None, parent=None):
         super(VideoPlayer, self).__init__(parent)
         self.ui = Ui_VideoPlayer()

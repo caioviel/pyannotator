@@ -11,4 +11,5 @@ pyuic4 ui/ProjectChooseWidget.ui > ui/ui_ProjectChooseWidget.py
 pyuic4 ui/ProjectChooseWidget.ui > ui/ui_ProjectChooseWidget.py
 pyuic4 ui/WaitingDialog.ui > ui/ui_WaitingDialog.py
 pyuic4 ui/VideoPlayer.ui > ui/ui_VideoPlayer.py
+pyuic4 ui/VideoContent.ui > ui/ui_VideoContent.py
 
