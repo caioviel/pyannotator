@@ -104,7 +104,7 @@ def main():
     
     import sys
     app = QtGui.QApplication(sys.argv)    
-    vsl = VideoSegmentSelector('/home/caioviel/public_html/PrimeiroJoao/media/animGar.webm',
+    vsl = VideoSegmentSelector('/home/caioviel/Videos/sample-480.mp4',
                                (0,7000), (0,7000))
     vsl.show()
     sys.exit(app.exec_())
