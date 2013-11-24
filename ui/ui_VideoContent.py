@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/VideoContent.ui'
 #
-# Created: Sat Nov 16 18:39:27 2013
+# Created: Sun Nov 24 19:38:07 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,15 +18,15 @@ class Ui_VideoContent(object):
     def setupUi(self, VideoContent):
         VideoContent.setObjectName(_fromUtf8("VideoContent"))
         VideoContent.resize(744, 640)
-        self.tabs = QtGui.QTabWidget(VideoContent)
-        self.tabs.setGeometry(QtCore.QRect(10, 50, 721, 531))
-        self.tabs.setObjectName(_fromUtf8("tabs"))
+        self.tab_behavior = QtGui.QTabWidget(VideoContent)
+        self.tab_behavior.setGeometry(QtCore.QRect(10, 50, 721, 531))
+        self.tab_behavior.setObjectName(_fromUtf8("tab_behavior"))
         self.tab_content = QtGui.QWidget()
         self.tab_content.setObjectName(_fromUtf8("tab_content"))
-        self.txt_main_video = QtGui.QPlainTextEdit(self.tab_content)
-        self.txt_main_video.setGeometry(QtCore.QRect(10, 10, 521, 41))
-        self.txt_main_video.setTextInteractionFlags(QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
-        self.txt_main_video.setObjectName(_fromUtf8("txt_main_video"))
+        self.txt_media_name = QtGui.QPlainTextEdit(self.tab_content)
+        self.txt_media_name.setGeometry(QtCore.QRect(10, 10, 521, 41))
+        self.txt_media_name.setTextInteractionFlags(QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
+        self.txt_media_name.setObjectName(_fromUtf8("txt_media_name"))
         self.btn_choose_video = QtGui.QPushButton(self.tab_content)
         self.btn_choose_video.setGeometry(QtCore.QRect(540, 10, 161, 41))
         icon = QtGui.QIcon()
@@ -37,10 +37,16 @@ class Ui_VideoContent(object):
         self.player_holder = QtGui.QWidget(self.tab_content)
         self.player_holder.setGeometry(QtCore.QRect(0, 50, 721, 451))
         self.player_holder.setObjectName(_fromUtf8("player_holder"))
-        self.tabs.addTab(self.tab_content, _fromUtf8(""))
+        self.tab_behavior.addTab(self.tab_content, _fromUtf8(""))
         self.tab_position = QtGui.QWidget()
         self.tab_position.setObjectName(_fromUtf8("tab_position"))
-        self.tabs.addTab(self.tab_position, _fromUtf8(""))
+        self.tab_behavior.addTab(self.tab_position, _fromUtf8(""))
+        self.tab = QtGui.QWidget()
+        self.tab.setObjectName(_fromUtf8("tab"))
+        self.colume_control_widget = QtGui.QWidget(self.tab)
+        self.colume_control_widget.setGeometry(QtCore.QRect(20, 20, 301, 237))
+        self.colume_control_widget.setObjectName(_fromUtf8("colume_control_widget"))
+        self.tab_behavior.addTab(self.tab, _fromUtf8(""))
         self.lbl_begin_time = QtGui.QLabel(VideoContent)
         self.lbl_begin_time.setGeometry(QtCore.QRect(10, 16, 111, 21))
         self.lbl_begin_time.setObjectName(_fromUtf8("lbl_begin_time"))
@@ -76,14 +82,15 @@ class Ui_VideoContent(object):
         self.btn_cancel.setObjectName(_fromUtf8("btn_cancel"))
 
         self.retranslateUi(VideoContent)
-        self.tabs.setCurrentIndex(1)
+        self.tab_behavior.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(VideoContent)
 
     def retranslateUi(self, VideoContent):
-        VideoContent.setWindowTitle(QtGui.QApplication.translate("VideoContent", "Conteúdo em Vìdeo", None, QtGui.QApplication.UnicodeUTF8))
+        VideoContent.setWindowTitle(QtGui.QApplication.translate("VideoContent", "Conteúdo em Vídeo", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_choose_video.setText(QtGui.QApplication.translate("VideoContent", "Escolher Vídeo", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_content), QtGui.QApplication.translate("VideoContent", "Conteúdo", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_position), QtGui.QApplication.translate("VideoContent", "Posição", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab_behavior.setTabText(self.tab_behavior.indexOf(self.tab_content), QtGui.QApplication.translate("VideoContent", "Conteúdo", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab_behavior.setTabText(self.tab_behavior.indexOf(self.tab_position), QtGui.QApplication.translate("VideoContent", "Posição", None, QtGui.QApplication.UnicodeUTF8))
+        self.tab_behavior.setTabText(self.tab_behavior.indexOf(self.tab), QtGui.QApplication.translate("VideoContent", "Comportamento", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_begin_time.setText(QtGui.QApplication.translate("VideoContent", "Tempo de Início:", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_duration.setText(QtGui.QApplication.translate("VideoContent", "Duração (segundos):", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_end_time.setText(QtGui.QApplication.translate("VideoContent", "Tempo de Termino:", None, QtGui.QApplication.UnicodeUTF8))
