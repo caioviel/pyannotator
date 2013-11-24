@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VideoContent</class>
- <widget class="QWidget" name="VideoContent">
+ <class>ImageContent</class>
+ <widget class="QWidget" name="ImageContent">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>744</width>
+    <width>743</width>
     <height>640</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Conteúdo em Vídeo</string>
+   <string>Conteúdo em Imagem</string>
   </property>
-  <widget class="QTabWidget" name="tab_behavior">
+  <widget class="QPlainTextEdit" name="txt_duration">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>10</y>
+     <width>104</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_cancel">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>590</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cancelar</string>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/i/no.png</normaloff>:/i/no.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>25</width>
+     <height>25</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="tabs">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -23,7 +59,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab_content">
     <attribute name="title">
@@ -32,7 +68,7 @@
     <widget class="QPlainTextEdit" name="txt_media_name">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>10</y>
        <width>521</width>
        <height>41</height>
@@ -42,17 +78,17 @@
       <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
-    <widget class="QPushButton" name="btn_choose_video">
+    <widget class="QPushButton" name="btn_choose_image">
      <property name="geometry">
       <rect>
-       <x>540</x>
+       <x>550</x>
        <y>10</y>
        <width>161</width>
        <height>41</height>
       </rect>
      </property>
      <property name="text">
-      <string>Escolher Vídeo</string>
+      <string>Escolher Imagem</string>
      </property>
      <property name="icon">
       <iconset resource="icons.qrc">
@@ -65,14 +101,17 @@
       </size>
      </property>
     </widget>
-    <widget class="QWidget" name="player_holder" native="true">
+    <widget class="QLabel" name="lbl_image">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>50</y>
-       <width>721</width>
-       <height>451</height>
+       <x>20</x>
+       <y>60</y>
+       <width>681</width>
+       <height>421</height>
       </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -81,39 +120,11 @@
      <string>Posição</string>
     </attribute>
    </widget>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Comportamento</string>
-    </attribute>
-    <widget class="QWidget" name="colume_control_widget" native="true">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>301</width>
-       <height>237</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
   </widget>
-  <widget class="QLabel" name="lbl_begin_time">
+  <widget class="QTimeEdit" name="time_end">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>16</y>
-     <width>111</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Tempo de Início:</string>
-   </property>
-  </widget>
-  <widget class="QTimeEdit" name="time_begin">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
+     <x>360</x>
      <y>10</y>
      <width>91</width>
      <height>31</height>
@@ -131,42 +142,6 @@
    </property>
    <property name="text">
     <string>Duração (segundos):</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="lbl_end_time">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>16</y>
-     <width>131</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Tempo de Termino:</string>
-   </property>
-  </widget>
-  <widget class="QTimeEdit" name="time_end">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>10</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPlainTextEdit" name="txt_duration">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>620</x>
-     <y>10</y>
-     <width>104</width>
-     <height>31</height>
-    </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_ok">
@@ -192,27 +167,40 @@
     </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_cancel">
+  <widget class="QLabel" name="lbl_end_time">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>590</y>
-     <width>101</width>
-     <height>41</height>
+     <x>230</x>
+     <y>16</y>
+     <width>131</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>Cancelar</string>
+    <string>Tempo de Termino:</string>
    </property>
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/i/no.png</normaloff>:/i/no.png</iconset>
+  </widget>
+  <widget class="QLabel" name="lbl_begin_time">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>16</y>
+     <width>111</width>
+     <height>21</height>
+    </rect>
    </property>
-   <property name="iconSize">
-    <size>
-     <width>25</width>
-     <height>25</height>
-    </size>
+   <property name="text">
+    <string>Tempo de Início:</string>
+   </property>
+  </widget>
+  <widget class="QTimeEdit" name="time_begin">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>10</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
    </property>
   </widget>
  </widget>
