@@ -88,7 +88,7 @@
     <string>Mudar</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="lbl_font_color">
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -133,7 +133,7 @@
     <string>Mudar</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QCheckBox" name="ckb_transparency">
    <property name="geometry">
     <rect>
      <x>570</x>
@@ -218,7 +218,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QWidget" name="layout_selection_holder" native="true">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -273,6 +273,57 @@
      <height>25</height>
     </size>
    </property>
+  </widget>
+  <widget class="QPushButton" name="btn_reset_layout">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>680</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Resetar Posição</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>200</y>
+     <width>101</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Alinhamento:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cmb_alligment">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>200</y>
+     <width>181</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Esquerda</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Centro</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Direita</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources>
