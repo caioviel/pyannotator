@@ -44,7 +44,7 @@ class VideoContent(QtGui.QDialog):
     @QtCore.pyqtSlot()
     def choose_video(self):
         path = QtGui.QFileDialog.getOpenFileName(self, 
-                                                 u'Selecione o Vídeo Principal',
+                                                 u'Selecione um vídeo',
                                                  HOME_DIRECTORY,
                                                  model.CONTENT_TYPES[model.Media.VIDEO])
         if path == None:

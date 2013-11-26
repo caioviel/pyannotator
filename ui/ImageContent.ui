@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>743</width>
-    <height>640</height>
+    <height>573</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>630</x>
-     <y>590</y>
+     <y>520</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -48,78 +48,6 @@
      <height>25</height>
     </size>
    </property>
-  </widget>
-  <widget class="QTabWidget" name="tabs">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>50</y>
-     <width>721</width>
-     <height>531</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <widget class="QWidget" name="tab_content">
-    <attribute name="title">
-     <string>Conteúdo</string>
-    </attribute>
-    <widget class="QPlainTextEdit" name="txt_media_name">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>521</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="btn_choose_image">
-     <property name="geometry">
-      <rect>
-       <x>550</x>
-       <y>10</y>
-       <width>161</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Escolher Imagem</string>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/i/folder_open.png</normaloff>:/i/folder_open.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-    </widget>
-    <widget class="QLabel" name="lbl_image">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>60</y>
-       <width>681</width>
-       <height>421</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="tab_position">
-    <attribute name="title">
-     <string>Posição</string>
-    </attribute>
-   </widget>
   </widget>
   <widget class="QTimeEdit" name="time_end">
    <property name="geometry">
@@ -148,7 +76,7 @@
    <property name="geometry">
     <rect>
      <x>520</x>
-     <y>590</y>
+     <y>520</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -203,6 +131,63 @@
     </rect>
    </property>
   </widget>
+  <widget class="QPlainTextEdit" name="txt_media_name">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>541</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="textInteractionFlags">
+    <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_choose_image">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>50</y>
+     <width>161</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Escolher Imagem</string>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/i/folder_open.png</normaloff>:/i/folder_open.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layout_selector_widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>721</width>
+     <height>411</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>layout_selector_widget</zorder>
+  <zorder>txt_duration</zorder>
+  <zorder>btn_cancel</zorder>
+  <zorder>time_end</zorder>
+  <zorder>lbl_duration</zorder>
+  <zorder>btn_ok</zorder>
+  <zorder>lbl_end_time</zorder>
+  <zorder>lbl_begin_time</zorder>
+  <zorder>time_begin</zorder>
+  <zorder>txt_media_name</zorder>
+  <zorder>btn_choose_image</zorder>
  </widget>
  <resources>
   <include location="icons.qrc"/>

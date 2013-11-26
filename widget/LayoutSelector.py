@@ -72,6 +72,8 @@ class LayoutSelector(QtGui.QWidget):
                                             border-color: rgb(255, 255, 255);\
                                             font: 75 16pt "Ubuntu";\
                                             color: rgb(0, 0, 0);')
+        self.lbl_content.setScaledContents(True)
+        self.lbl_content.setMinimumSize(1, 1)
         self.lbl_content.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_content.setWordWrap(True)
         self.lbl_content.setText(u"Contéudo Adicional")
@@ -79,6 +81,14 @@ class LayoutSelector(QtGui.QWidget):
         self.btn_reset_position = QtGui.QPushButton(u"Resetar Posição", self)
         self.btn_reset_position.clicked.connect(self.reset_position)
         self.btn_reset_position.move(580, 460)
+        
+        
+    def load_image(self, path):
+        self.lbl_content.setScaledContents(True)
+        self.lbl_content.setPixmap(QtGui.QPixmap(path))
+        self.lbl_content.setStyleSheet('background-color: rgba(0, 0, 0, 0);')
+        self.sizeGrip = QtGui.QSizeGrip(self)
+        
     
     
     @QtCore.pyqtSlot()
@@ -92,5 +102,6 @@ if __name__ == '__main__':
     import sys
     app = QtGui.QApplication(sys.argv)    
     vp = LayoutSelector()
+    vp.load_image('/home/caioviel/Pictures/icon_no.png')
     vp.show()
     sys.exit(app.exec_())
