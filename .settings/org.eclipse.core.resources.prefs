@@ -17,6 +17,7 @@ encoding//widget/ImageContent.py=utf-8
 encoding//widget/LayoutSelector.py=utf-8
 encoding//widget/MainProjectWidget.py=utf-8
 encoding//widget/ProjectChooseWidget.py=utf-8
+encoding//widget/ShowContent.py=utf-8
 encoding//widget/TextContent.py=utf-8
 encoding//widget/VideoContent.py=utf-8
 encoding//widget/VideoPlayer.py=utf-8

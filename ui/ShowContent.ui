@@ -424,7 +424,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radio_tr">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -450,20 +450,20 @@
        <string>Posicionamento:</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="radio_tl">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>70</y>
-        <width>181</width>
+        <width>221</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Canto Superior Direito</string>
+       <string>Canto Superior Esquerdo</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_3">
+     <widget class="QRadioButton" name="radio_br">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -473,23 +473,23 @@
        </rect>
       </property>
       <property name="text">
-       <string>Canto Superior Direito</string>
+       <string>Canto Inferior Direito</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_4">
+     <widget class="QRadioButton" name="radio_bl">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>130</y>
-        <width>181</width>
+        <width>201</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Canto Superior Direito</string>
+       <string>Canto Inferior Esquerdo</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="radioButton_5">
+     <widget class="QRadioButton" name="radio_free_position">
       <property name="geometry">
        <rect>
         <x>20</x>
