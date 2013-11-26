@@ -5,6 +5,7 @@ from ui.ui_VideoContent import Ui_VideoContent
 from VideoPlayer import VideoPlayer
 from PyQt4 import QtGui, QtCore
 from LayoutSelector import LayoutSelector
+from VolumeControl import VolumeControl
 import model
 import os
 HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
@@ -34,6 +35,10 @@ class VideoContent(QtGui.QDialog):
         tab = self.ui.tab_position
         self.layout_selector = LayoutSelector(tab)
         
+        #Tab 2
+        tab = self.ui.tab_behavior
+        self.volume_control = VolumeControl(self.ui.volume_control_widget)
+        
         
         
     @QtCore.pyqtSlot()
@@ -49,8 +54,8 @@ class VideoContent(QtGui.QDialog):
         
         self.video_path = path
         vp = self.video_player
-        self.ui.txt_main_video.clear()
-        self.ui.txt_main_video.appendPlainText(path)
+        self.ui.txt_media_name.clear()
+        self.ui.txt_media_name.appendPlainText(path)
         
         vp.load_video(path)
         

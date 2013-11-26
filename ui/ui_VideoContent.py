@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/VideoContent.ui'
 #
-# Created: Mon Nov 25 11:24:16 2013
+# Created: Tue Nov 26 12:02:01 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -43,9 +43,9 @@ class Ui_VideoContent(object):
         self.tabs.addTab(self.tab_position, _fromUtf8(""))
         self.tab_behavior = QtGui.QWidget()
         self.tab_behavior.setObjectName(_fromUtf8("tab_behavior"))
-        self.colume_control_widget = QtGui.QWidget(self.tab_behavior)
-        self.colume_control_widget.setGeometry(QtCore.QRect(20, 20, 301, 237))
-        self.colume_control_widget.setObjectName(_fromUtf8("colume_control_widget"))
+        self.volume_control_widget = QtGui.QWidget(self.tab_behavior)
+        self.volume_control_widget.setGeometry(QtCore.QRect(20, 20, 301, 237))
+        self.volume_control_widget.setObjectName(_fromUtf8("volume_control_widget"))
         self.tabs.addTab(self.tab_behavior, _fromUtf8(""))
         self.lbl_begin_time = QtGui.QLabel(VideoContent)
         self.lbl_begin_time.setGeometry(QtCore.QRect(10, 16, 111, 21))

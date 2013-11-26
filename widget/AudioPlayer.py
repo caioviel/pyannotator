@@ -1,23 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from ui.ui_VideoPlayer import Ui_VideoPlayer
 from PyQt4 import QtGui, QtCore
+from ui.ui_AudioPlayer import Ui_AudioPlayer
 from PyQt4.phonon import Phonon
+import os
 
-class VideoPlayer(QtGui.QDialog):
-    def __init__(self, video_source=None, begin_time=None, end_time=None, parent=None):
-        super(VideoPlayer, self).__init__(parent)
-        self.ui = Ui_VideoPlayer()
-        self.ui.setupUi(self)
+class AudioPlayer(QtGui.QWidget):
+    def __init__(self, audio_source=None, begin_time=None, end_time=None, parent=None):
+        super(AudioPlayer, self).__init__(parent)
+        self.audio_source = audio_source
         self.begin_time = begin_time
         self.end_time = end_time
         
-        self.player = self.ui.video_player
+        self.ui = Ui_AudioPlayer()
+        self.ui.setupUi(self)
+        self.player = Phonon.VideoPlayer(self)
+        self.player.setVisible(False)
+        
+        #self.player = self.ui.video_player
         self.init_ui()
         self.is_paused = False
         
-        if video_source is not None:
-            self.load_video(video_source)
+        if audio_source is not None:
+            self.load_audio(audio_source)
         
     def init_ui(self):
         self.ui.btn_pause.setVisible(False)
@@ -55,18 +60,18 @@ class VideoPlayer(QtGui.QDialog):
     def seek(self, msec):
         self.player.seek(msec)
         
-    def get_pixmap(self):
-        return QtGui.QPixmap.grabWindow(self.player.videoWidget().winId())
-    
-    def load_video(self, video_source):
-        self.video_source = video_source
+    def load_audio(self, audio_source):
+        self.video_source = audio_source
+        
         
         player = self.player
         player.stop()
-        media_source = Phonon.MediaSource(video_source)
+        media_source = Phonon.MediaSource(audio_source)
         player.load( media_source )
         self.ui.seek_slider.setMediaObject(player.mediaObject())
         self.ui.volume_slider.setAudioOutput(player.audioOutput())
+        
+        self.ui.lbl_audio_description.setText(os.path.split(audio_source)[1])
         
         self.ui.btn_play.setEnabled(True)
         self.ui.btn_stop.setEnabled(True)
@@ -76,7 +81,7 @@ class VideoPlayer(QtGui.QDialog):
 def main():
     import sys
     app = QtGui.QApplication(sys.argv)    
-    vp = VideoPlayer('/home/caioviel/Videos/Videosgreentower.avi', begin_time=5000)
+    vp = AudioPlayer('/home/caioviel/Music/audio.mp3')
     vp.show()
     sys.exit(app.exec_())
 

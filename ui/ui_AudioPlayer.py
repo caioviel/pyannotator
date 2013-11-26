@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AudioPlayer.ui'
 #
-# Created: Mon Nov 25 11:24:15 2013
+# Created: Tue Nov 26 12:02:01 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -44,6 +44,14 @@ class Ui_AudioPlayer(object):
         self.lbl_audio_description.setGeometry(QtCore.QRect(10, 10, 671, 17))
         self.lbl_audio_description.setStyleSheet(_fromUtf8("font: 75 bold 12pt \"Ubuntu\";"))
         self.lbl_audio_description.setObjectName(_fromUtf8("lbl_audio_description"))
+        self.btn_pause = QtGui.QPushButton(AudioPlayer)
+        self.btn_pause.setGeometry(QtCore.QRect(10, 40, 41, 41))
+        self.btn_pause.setText(_fromUtf8(""))
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/button_blue_pause.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_pause.setIcon(icon2)
+        self.btn_pause.setIconSize(QtCore.QSize(40, 40))
+        self.btn_pause.setObjectName(_fromUtf8("btn_pause"))
 
         self.retranslateUi(AudioPlayer)
         QtCore.QMetaObject.connectSlotsByName(AudioPlayer)

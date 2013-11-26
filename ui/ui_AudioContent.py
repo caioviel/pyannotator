@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AudioContent.ui'
 #
-# Created: Mon Nov 25 11:24:16 2013
+# Created: Tue Nov 26 12:02:01 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -48,12 +48,12 @@ class Ui_AudioContent(object):
         self.txt_media_name.setGeometry(QtCore.QRect(10, 50, 541, 41))
         self.txt_media_name.setTextInteractionFlags(QtCore.Qt.TextSelectableByKeyboard|QtCore.Qt.TextSelectableByMouse)
         self.txt_media_name.setObjectName(_fromUtf8("txt_media_name"))
-        self.widget = QtGui.QWidget(AudioContent)
-        self.widget.setGeometry(QtCore.QRect(20, 100, 694, 92))
-        self.widget.setObjectName(_fromUtf8("widget"))
-        self.colume_control_widget = QtGui.QWidget(AudioContent)
-        self.colume_control_widget.setGeometry(QtCore.QRect(20, 200, 301, 237))
-        self.colume_control_widget.setObjectName(_fromUtf8("colume_control_widget"))
+        self.audio_player_widget = QtGui.QWidget(AudioContent)
+        self.audio_player_widget.setGeometry(QtCore.QRect(20, 100, 694, 92))
+        self.audio_player_widget.setObjectName(_fromUtf8("audio_player_widget"))
+        self.volume_control_widget = QtGui.QWidget(AudioContent)
+        self.volume_control_widget.setGeometry(QtCore.QRect(20, 200, 301, 237))
+        self.volume_control_widget.setObjectName(_fromUtf8("volume_control_widget"))
         self.btn_ok = QtGui.QPushButton(AudioContent)
         self.btn_ok.setGeometry(QtCore.QRect(520, 400, 101, 41))
         icon1 = QtGui.QIcon()

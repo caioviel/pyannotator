@@ -59,7 +59,7 @@
     </size>
    </property>
   </widget>
-  <widget class="Phonon::VolumeSlider" name="volume_slider">
+  <widget class="Phonon::VolumeSlider" name="volume_slider" native="true">
    <property name="geometry">
     <rect>
      <x>560</x>
@@ -69,7 +69,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="Phonon::SeekSlider" name="seek_slider">
+  <widget class="Phonon::SeekSlider" name="seek_slider" native="true">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -93,6 +93,29 @@
    </property>
    <property name="text">
     <string>Nenhum áudio selecionado...</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_pause">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>41</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/i/button_blue_pause.png</normaloff>:/i/button_blue_pause.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
    </property>
   </widget>
  </widget>
