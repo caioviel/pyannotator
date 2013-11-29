@@ -18,7 +18,7 @@ class ShowContent(QtGui.QDialog):
         
     def init_ui(self):
         self.ui.radio_info.setChecked(True)
-        self.ui.radio_tr.setChecked(True)
+        self.ui.radio_tl.setChecked(True)
         self.ui.btn_choose_icon.setEnabled(False)
         
         self.ui.radio_personalized.toggled.connect(self.personalized_choosed)
@@ -47,6 +47,35 @@ class ShowContent(QtGui.QDialog):
         self.ui.radio_tr.toggled.connect(self.selected_tr)
         self.ui.radio_tl.toggled.connect(self.selected_tl)
         self.ui.radio_free_position.toggled.connect(self.selected_free_position)
+        
+    @QtCore.pyqtSlot(bool)
+    def selected_bl(self, value):
+        self.lbl_icon.resize(30,30)
+        self.lbl_icon.move(10,150)
+        self.lbl_icon.setEnabled(False)
+    
+    @QtCore.pyqtSlot(bool)
+    def selected_br(self, value):
+        self.lbl_icon.resize(30,30)
+        self.lbl_icon.move(300,150)
+        self.lbl_icon.setEnabled(False)
+    
+    @QtCore.pyqtSlot(bool)
+    def selected_tr(self, value):
+        self.lbl_icon.resize(30,30)
+        self.lbl_icon.move(300,10)
+        self.lbl_icon.setEnabled(False)
+    
+    @QtCore.pyqtSlot(bool)
+    def selected_tl(self, value):
+        self.lbl_icon.resize(30,30)
+        self.lbl_icon.move(10,10)
+        self.lbl_icon.setEnabled(False)
+    
+    @QtCore.pyqtSlot(bool)
+    def selected_free_position(self, value):
+        self.lbl_icon.setEnabled(True)
+        
         
         
         

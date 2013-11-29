@@ -37,8 +37,9 @@ class VideoContent(QtGui.QDialog):
         
         #Tab 2
         tab = self.ui.tab_behavior
-        self.volume_control = VolumeControl(self.ui.volume_control_widget)
-        
+        #self.ui.volume_control_widget.resize(800,800)
+        self.volume_control = VolumeControl(tab)
+        #self.volume_control.show()
         
         
     @QtCore.pyqtSlot()
