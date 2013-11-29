@@ -7,17 +7,18 @@ Created on Feb 3, 2013
 @author: caioviel
 '''
 import os
-
+from datetime import datetime
 import logging
 logger = logging.getLogger('pyannotator')
 logger.setLevel(logging.DEBUG)
 
 
 from model import Annotation
-from PySide import QtGui, QtCore
-from PySide.phonon import Phonon
+from PyQt4 import QtGui, QtCore
+from PyQt4.phonon import Phonon
 from ui.ui_MainProjectWidget import Ui_MainProjectWidget
 from ui.ui_AnnotationListItem import Ui_AnnotationListItem
+from VideoPlayer import VideoPlayer
 import model
 
 def get_media_icon(media_type):
@@ -42,20 +43,21 @@ class AnnotationListItem(QtGui.QWidget):
         self.load_annotation()
         
     def load_annotation(self):
-        icon = get_media_icon(self.annotation.content_type)
-        self.ui.lbl_content_type.setPixmap(icon)
-        self.ui.lbl_type.setText(self.annotation.name)
-        self.ui.lbl_timestamp.setText(self.annotation.timestamp.toString())
+        #icon = get_media_icon(self.annotation.content_type)
+        #self.ui.lbl_content_type.setPixmap(icon)
+        self.ui.lbl_type.setText(self.annotation.pt_type)
+        self.ui.lbl_timestamp.setText(self.annotation.annotation_time.toString())
+        self.ui.lbl_description.setText(self.annotation.description)
 
 class MainProjectWidget(QtGui.QWidget):
     
-    annotation_list_chaged = QtCore.Signal()
+    annotation_list_chaged = QtCore.pyqtSignal()
     
-    def __init__(self, project, project_directory, parent=None):
+    def __init__(self, project, parent=None):
         super(MainProjectWidget, self).__init__(parent)
         self.ui = Ui_MainProjectWidget()
         self.ui.setupUi(self)
-        self.project_diretory = project_directory
+        self.project_diretory = project.directory
         self.main_video_path = None
         self.is_editing_time = False
         self.open_widgets = []
@@ -66,6 +68,31 @@ class MainProjectWidget(QtGui.QWidget):
         self.load_project()
         
         self.show()
+        
+    def init_ui(self):
+        self.setWindowTitle(u'Projeto - ' + self.project.name)
+        
+        player_holder = self.ui.player_widget
+        layout = QtGui.QVBoxLayout()
+        self.player = VideoPlayer()
+        layout.addWidget(self.player)
+        player_holder.setLayout(layout)       
+        
+        self.ui.btn_choose_video.clicked.connect(self.choose_video)
+        
+        self.ui.btn_add_annotation.clicked.connect(self.add_annotation)
+        self.ui.btn_delete.clicked.connect(self.delete_annotation)
+        self.ui.btn_edit.clicked.connect(self.edit_annotation)
+        self.annotation_list_chaged.connect(self.update_annotation_list)
+        self.ui.txt_description.textChanged.connect(self.description_changed)
+        #self.ui.list_notes.doubleClicked.connect(self.click_over_list)
+        
+        #self.player.mediaObject().tick.connect(self.update_time_edit)
+        self.ui.time_edit.timeChanged.connect(self.editing_time)
+        self.ui.time_edit.installEventFilter(self)
+        
+        self.ui.btn_save_project.clicked.connect(self.save_project)
+        self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
         
     def load_project(self):
         project = self.project
@@ -98,48 +125,36 @@ class MainProjectWidget(QtGui.QWidget):
                 pass
             
         return False
-        
     
-    def init_ui(self):
-        self.setWindowTitle(u'Projeto - ' + self.project.name)
-        
-        player = self.ui.video_player
-        
-        self.ui.btn_choose_video.clicked.connect(self.choose_video)
-        self.ui.btn_play.clicked.connect(self.start_playback)
-        self.ui.btn_stop.clicked.connect(self.stop_playback)
-        self.ui.btn_pause.clicked.connect(self.pause_playback)
-        
-        self.ui.btn_add_annotation.clicked.connect(self.add_annotation)
-        self.ui.btn_delete.clicked.connect(self.delete_annotation)
-        self.ui.btn_edit.clicked.connect(self.edit_annotation)
-        self.annotation_list_chaged.connect(self.update_annotation_list)
-        
-        player.mediaObject().tick.connect(self.update_time_edit)
-        self.ui.time_edit.timeChanged.connect(self.editing_time)
-        self.ui.time_edit.installEventFilter(self)
-        
-        self.ui.btn_save_project.clicked.connect(self.save_project)
-        self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
-    
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def save_project(self):
         print self.main_video_path
         self.project.main_media = self.main_video_path
         from datetime import datetime
         self.project.last_modification = datetime.now()
         project_path = os.path.join(self.project_diretory, 'project.json')
-        self.serializator.dump_file(self.project, project_path)
+        json_object = self.project.to_json()
+        myfile = open(project_path, "w")
+        
+        import json
+        myfile.write(json.dumps(json_object, indent=4, sort_keys=True))
         
     
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
+    def description_changed(self):
+        self.player.pause()
+    
+    @QtCore.pyqtSlot()
     def generate_ncl(self):
-        raise NotImplementedError()
+        raise NotImplementedError()   
         
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def update_annotation_list(self):
         self.ui.list_notes.clear()
-        for annotation in self.project.annotations:
+        sorted_annotations = sorted(self.project.annotations, 
+                                    key=lambda ann: ann.annotation_time)
+        
+        for annotation in sorted_annotations:
             anotationItem = AnnotationListItem(annotation)
             item = QtGui.QListWidgetItem()
             item.setSizeHint(QtCore.QSize(40,60))
@@ -164,7 +179,7 @@ class MainProjectWidget(QtGui.QWidget):
             logger.exception("Error Canceling the Annotation.")
             
             
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def delete_annotation(self):
         item = self.ui.list_notes.currentItem()
         annotation = self.ui.list_notes.itemWidget(item).annotation
@@ -172,7 +187,7 @@ class MainProjectWidget(QtGui.QWidget):
             self.annotation_list_chaged.emit()
         
     
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def edit_annotation(self):
         item = self.ui.list_notes.currentItem()
         annotation = self.ui.list_notes.itemWidget(item).annotation
@@ -183,27 +198,35 @@ class MainProjectWidget(QtGui.QWidget):
         widget.show()
     
         
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def add_annotation(self):
-        self.pause_playback()
-        annotation_class = self.plugin_manager.get_annotation_class('InformationAnnotation')
-        annotation = annotation_class('MyId')
-        print annotation.type
-        annotation.timestamp = self.ui.time_edit.time()
+        self.player.pause()
+        print self.ui.time_edit.time()
+        annotation = model.Annotation(self.project.generate_annotation_id(), 
+                                      datetime.now())
+        description = self.ui.txt_description.toPlainText()
         
-        widget_class = annotation.get_widget_class()
-        widget = widget_class(annotation, self)
-        self.open_widgets.append(widget)
-        widget.show()
+        if description != "":
+            annotation.description = description
+            
+        print self.ui.time_edit.time()
+        annotation.annotation_time = self.ui.time_edit.time()
         
-    @QtCore.Slot(int)
+        self.project.add_annotation(annotation)
+        self.ui.txt_description.setText("")
+        self.annotation_list_chaged.emit()
+        
+        
+        
+        
+    @QtCore.pyqtSlot(int)
     def update_time_edit(self, time):
         if not self.is_editing_time:
             time_edit = self.ui.time_edit
             time_edit.setTime(QtCore.QTime().addMSecs(time))
         
         
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def start_playback(self):
         player = self.ui.video_player
         player.play()
@@ -213,7 +236,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.is_editing_time = False
         
     
-    @QtCore.Slot(QtCore.QTime)
+    @QtCore.pyqtSlot(QtCore.QTime)
     def editing_time(self, time):
         if self.is_editing_time:
             total_time = self.ui.video_player.mediaObject().totalTime()
@@ -233,57 +256,36 @@ class MainProjectWidget(QtGui.QWidget):
         self.is_editing_time = True
         
     
-    @QtCore.Slot()
-    def stop_playback(self):
-        player = self.ui.video_player
-        player.stop()
-        self.ui.btn_stop.setEnabled(False)
-        self.ui.btn_pause.setVisible(False)
-        self.ui.btn_play.setVisible(True)
-    
-    @QtCore.Slot()
-    def pause_playback(self):
-        player = self.ui.video_player
-        player.pause()
-        self.ui.btn_pause.setVisible(False)
-        self.ui.btn_play.setVisible(True)
-        
-    
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def choose_video(self):
-        path, _ = QtGui.QFileDialog.getOpenFileName(self, 
+        path = QtGui.QFileDialog.getOpenFileName(self, 
                                                  u'Selecione o Vídeo Principal',
                                                  self.project_diretory,
                                                  model.CONTENT_TYPES[model.Media.VIDEO])
+        
+        print path
         if path == None:
             return
         
+        import util
         
         
-        self.main_video_path = path           
-        player = self.ui.video_player
+        self.main_video_path = util.copy_to_directory(self.project, str(path))           
         self.ui.txt_main_video.clear()
-        self.ui.txt_main_video.appendPlainText(path)
+        self.ui.txt_main_video.appendPlainText(self.main_video_path)
         
-        player.stop()
-        media_source = Phonon.MediaSource(path)
-        player.load( media_source )
-        self.ui.seek_slider.setMediaObject(player.mediaObject())
-        self.ui.volume_slider.setAudioOutput(player.audioOutput())
-        
-        player.setVisible(True)
-        self.ui.seek_slider.setVisible(True)
-        self.ui.volume_slider.setVisible(True)
-        self.ui.btn_play.setVisible(True)
-        self.ui.btn_stop.setVisible(True)
-        self.ui.btn_stop.setEnabled(False)
+        self.player.stop()
+        self.player.load_video( self.main_video_path )
+        self.player.player.mediaObject().tick.connect(self.update_time_edit)
+
 
 def test():
     import sys
     from datetime import datetime
     app = QtGui.QApplication(sys.argv)
     project = model.AnnotationProject('meu_id', 'meu_nome', None, '', datetime.now(), 'username')
-    widget = MainProjectWidget(project, '/home/caioviel/AnnotationProjects/MeuProjeto')
+    project.directory = '/home/caioviel/AnnotationProjects/MeuProjeto'
+    widget = MainProjectWidget(project)
     sys.exit(app.exec_())
         
 if __name__ == "__main__":

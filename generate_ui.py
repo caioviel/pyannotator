@@ -10,6 +10,7 @@ UIC = "pyuic4"
 
 if __name__ == "__main__":
     all_files = os.listdir(DIRECTORY)
+    all_files.sort()
     for mfile in all_files:
         if ".qrc" in mfile and not "~" in mfile:
             print mfile

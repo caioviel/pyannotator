@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AnnotationListItem.ui'
 #
-# Created: Tue Nov 26 15:18:12 2013
+# Created: Fri Nov 29 06:38:46 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,14 +18,8 @@ class Ui_AnnotationListItem(object):
     def setupUi(self, AnnotationListItem):
         AnnotationListItem.setObjectName(_fromUtf8("AnnotationListItem"))
         AnnotationListItem.resize(272, 54)
-        self.lbl_content_type = QtGui.QLabel(AnnotationListItem)
-        self.lbl_content_type.setGeometry(QtCore.QRect(10, 10, 41, 41))
-        self.lbl_content_type.setText(_fromUtf8(""))
-        self.lbl_content_type.setPixmap(QtGui.QPixmap(_fromUtf8(":/m/audio.png")))
-        self.lbl_content_type.setScaledContents(True)
-        self.lbl_content_type.setObjectName(_fromUtf8("lbl_content_type"))
         self.lbl_type = QtGui.QLabel(AnnotationListItem)
-        self.lbl_type.setGeometry(QtCore.QRect(70, 10, 201, 17))
+        self.lbl_type.setGeometry(QtCore.QRect(10, 10, 101, 17))
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Sans Serif"))
         font.setPointSize(12)
@@ -35,15 +29,21 @@ class Ui_AnnotationListItem(object):
         self.lbl_type.setFont(font)
         self.lbl_type.setObjectName(_fromUtf8("lbl_type"))
         self.lbl_timestamp = QtGui.QLabel(AnnotationListItem)
-        self.lbl_timestamp.setGeometry(QtCore.QRect(70, 30, 66, 17))
+        self.lbl_timestamp.setGeometry(QtCore.QRect(10, 30, 66, 17))
         self.lbl_timestamp.setObjectName(_fromUtf8("lbl_timestamp"))
+        self.lbl_description = QtGui.QLabel(AnnotationListItem)
+        self.lbl_description.setGeometry(QtCore.QRect(110, 10, 161, 41))
+        self.lbl_description.setText(_fromUtf8(""))
+        self.lbl_description.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.lbl_description.setWordWrap(True)
+        self.lbl_description.setObjectName(_fromUtf8("lbl_description"))
 
         self.retranslateUi(AnnotationListItem)
         QtCore.QMetaObject.connectSlotsByName(AnnotationListItem)
 
     def retranslateUi(self, AnnotationListItem):
         AnnotationListItem.setWindowTitle(QtGui.QApplication.translate("AnnotationListItem", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_type.setText(QtGui.QApplication.translate("AnnotationListItem", "Informação SImples", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_type.setText(QtGui.QApplication.translate("AnnotationListItem", "(Anotação)", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_timestamp.setText(QtGui.QApplication.translate("AnnotationListItem", "00:48:56", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc

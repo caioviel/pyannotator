@@ -2,19 +2,53 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import json
+from PyQt4 import QtGui, QtCore
 #from PySide import QtCore
 
 
 class AnnotationProject(object):
-    def __init__(self, mid, name, main_media=None, description=None, last_modification=None, username=None):
+    def __init__(self, mid, name, main_media=None, description=None, last_modification=None, username=None, directory=None):
         self.id = mid
         self.name = name
         self.main_media = main_media
         self.description = description
         self.last_modification = last_modification
         self.username = username
-        
+        self.directory = directory
         self.annotations = []
+        
+    @staticmethod
+    def parse_json(self, json_object):
+        project =  AnnotationProject(json_object['AnnotationProject']['id'],
+                                         json_object['AnnotationProject']['name'],
+                                         json_object['AnnotationProject']['main_media'],
+                                         json_object['AnnotationProject']['description'])
+        
+        for json_ann in json_object['AnnotationProject']['annotations']:
+            project.add_annotation(Annotation.parse_json(json_ann))
+            
+        return project
+    
+    def to_json(self):
+        json_annotations = []
+        json_object = {'AnnotationProject' : {
+                                              "id" : self.id,
+                                              "name" : self.name,
+                                              "main_media" : self.main_media,
+                                              "description" : self.description,
+                                              "annotations" : json_annotations}}
+        for ann in self.annotations:
+            print ann
+            json_annotations.append(ann.to_json())
+            
+        return json_object
+        
+    def generate_annotation_id(self):
+        if len(self.annotations) > 0:
+            return self.annotations[len(self.annotations)-1].id + 1
+        else:
+            return 1
     
     def remove_annotation(self, annotation):
         if not isinstance(annotation, Annotation):
@@ -36,7 +70,53 @@ class AnnotationProject(object):
         if annotation not in self.annotations:
             self.annotations.append(annotation)
         else:
-            raise Exception('This annotation is already inserted.')    
+            raise Exception('This annotation is already inserted.') 
+        
+class Annotation(object):
+    def __init__(self, myid, description=None, timestamp=None):
+        self.id = myid
+        self.timestamp = timestamp
+        self.description = description
+        self.annotation_time = None
+        self.interaction = None
+        
+    @staticmethod
+    def parse_json(self, json_object):
+        ann =  Annotation(json_object['Annotation']['id'],
+                              json_object['Annotation']['description'])
+        
+        
+        ann.annotation_time = QtCore.QTime.fromString(json_object['Annotation']['annotation_time'])
+        if json_object['Annotation'].has_key('interaction'):
+            ann.interaction = Interaction.parse_json(json_object['Annotation']['interaction'])
+        
+        return ann
+    
+    def to_json(self):
+        json_object = {'Annotation' : {
+                                              "id" : self.id,
+                                              "annotation_time" : str(self.annotation_time.toString()),
+                                              "description" : str(self.description)}}
+        
+        if self.interaction is not None:
+            json_object['Annotation']['interaction'] = self.interaction.to_json()
+            
+        return json_object
+    
+    @property
+    def type(self):
+        if self.interaction is None:
+            return "Annotation"
+        else:
+            return self.interaction.type
+        
+        
+    @property
+    def pt_type(self):
+        if self.interaction is None:
+            return u"Anotação"
+        else:
+            return self.interaction.pt_type
         
         
 class Media(object):
@@ -135,13 +215,6 @@ class VideoStream(object):
     @property
     def duration(self):
         return self.__duration
-    
-class Annotation(object):
-    def __init__(self, myid, timestamp):
-        self.id = id
-        self.timestamp = timestamp
-        self.description = None
-        self.annotation_time = None
         
 class Icon(object):
     #Colocar as imagens aqui no icone como variaveis
@@ -177,18 +250,44 @@ class ShowContent(Interaction):
             raise TypeError('The argument content must be an instance of Media.')
         
         self.contents.remove(content)
+        
+    @property
+    def type(self):
+        return "Content"
+        
+        
+    @property
+    def pt_type(self):
+        return u"Conteúdo"
+
                         
 class Skip(Interaction):
-    pass
+    @property
+    def type(self):
+        return "Skip"
+        
+        
+    @property
+    def pt_type(self):
+        return u"Pular"
 
 class Poll(Interaction):
-    pass
+    @property
+    def type(self):
+        return "Poll"
+        
+    @property
+    def pt_type(self):
+        return u"Enquete"
 
 class Replay(Interaction):
-    pass
-
-class InternalLink(Interaction):
-    pass
+    @property
+    def type(self):
+        return "Replay"
+        
+    @property
+    def pt_type(self):
+        return u"Retroceder"
     
 
 

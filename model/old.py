@@ -12,6 +12,26 @@ def invert_type_maps(original):
     return inverted
 
 class AnnotationProject(object):
+    @staticmethod
+    def parse_json(self, project):
+        pass
+    
+    def to_json(self):
+        annotations = []
+        json_object = {'AnnotationProject' : {
+                                              "id" : self.id,
+                                              "name" : self.name,
+                                              "main_media" : self.main_media,
+                                              "description" : self.description,
+                                              "annotations" : annotations}}
+        for ann in self.annotations:
+            self.annotations.append(ann.to_json())
+            
+        return json_object
+                       
+        
+    
+    
     def __init__(self, mid, name, main_media=None, description=None, last_modification=None, username=None):
         self.id = mid
         self.name = name
