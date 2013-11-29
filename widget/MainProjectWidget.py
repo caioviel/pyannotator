@@ -34,20 +34,60 @@ def get_media_icon(media_type):
 
 
 class AnnotationListItem(QtGui.QWidget):
-    def __init__(self, annotation, parent=None):
+    def __init__(self, annotation, main_widget, parent=None):
         super(AnnotationListItem, self).__init__(parent)
         self.ui = Ui_AnnotationListItem()
         self.ui.setupUi(self)
+        self.main_widget = main_widget
+        
+        self.init_ui()
         
         self.annotation = annotation
         self.load_annotation()
         
+    def init_ui(self):
+        self.pop_menu = QtGui.QMenu(self)
+        action = QtGui.QAction(QtGui.QIcon(":/i/comment_edit.png"), u'Alterar', self)
+        action.triggered.connect(self.main_widget.edit_annotation)
+        self.pop_menu.addAction(action)
+        
+        action = QtGui.QAction(QtGui.QIcon(":/i/comment_delete.png"), u'Excluir', self)
+        action.triggered.connect(self.main_widget.delete_annotation)
+        self.pop_menu.addAction(action)
+        self.pop_menu.addSeparator()
+        
+        sub_menu = QtGui.QMenu(u"Definir Interação", self)
+        self.pop_menu.addMenu(sub_menu)
+        
+        
+        sub_menu.addAction(QtGui.QAction(u'Exibir conteúdo', self))
+        sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
+        sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
+        sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
+        
+        self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        #self.connect(self.connect(self.button, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.on_context_menu)
+        
+        self.customContextMenuRequested.connect(self.on_context_menu)
+    
+    @QtCore.pyqtSlot(QtCore.QPoint)
+    def on_context_menu(self, point):
+        # show context menu
+        self.pop_menu.exec_(self.mapToGlobal(point)) 
+    
+    
     def load_annotation(self):
         #icon = get_media_icon(self.annotation.content_type)
         #self.ui.lbl_content_type.setPixmap(icon)
         self.ui.lbl_type.setText(self.annotation.pt_type)
         self.ui.lbl_timestamp.setText(self.annotation.annotation_time.toString())
-        self.ui.lbl_description.setText(self.annotation.description)
+        if len(str(self.annotation)) > 20:
+            self.ui.lbl_description.setText((self.annotation.description)[:20] + "...")
+        else:
+            self.ui.lbl_description.setText(str(self.annotation.description))
+        
+        
+        self.setToolTip(self.annotation.description)
 
 class MainProjectWidget(QtGui.QWidget):
     
@@ -76,13 +116,15 @@ class MainProjectWidget(QtGui.QWidget):
         layout = QtGui.QVBoxLayout()
         self.player = VideoPlayer()
         layout.addWidget(self.player)
-        player_holder.setLayout(layout)       
+        player_holder.setLayout(layout)
+        
+        self.ui.frame_edit.setVisible(False)
         
         self.ui.btn_choose_video.clicked.connect(self.choose_video)
         
         self.ui.btn_add_annotation.clicked.connect(self.add_annotation)
-        self.ui.btn_delete.clicked.connect(self.delete_annotation)
-        self.ui.btn_edit.clicked.connect(self.edit_annotation)
+        #self.ui.btn_delete.clicked.connect(self.delete_annotation)
+        #self.ui.btn_edit.clicked.connect(self.edit_annotation)
         self.annotation_list_chaged.connect(self.update_annotation_list)
         self.ui.txt_description.textChanged.connect(self.description_changed)
         #self.ui.list_notes.doubleClicked.connect(self.click_over_list)
@@ -93,6 +135,9 @@ class MainProjectWidget(QtGui.QWidget):
         
         self.ui.btn_save_project.clicked.connect(self.save_project)
         self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
+        
+        self.ui.btn_ok.clicked.connect(self.save_edit)
+        self.ui.btn_cancel.clicked.connect(self.cancel_edit)
         
     def load_project(self):
         project = self.project
@@ -125,6 +170,7 @@ class MainProjectWidget(QtGui.QWidget):
                 pass
             
         return False
+        
     
     @QtCore.pyqtSlot()
     def save_project(self):
@@ -155,7 +201,7 @@ class MainProjectWidget(QtGui.QWidget):
                                     key=lambda ann: ann.annotation_time)
         
         for annotation in sorted_annotations:
-            anotationItem = AnnotationListItem(annotation)
+            anotationItem = AnnotationListItem(annotation, self)
             item = QtGui.QListWidgetItem()
             item.setSizeHint(QtCore.QSize(40,60))
             self.ui.list_notes.addItem(item)
@@ -190,12 +236,39 @@ class MainProjectWidget(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def edit_annotation(self):
         item = self.ui.list_notes.currentItem()
-        annotation = self.ui.list_notes.itemWidget(item).annotation
+        self.editing_annotation = self.ui.list_notes.itemWidget(item).annotation
+        self.ui.txt_description.setText(self.editing_annotation.description)
+        self.ui.time_edit.setTime(self.editing_annotation.annotation_time)
+        self.ui.frame_edit.setVisible(True)
         
-        widget_class = annotation.get_widget_class()
-        widget = widget_class(annotation, self)
-        self.open_widgets.append(widget)
-        widget.show()
+        self.ui.frame_notes.setEnabled(False)
+        self.ui.btn_add_annotation.setVisible(False)
+        self.ui.btn_save_project.setVisible(False)
+        self.ui.btn_generate_ncl.setVisible(False)
+        
+        
+    @QtCore.pyqtSlot()
+    def cancel_edit(self):
+        self.ui.frame_edit.setVisible(False)
+        self.ui.frame_notes.setEnabled(True)
+        self.ui.btn_add_annotation.setVisible(True)
+        self.ui.btn_save_project.setVisible(True)
+        self.ui.btn_generate_ncl.setVisible(True)
+        self.ui.txt_description.setText("")
+        
+        
+    @QtCore.pyqtSlot()
+    def save_edit(self):
+        self.editing_annotation.description = str(self.ui.txt_description.toPlainText())
+        self.editing_annotation.annotation_time = self.ui.time_edit.time()
+        
+        self.ui.frame_edit.setVisible(False)
+        self.ui.frame_notes.setEnabled(True)
+        self.ui.btn_add_annotation.setVisible(True)
+        self.ui.btn_save_project.setVisible(True)
+        self.ui.btn_generate_ncl.setVisible(True)
+        self.ui.txt_description.setText("")
+        self.annotation_list_chaged.emit()
     
         
     @QtCore.pyqtSlot()

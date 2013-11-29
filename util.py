@@ -16,7 +16,7 @@ def copy_to_directory(project, path):
     no_extension = filename[:filename.find('.')]
     extension = filename[filename.find('.'):]
     while os.path.exists(final_path):
-        final_path = no_extension + str(count) + '.' + extension
+        final_path = no_extension + str(count)  + extension
         final_path = os.path.join(media_directory, final_path)
         count = count + 1
     

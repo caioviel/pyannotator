@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/VideoPlayer.ui'
 #
-# Created: Fri Nov 29 06:38:47 2013
+# Created: Fri Nov 29 17:39:25 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

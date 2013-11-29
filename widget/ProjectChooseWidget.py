@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from PySide import QtGui, QtCore
+from PyQt4 import QtGui, QtCore
 import os
 
 from ui.ui_ProjectChooseWidget import Ui_ProjectChooseWidget
@@ -33,6 +33,8 @@ class ProjectChooseWidget(QtGui.QWidget):
         
         self.ui.txt_project_id.textChanged.connect(self.atualize_create_button)
         self.ui.txt_project_name.textChanged.connect(self.atualize_create_button)
+        
+        
         
         self.detect_projects()    
     
@@ -72,12 +74,12 @@ class ProjectChooseWidget(QtGui.QWidget):
         self.ui.txt_project_id.appendPlainText(candidate_id)
 
                 
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def atualize_open_button(self):
         #selected = self.ui.lst_projects.currentItem()
         self.ui.btn_open_project.setEnabled(True)
         
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def atualize_create_button(self):
         if self.ui.txt_project_id.toPlainText() == "" or self.ui.txt_project_name.toPlainText() == "":
             self.ui.btn_create_project.setEnabled(False)
@@ -85,13 +87,13 @@ class ProjectChooseWidget(QtGui.QWidget):
             self.ui.btn_create_project.setEnabled(True)
         
         
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def create_project(self):
         project_id = self.ui.txt_project_id.toPlainText()
         project_name = self.ui.txt_project_name.toPlainText()
         description = self.ui.txt_description_2.toPlainText()
         
-        project_directory = os.path.join(self.home_directory, self.PROJECTS_DIRECTORY, project_id)
+        project_directory = os.path.join(self.home_directory, self.PROJECTS_DIRECTORY, str(project_id))
         if os.path.exists(project_directory):
             QtGui.QMessageBox.warning(self, u"Erro criando projeto.", 
                                       u"Já existe um arquivo ou diretório chamado %s. Por favor escolha outro identificador para o projeto." % project_id)
@@ -101,13 +103,14 @@ class ProjectChooseWidget(QtGui.QWidget):
             return
         
         os.mkdir(project_directory)
-        project = model.AnnotationProject(project_id, project_name, None, description, datetime.now(), self.username)
+        project = model.AnnotationProject(str(project_id), str(project_name), None, str(description), datetime.now(), self.username)
+        project.directory = project_directory
         
-        self.width = MainProjectWidget(project, project_directory)
+        self.width = MainProjectWidget(project)
         self.close()
 
     
-    @QtCore.Slot()
+    @QtCore.pyqtSlot()
     def open_project(self):
         selected = self.ui.lst_projects.currentItem()
         print selected
