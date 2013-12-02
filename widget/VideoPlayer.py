@@ -4,6 +4,19 @@ from ui.ui_VideoPlayer import Ui_VideoPlayer
 from PyQt4 import QtGui, QtCore
 from PyQt4.phonon import Phonon
 
+
+class MySlider(Phonon.SeekSlider):
+    mouse_released = QtCore.pyqtSignal(int) 
+    
+    def __init__(self, parent=None):
+        super(MySlider, self).__init__(parent)
+        
+    def mouseReleaseEvent(self, mouseEvent):
+        #print self.pos()
+        self.mouse_released.emit(self.pos())
+        
+
+
 class VideoPlayer(QtGui.QDialog):
     def __init__(self, video_source=None, begin_time=None, end_time=None, parent=None):
         super(VideoPlayer, self).__init__(parent)
@@ -20,6 +33,9 @@ class VideoPlayer(QtGui.QDialog):
             self.load_video(video_source)
         
     def init_ui(self):
+        self.ui.seek_slider = MySlider(self.ui.seek_slider_widget)
+        self.ui.seek_slider.resize(self.ui.seek_slider_widget.size())
+        
         self.ui.btn_pause.setVisible(False)
         self.ui.btn_play.setEnabled(False)
         self.ui.btn_stop.setEnabled(False)
@@ -65,6 +81,7 @@ class VideoPlayer(QtGui.QDialog):
         player.stop()
         media_source = Phonon.MediaSource(video_source)
         player.load( media_source )
+        
         self.ui.seek_slider.setMediaObject(player.mediaObject())
         self.ui.volume_slider.setAudioOutput(player.audioOutput())
         

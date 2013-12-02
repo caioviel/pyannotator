@@ -23,16 +23,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="Phonon::SeekSlider" name="seek_slider">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>390</y>
-     <width>451</width>
-     <height>41</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="btn_play">
    <property name="geometry">
     <rect>
@@ -112,19 +102,24 @@
     </size>
    </property>
   </widget>
+  <widget class="QWidget" name="seek_slider_widget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>390</y>
+     <width>451</width>
+     <height>41</height>
+    </rect>
+   </property>
+  </widget>
   <zorder>btn_pause</zorder>
   <zorder>video_player</zorder>
-  <zorder>seek_slider</zorder>
   <zorder>btn_play</zorder>
   <zorder>volume_slider</zorder>
   <zorder>btn_stop</zorder>
+  <zorder>seek_slider_widget</zorder>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>Phonon::SeekSlider</class>
-   <extends>QWidget</extends>
-   <header location="global">phonon/seekslider.h</header>
-  </customwidget>
   <customwidget>
    <class>Phonon::VideoPlayer</class>
    <extends>QWidget</extends>

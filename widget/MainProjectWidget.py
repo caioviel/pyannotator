@@ -108,6 +108,10 @@ class MainProjectWidget(QtGui.QWidget):
         self.load_project()
         
         self.show()
+    
+    #@QtCore.pyqtSlot(int)
+    #def on_video_seek(self, point):
+        
         
     def init_ui(self):
         self.setWindowTitle(u'Projeto - ' + self.project.name)
@@ -117,6 +121,8 @@ class MainProjectWidget(QtGui.QWidget):
         self.player = VideoPlayer()
         layout.addWidget(self.player)
         player_holder.setLayout(layout)
+        
+        #self.player.ui.seek_slider.mouse_released.connect(self.update_time_edit)
         
         self.ui.frame_edit.setVisible(False)
         

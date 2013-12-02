@@ -19,7 +19,7 @@ class AnnotationProject(object):
         self.annotations = []
         
     @staticmethod
-    def parse_json(self, json_object):
+    def parse_json(json_object):
         project =  AnnotationProject(json_object['AnnotationProject']['id'],
                                          json_object['AnnotationProject']['name'],
                                          json_object['AnnotationProject']['main_media'],
@@ -81,7 +81,7 @@ class Annotation(object):
         self.interaction = None
         
     @staticmethod
-    def parse_json(self, json_object):
+    def parse_json(json_object):
         ann =  Annotation(json_object['Annotation']['id'],
                               json_object['Annotation']['description'])
         

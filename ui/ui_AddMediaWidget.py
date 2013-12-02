@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AddMediaWidget.ui'
 #
-# Created: Fri Nov 29 17:39:24 2013
+# Created: Sat Nov 30 10:23:05 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,22 +17,22 @@ except AttributeError:
 class Ui_AddMediaWidget(object):
     def setupUi(self, AddMediaWidget):
         AddMediaWidget.setObjectName(_fromUtf8("AddMediaWidget"))
-        AddMediaWidget.resize(721, 531)
+        AddMediaWidget.resize(721, 490)
         self.lst_medias = QtGui.QListWidget(AddMediaWidget)
-        self.lst_medias.setGeometry(QtCore.QRect(20, 50, 221, 411))
+        self.lst_medias.setGeometry(QtCore.QRect(20, 50, 221, 381))
         self.lst_medias.setObjectName(_fromUtf8("lst_medias"))
         self.preview_widget = QtGui.QWidget(AddMediaWidget)
         self.preview_widget.setGeometry(QtCore.QRect(250, 70, 441, 341))
         self.preview_widget.setObjectName(_fromUtf8("preview_widget"))
         self.btn_delete = QtGui.QPushButton(AddMediaWidget)
-        self.btn_delete.setGeometry(QtCore.QRect(140, 470, 101, 41))
+        self.btn_delete.setGeometry(QtCore.QRect(140, 440, 101, 41))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/comment_delete.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_delete.setIcon(icon)
         self.btn_delete.setIconSize(QtCore.QSize(40, 40))
         self.btn_delete.setObjectName(_fromUtf8("btn_delete"))
         self.btn_edit = QtGui.QPushButton(AddMediaWidget)
-        self.btn_edit.setGeometry(QtCore.QRect(20, 470, 101, 41))
+        self.btn_edit.setGeometry(QtCore.QRect(20, 440, 101, 41))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/comment_edit.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_edit.setIcon(icon1)

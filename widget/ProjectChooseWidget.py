@@ -50,9 +50,15 @@ class ProjectChooseWidget(QtGui.QWidget):
             if os.path.isdir(file_path):
                 project_file = os.path.join(file_path, 'project.json')
                 if os.path.exists(project_file) and not os.path.isdir(project_file):
-                    #project = self.serializator.parse_file(project_file)
-                    project = model.AnnotationProject('id', 'name', 'main_media', 'description', 'modification', 'username')
-                    existent_projects.append(project)
+                    import codecs, json
+                    try:
+                        f = codecs.open(project_file, "r", "utf-8")
+                        json_str = f.read()                        
+                        project = model.AnnotationProject.parse_json(json.loads(json_str))
+                        #project = model.AnnotationProject('id', 'name', 'main_media', 'description', 'modification', 'username')
+                        existent_projects.append(project)
+                    except:
+                        print 'Problems reading the file', project_file
                     
                     
         #TODO: Order the projects by last modification

@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ui.ui_ShowContent import Ui_ShowContent
 from PyQt4 import QtGui, QtCore
+from ui.ui_ShowContent import Ui_ShowContent
+from AddMediaWidget import AddMediaWidget
+
 import model
 import os
 HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
@@ -20,6 +22,12 @@ class ShowContent(QtGui.QDialog):
         self.ui.radio_info.setChecked(True)
         self.ui.radio_tl.setChecked(True)
         self.ui.btn_choose_icon.setEnabled(False)
+        
+        
+        layout = QtGui.QHBoxLayout()
+        self.ui.tab_content.setLayout(layout)
+        self.add_media_widget = AddMediaWidget()
+        layout.addWidget(self.add_media_widget)
         
         self.ui.radio_personalized.toggled.connect(self.personalized_choosed)
         self.ui.btn_choose_icon.clicked.connect(self.choose_icon)

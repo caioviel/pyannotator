@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/VideoPlayer.ui'
 #
-# Created: Fri Nov 29 17:39:25 2013
+# Created: Sat Nov 30 10:23:06 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -21,9 +21,6 @@ class Ui_VideoPlayer(object):
         self.video_player = phonon.Phonon.VideoPlayer(VideoPlayer)
         self.video_player.setGeometry(QtCore.QRect(10, 10, 671, 371))
         self.video_player.setObjectName(_fromUtf8("video_player"))
-        self.seek_slider = phonon.Phonon.SeekSlider(VideoPlayer)
-        self.seek_slider.setGeometry(QtCore.QRect(100, 390, 451, 41))
-        self.seek_slider.setObjectName(_fromUtf8("seek_slider"))
         self.btn_play = QtGui.QPushButton(VideoPlayer)
         self.btn_play.setGeometry(QtCore.QRect(10, 390, 41, 41))
         self.btn_play.setText(_fromUtf8(""))
@@ -51,6 +48,9 @@ class Ui_VideoPlayer(object):
         self.btn_pause.setIcon(icon2)
         self.btn_pause.setIconSize(QtCore.QSize(40, 40))
         self.btn_pause.setObjectName(_fromUtf8("btn_pause"))
+        self.seek_slider_widget = QtGui.QWidget(VideoPlayer)
+        self.seek_slider_widget.setGeometry(QtCore.QRect(100, 390, 451, 41))
+        self.seek_slider_widget.setObjectName(_fromUtf8("seek_slider_widget"))
 
         self.retranslateUi(VideoPlayer)
         QtCore.QMetaObject.connectSlotsByName(VideoPlayer)
