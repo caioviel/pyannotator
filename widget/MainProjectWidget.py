@@ -81,10 +81,10 @@ class AnnotationListItem(QtGui.QWidget):
         #self.ui.lbl_content_type.setPixmap(icon)
         self.ui.lbl_type.setText(self.annotation.pt_type)
         self.ui.lbl_timestamp.setText(self.annotation.annotation_time.toString())
-        if len(str(self.annotation)) > 20:
+        if len(unicode(self.annotation)) > 20:
             self.ui.lbl_description.setText((self.annotation.description)[:20] + "...")
         else:
-            self.ui.lbl_description.setText(str(self.annotation.description))
+            self.ui.lbl_description.setText(unicode(self.annotation.description))
         
         
         self.setToolTip(self.annotation.description)
@@ -250,7 +250,7 @@ class MainProjectWidget(QtGui.QWidget):
         
     @QtCore.pyqtSlot()
     def save_edit(self):
-        self.editing_annotation.description = str(self.ui.txt_description.toPlainText())
+        self.editing_annotation.description = unicode(self.ui.txt_description.toPlainText())
         self.editing_annotation.annotation_time = self.ui.time_edit.time()
         
         self.ui.frame_edit.setVisible(False)
@@ -334,7 +334,7 @@ class MainProjectWidget(QtGui.QWidget):
         import util
         
         
-        self.main_video_path = util.copy_to_directory(self.project, str(path))           
+        self.main_video_path = util.copy_to_directory(self.project, unicode(path))           
         self.ui.txt_main_video.clear()
         self.ui.txt_main_video.appendPlainText(self.main_video_path)
         
