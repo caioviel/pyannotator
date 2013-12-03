@@ -232,6 +232,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.ui.txt_description.setText(self.editing_annotation.description)
         self.ui.time_edit.setTime(self.editing_annotation.annotation_time)
         self.ui.frame_edit.setVisible(True)
+        self.ui.txt_description.setFocus()
         
         self.ui.frame_notes.setEnabled(False)
         self.ui.btn_add_annotation.setVisible(False)
