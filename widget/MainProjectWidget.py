@@ -149,23 +149,8 @@ class MainProjectWidget(QtGui.QWidget):
         project = self.project
         if project.main_media:
             self.main_video_path = project.main_media           
-            player = self.ui.video_player
-            self.ui.txt_main_video.clear()
-            self.ui.txt_main_video.appendPlainText(project.main_media)
-        
-            player.stop()
-            media_source = Phonon.MediaSource(project.main_media)
-            player.load( media_source )
-            self.ui.seek_slider.setMediaObject(player.mediaObject())
-            self.ui.volume_slider.setAudioOutput(player.audioOutput())
-        
-            player.setVisible(True)
-            self.ui.seek_slider.setVisible(True)
-            self.ui.volume_slider.setVisible(True)
-            self.ui.btn_play.setVisible(True)
-            self.ui.btn_stop.setVisible(True)
-            self.ui.btn_stop.setEnabled(False)
-        
+            self.player.load_video(self.main_video_path)
+            self.ui.txt_main_video.appendPlainText(self.main_video_path)
             self.update_annotation_list()
         
     def eventFilter(self, myObject, event):

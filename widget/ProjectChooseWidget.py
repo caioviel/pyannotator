@@ -123,7 +123,5 @@ class ProjectChooseWidget(QtGui.QWidget):
         project = selected._project
         project_directory = os.path.join(self.home_directory, self.PROJECTS_DIRECTORY, project.id)
         
-        self.width = MainProjectWidget(project, project_directory, self.serializator, self.plugins_manager)
+        self.width = MainProjectWidget(project)
         self.close()
-
- 
