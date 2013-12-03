@@ -150,6 +150,7 @@ class MainProjectWidget(QtGui.QWidget):
         if project.main_media:
             self.main_video_path = project.main_media           
             self.player.load_video(self.main_video_path)
+            self.player.player.mediaObject().tick.connect(self.update_time_edit)
             self.ui.txt_main_video.appendPlainText(self.main_video_path)
             self.update_annotation_list()
         
@@ -169,7 +170,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.project.main_media = self.main_video_path
         from datetime import datetime
         self.project.last_modification = datetime.now()
-        project_path = os.path.join(self.project_diretory, 'project.json')
+        project_path = os.path.join(unicode(self.project_diretory), 'project.json')
         json_object = self.project.to_json()
         myfile = open(project_path, "w")
         
@@ -316,7 +317,7 @@ class MainProjectWidget(QtGui.QWidget):
             
             
     def timer_focus_in(self):
-        self.pause_playback()
+        self.player.pause()
         self.is_editing_time = True
         
     
@@ -324,7 +325,7 @@ class MainProjectWidget(QtGui.QWidget):
     def choose_video(self):
         path = QtGui.QFileDialog.getOpenFileName(self, 
                                                  u'Selecione o Vídeo Principal',
-                                                 self.project_diretory,
+                                                 unicode(self.project_diretory),
                                                  model.CONTENT_TYPES[model.Media.VIDEO])
         
         print path

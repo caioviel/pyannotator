@@ -95,8 +95,8 @@ class Annotation(object):
     def to_json(self):
         json_object = {'Annotation' : {
                                               "id" : self.id,
-                                              "annotation_time" : str(self.annotation_time.toString()),
-                                              "description" : str(self.description)}}
+                                              "annotation_time" : unicode(self.annotation_time.toString()),
+                                              "description" : unicode(self.description)}}
         
         if self.interaction is not None:
             json_object['Annotation']['interaction'] = self.interaction.to_json()

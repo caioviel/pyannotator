@@ -5,7 +5,7 @@ import os
 def copy_to_directory(project, path):
     filename = os.path.split(path)[1]
     print filename
-    media_directory = os.path.join(project.directory, "medias")
+    media_directory = os.path.join(unicode(project.directory), "medias")
     print media_directory
     
     if not os.path.exists(media_directory):
