@@ -81,10 +81,10 @@ class AnnotationListItem(QtGui.QWidget):
         #self.ui.lbl_content_type.setPixmap(icon)
         self.ui.lbl_type.setText(self.annotation.pt_type)
         self.ui.lbl_timestamp.setText(self.annotation.annotation_time.toString())
-        if len(str(self.annotation)) > 20:
+        if len(unicode(self.annotation)) > 20:
             self.ui.lbl_description.setText((self.annotation.description)[:20] + "...")
         else:
-            self.ui.lbl_description.setText(str(self.annotation.description))
+            self.ui.lbl_description.setText(unicode(self.annotation.description))
         
         
         self.setToolTip(self.annotation.description)
@@ -149,23 +149,9 @@ class MainProjectWidget(QtGui.QWidget):
         project = self.project
         if project.main_media:
             self.main_video_path = project.main_media           
-            player = self.ui.video_player
-            self.ui.txt_main_video.clear()
-            self.ui.txt_main_video.appendPlainText(project.main_media)
-        
-            player.stop()
-            media_source = Phonon.MediaSource(project.main_media)
-            player.load( media_source )
-            self.ui.seek_slider.setMediaObject(player.mediaObject())
-            self.ui.volume_slider.setAudioOutput(player.audioOutput())
-        
-            player.setVisible(True)
-            self.ui.seek_slider.setVisible(True)
-            self.ui.volume_slider.setVisible(True)
-            self.ui.btn_play.setVisible(True)
-            self.ui.btn_stop.setVisible(True)
-            self.ui.btn_stop.setEnabled(False)
-        
+            self.player.load_video(self.main_video_path)
+            self.player.player.mediaObject().tick.connect(self.update_time_edit)
+            self.ui.txt_main_video.appendPlainText(self.main_video_path)
             self.update_annotation_list()
         
     def eventFilter(self, myObject, event):
@@ -184,7 +170,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.project.main_media = self.main_video_path
         from datetime import datetime
         self.project.last_modification = datetime.now()
-        project_path = os.path.join(self.project_diretory, 'project.json')
+        project_path = os.path.join(unicode(self.project_diretory), 'project.json')
         json_object = self.project.to_json()
         myfile = open(project_path, "w")
         
@@ -246,6 +232,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.ui.txt_description.setText(self.editing_annotation.description)
         self.ui.time_edit.setTime(self.editing_annotation.annotation_time)
         self.ui.frame_edit.setVisible(True)
+        self.ui.txt_description.setFocus()
         
         self.ui.frame_notes.setEnabled(False)
         self.ui.btn_add_annotation.setVisible(False)
@@ -265,7 +252,7 @@ class MainProjectWidget(QtGui.QWidget):
         
     @QtCore.pyqtSlot()
     def save_edit(self):
-        self.editing_annotation.description = str(self.ui.txt_description.toPlainText())
+        self.editing_annotation.description = unicode(self.ui.txt_description.toPlainText())
         self.editing_annotation.annotation_time = self.ui.time_edit.time()
         
         self.ui.frame_edit.setVisible(False)
@@ -331,7 +318,7 @@ class MainProjectWidget(QtGui.QWidget):
             
             
     def timer_focus_in(self):
-        self.pause_playback()
+        self.player.pause()
         self.is_editing_time = True
         
     
@@ -339,7 +326,7 @@ class MainProjectWidget(QtGui.QWidget):
     def choose_video(self):
         path = QtGui.QFileDialog.getOpenFileName(self, 
                                                  u'Selecione o Vídeo Principal',
-                                                 self.project_diretory,
+                                                 unicode(self.project_diretory),
                                                  model.CONTENT_TYPES[model.Media.VIDEO])
         
         print path
@@ -349,7 +336,7 @@ class MainProjectWidget(QtGui.QWidget):
         import util
         
         
-        self.main_video_path = util.copy_to_directory(self.project, str(path))           
+        self.main_video_path = util.copy_to_directory(self.project, unicode(path))           
         self.ui.txt_main_video.clear()
         self.ui.txt_main_video.appendPlainText(self.main_video_path)
         
