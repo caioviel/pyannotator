@@ -10,15 +10,29 @@ HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
 
 
 class AudioContent(QtGui.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, project=None, content=None, parent=None):
         super(AudioContent, self).__init__(parent)
+        
+        self.project = project
+        self.content = content
+        self.result = None
+        
         self.ui = Ui_AudioContent()
         self.ui.setupUi(self)
         
-        self.init_ui()
-        self.show()
+        if content is not None:
+            self.load_content()
         
+        self.init_ui()
+        
+    def get_result(self):
+        return self.result
+            
+    def load_content(self):
+        pass
+    
     def init_ui(self):
+        self.setFixedSize(self.size())
         self.volume_control = VolumeControl(self.ui.volume_control_widget)
         self.audio_player = AudioPlayer(parent=self.ui.audio_player_widget)
         

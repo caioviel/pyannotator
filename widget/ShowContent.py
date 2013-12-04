@@ -19,6 +19,7 @@ class ShowContent(QtGui.QDialog):
         self.init_ui()
         
     def init_ui(self):
+        self.setFixedSize(self.size())
         self.ui.radio_info.setChecked(True)
         self.ui.radio_tl.setChecked(True)
         self.ui.btn_choose_icon.setEnabled(False)
@@ -109,7 +110,6 @@ class ShowContent(QtGui.QDialog):
             
         
 def main():
-    import sys
     app = QtGui.QApplication(sys.argv)    
     vp = ShowContent()
     vp.show()

@@ -11,11 +11,15 @@ from LayoutSelector import LayoutSelector
 from PyQt4 import QtGui, QtCore
 
 class TextContent(QtGui.QDialog):
-    def __init__(self, text_content=None, parent=None):
+    def __init__(self, project=None, content=None, parent=None):
         super(TextContent, self).__init__(parent)
         self.ui = Ui_TextContent()
+        self.project = project
+        self.content = content
+        self.result = None
+        
         self.ui.setupUi(self)
-        self.text_content = text_content
+        self.text_content = None
         self.align_array = [QtCore.Qt.AlignLeft, QtCore.Qt.AlignCenter, QtCore.Qt.AlignRight]
         self.text_alligment = QtCore.Qt.AlignLeft
         
@@ -25,16 +29,20 @@ class TextContent(QtGui.QDialog):
         self.transparency_bg = False
         self.text_content = ""
         
-        if text_content is not None:
+        #TODO:
+        if content is not None:
             self.load_content()
         
         self.init_ui()
+        
+    def get_result(self):
+        return self.result
             
     def load_content(self):
         pass
 
     def init_ui(self):
-        self.layout_selector = LayoutSelector(self.ui.layout_selection_holder)
+        self.layout_selector = LayoutSelector(parent=self.ui.layout_selection_holder)
         
         lbl_content = self.layout_selector.lbl_content
         lbl_content.resize(self.layout_selector.width(),50)

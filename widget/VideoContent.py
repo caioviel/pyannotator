@@ -11,13 +11,27 @@ import os
 HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
 
 class VideoContent(QtGui.QDialog):
-    def __init__(self, video_source=None, begin_time=None, end_time=None, parent=None):
+    def __init__(self, project=None, content=None, parent=None):
         super(VideoContent, self).__init__(parent)
+        self.project = project
+        self.content = content
+        self.result = None
+        
         self.ui = Ui_VideoContent()
         self.ui.setupUi(self)
         
+        #TODO:
+        if content is not None:
+            self.load_content()
+        
         self.init_ui()
         
+    def get_result(self):
+        return self.result
+            
+    def load_content(self):
+        pass
+    
     def init_ui(self):
         self.setFixedSize(self.size())
         self.ui.tabs.setCurrentIndex(0)
@@ -33,7 +47,7 @@ class VideoContent(QtGui.QDialog):
         
         #Tab 1
         tab = self.ui.tab_position
-        self.layout_selector = LayoutSelector(tab)
+        self.layout_selector = LayoutSelector(parent=tab)
         
         #Tab 2
         tab = self.ui.tab_behavior
@@ -65,7 +79,7 @@ class VideoContent(QtGui.QDialog):
 def main():
     import sys
     app = QtGui.QApplication(sys.argv)    
-    vp = VideoContent('/home/caioviel/Videos/Videosgreentower.avi', begin_time=5000)
+    vp = VideoContent()
     vp.show()
     sys.exit(app.exec_())
 
