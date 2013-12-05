@@ -105,7 +105,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Tempo de Termino:</string>
+    <string>Tempo de Término:</string>
    </property>
   </widget>
   <widget class="QLabel" name="lbl_begin_time">

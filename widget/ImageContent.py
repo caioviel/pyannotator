@@ -51,6 +51,8 @@ class ImageContent(QtGui.QDialog):
             if self.content.resize_main_video is not None:
                 self.layout_selector.set_main_video_bondaries(
                                             self.content.resize_main_video)
+            
+            
         
     def init_ui(self):
         self.setFixedSize(self.size())
@@ -85,7 +87,15 @@ class ImageContent(QtGui.QDialog):
         finalpath = util.copy_to_directory(self.project, filename)
         showtime = util.qtime_to_sec(self.ui.time_begin.time())
         duration = util.qtime_to_sec(self.ui.time_end.time()) - showtime
-        image_content = model.Image(filename, finalpath, showtime, duration)
+        image_content = None
+        if self.content is None:
+            image_content = model.Image(filename, finalpath, showtime, duration)
+        else:
+            image_content = self.content
+            image_content.id = filename
+            image_content.filename = finalpath
+            image_content.showtime = showtime
+            image_content.duration = duration
         image_content.bondaries = self.layout_selector.get_content_bondaries()
         
         if self.layout_selector.is_main_video_resized():

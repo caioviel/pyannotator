@@ -359,9 +359,9 @@ class Image(Media):
 
 
 class Text(Media):
-    ALIGN_LEFT = 1
+    ALIGN_LEFT = 0
+    ALIGN_CENTER = 1
     ALIGN_RIGHT = 2
-    ALIGN_CENTER = 3
 
     def __init__(self, myid, filename, showtime, duration=5):
         super(Text, self).__init__(myid, filename, showtime, 

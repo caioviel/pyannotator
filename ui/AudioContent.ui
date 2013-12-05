@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Tempo de Termino:</string>
+    <string>Tempo de Término:</string>
    </property>
   </widget>
   <widget class="QTimeEdit" name="time_begin">

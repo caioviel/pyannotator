@@ -37,9 +37,9 @@ class MediaListItem(QtGui.QWidget):
     def init_ui(self):
         self.ui.lbl_content_icon.setPixmap(get_media_icon(self.content.type))
         begin_time = util.sec_to_qtime(self.content.showtime)
-        end_time = QtCore.QTime(begin_time)
-        end_time.addSecs(self.content.duration)
-        description = u'De ' + end_time.toString() + u' até ' + end_time.toString()
+        end_time = util.sec_to_qtime(self.content.showtime + self.content.duration)
+        print begin_time, end_time
+        description = u'De ' + begin_time.toString() + u' até ' + end_time.toString()
         self.ui.lbl_description.setText(description)
         
 
@@ -71,7 +71,11 @@ class AddMediaWidget(QtGui.QDialog):
     @QtCore.pyqtSlot()
     def delete_media(self):
         item = self.ui.lst_medias.currentItem()
-        self.medias.remove(item.content)
+        content = self.ui.lst_medias.itemWidget(item).content
+        print 'conteudo', content
+        print 'lista', self.medias
+        self.medias.remove(content)
+        print 'lista', self.medias
         self.update_media_list()
         
     @QtCore.pyqtSlot()
@@ -90,8 +94,8 @@ class AddMediaWidget(QtGui.QDialog):
             myclass = ImageContent(self.project, self.annotation, 
                                    content, self)
             
-            self.medias.remove(content)
-            self.medias.append(myclass.result)
+            #self.medias.remove(content)
+            #self.medias.append(myclass.result)
             myclass.exec_()
         elif content.type == model.Media.TEXT:
             myclass = TextContent(self.project, self.annotation, 
@@ -103,9 +107,10 @@ class AddMediaWidget(QtGui.QDialog):
         
     @QtCore.pyqtSlot()
     def update_media_list(self):
-        print 'update_media_list'
-        
         self.ui.lst_medias.clear()
+        if len(self.medias) == 0:
+            return
+        
         sorted_medias = sorted(self.medias, 
                                     key=lambda media: media.showtime)
         
@@ -123,11 +128,11 @@ class AddMediaWidget(QtGui.QDialog):
     def add_audio(self):
         myclass = AudioContent(self.project, self.annotation, 
                                parent=self)
-        if myclass.exec_():
-            result = myclass.get_result()
-            self.add_media_item(result)
-            
-        self.update_media_list()
+        myclass.exec_()
+        result = myclass.get_result()
+        if result is not None:
+            self.add_media_item(result)    
+            self.update_media_list()
         
     @QtCore.pyqtSlot()
     def add_image(self):
@@ -135,9 +140,9 @@ class AddMediaWidget(QtGui.QDialog):
                                parent=self)
         myclass.exec_()
         result = myclass.get_result()
-        self.add_media_item(result)
-            
-        self.update_media_list()
+        if result is not None:
+            self.add_media_item(result)    
+            self.update_media_list()
             
     @QtCore.pyqtSlot()
     def add_video(self):
@@ -145,9 +150,9 @@ class AddMediaWidget(QtGui.QDialog):
                                parent=self)
         myclass.exec_()
         result = myclass.get_result()
-        self.add_media_item(result)
-            
-        self.update_media_list()
+        if result is not None:
+            self.add_media_item(result)    
+            self.update_media_list()
         
     @QtCore.pyqtSlot()
     def add_text(self):
@@ -155,9 +160,9 @@ class AddMediaWidget(QtGui.QDialog):
                                parent=self)
         myclass.exec_()
         result = myclass.get_result()
-        self.add_media_item(result)
-            
-        self.update_media_list()
+        if result is not None:
+            self.add_media_item(result)    
+            self.update_media_list()
         
     @QtCore.pyqtSlot()
     def add_slides(self):

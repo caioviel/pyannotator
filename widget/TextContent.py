@@ -9,12 +9,15 @@ Created on Nov 16, 2013
 from ui.ui_TextContent import Ui_TextContent
 from LayoutSelector import LayoutSelector
 from PyQt4 import QtGui, QtCore
+import util
+import model
 
 class TextContent(QtGui.QDialog):
-    def __init__(self, project=None, content=None, parent=None):
+    def __init__(self, project=None, annotation=None, content=None, parent=None):
         super(TextContent, self).__init__(parent)
         self.ui = Ui_TextContent()
         self.project = project
+        self.annotation = annotation
         self.content = content
         self.result = None
         
@@ -29,17 +32,58 @@ class TextContent(QtGui.QDialog):
         self.transparency_bg = False
         self.text_content = ""
         
-        #TODO:
-        if content is not None:
-            self.load_content()
-        
         self.init_ui()
+        
+        #TODO:
+        self.load_content()
         
     def get_result(self):
         return self.result
             
     def load_content(self):
-        pass
+        if self.annotation is not None:
+            self.ui.time_begin.setTime(self.annotation.annotation_time)
+            
+        if self.content is not None:
+            begin = util.sec_to_qtime(self.content.showtime)
+            
+            self.ui.time_begin.setTime(begin)
+            
+            self.ui.time_end.setTime(begin.addSecs(self.content.duration))
+            
+            if self.content.bondaries is not None:
+                self.layout_selector.set_content_bondaires(
+                                            self.content.bondaries)
+            
+            if self.content.resize_main_video is not None:
+                self.layout_selector.set_main_video_bondaries(
+                                            self.content.resize_main_video)
+                
+            self.content = model.Text(None, None, None, None)
+            if self.content.bg_color is not None:
+                self.bg_color = self.content.bg_color
+                
+            if self.content.font_color is not None:
+                self.font_color = self.content.font_color
+                
+            font = QtGui.QFont()
+            if self.content.font is not None:
+                font.setFamily(self.content.font)
+            
+            if self.content.fontSize is not None:
+                font.setPointSize(self.content.fontSize)
+                
+            font.setBold(self.content.bold)
+            font.setItalic(self.content.italic)
+            font.setUnderline(self.content.underlined)
+            self.current_font = font
+            self.transparency_bg = self.content.bg_transparency
+            self.text_content = self.content.text
+            
+            self.text_alligment = self.align_array(self.content.alignment)
+            
+            self.update_text()
+                
 
     def init_ui(self):
         self.layout_selector = LayoutSelector(parent=self.ui.layout_selection_holder)
@@ -55,6 +99,56 @@ class TextContent(QtGui.QDialog):
         self.ui.btn_reset_layout.clicked.connect(self.reset_layout)
         self.ui.cmb_alligment.currentIndexChanged.connect(self.allign_selected)
         self.ui.textEdit.textChanged.connect(self.text_changes)
+        
+        self.ui.btn_ok.clicked.connect(self.ok_pressed)
+        self.ui.btn_cancel.clicked.connect(self.cancel_pressed)
+        
+        self.ui.time_begin.timeChanged.connect(self.calc_duration)
+        self.ui.time_end.timeChanged.connect(self.calc_duration)
+        
+    @QtCore.pyqtSlot()   
+    def calc_duration(self):
+        begin = util.qtime_to_sec(self.ui.time_begin.time())
+        end = util.qtime_to_sec(self.ui.time_end.time())
+        
+        self.ui.txt_duration.clear()
+        if end >= begin:
+            duration = end - begin
+            self.ui.txt_duration.appendPlainText(str(duration))
+        else:
+            self.ui.txt_duration.appendPlainText('---')
+            
+    @QtCore.pyqtSlot()
+    def ok_pressed(self):
+        filename = unicode(self.ui.txt_media_name.toPlainText())
+        finalpath = util.copy_to_directory(self.project, filename)
+        showtime = util.qtime_to_sec(self.ui.time_begin.time())
+        duration = util.qtime_to_sec(self.ui.time_end.time()) - showtime
+        text_content = None
+        if self.content is None:
+            text_content = model.Image(filename, finalpath, showtime, duration)
+        else:
+            text_content = self.content
+            text_content.id = filename
+            text_content.filename = finalpath
+            text_content.showtime = showtime
+            text_content.duration = duration
+        text_content.bondaries = self.layout_selector.get_content_bondaries()
+        
+        if self.layout_selector.is_main_video_resized():
+            text_content.resize_main_video = self.layout_selector.get_main_video_bondaries()
+            
+        self.result = text_content
+        
+        self.close()
+        
+        
+    
+    @QtCore.pyqtSlot()
+    def cancel_pressed(self):
+        #self.close()
+        pixmap = QtGui.QPixmap.grabWindow(self.layout_selector.lbl_content.winId())
+        pixmap.save('/home/caioviel/teste.jpg')
     
     @QtCore.pyqtSlot()
     def text_changes(self):
