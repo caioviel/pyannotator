@@ -41,9 +41,10 @@ class AnnotationListItem(QtGui.QWidget):
         
     def init_ui(self):
         self.pop_menu = QtGui.QMenu(self)
-        action = QtGui.QAction(QtGui.QIcon(":/i/comment_edit.png"), u'Alterar', self)
-        action.triggered.connect(self.main_widget.edit_annotation)
-        self.pop_menu.addAction(action)
+        if self.annotation.interaction is None:  
+            action = QtGui.QAction(QtGui.QIcon(":/i/comment_edit.png"), u'Alterar', self)
+            action.triggered.connect(self.main_widget.edit_annotation)
+            self.pop_menu.addAction(action)
         
         action = QtGui.QAction(QtGui.QIcon(":/i/comment_delete.png"), u'Excluir', self)
         action.triggered.connect(self.main_widget.delete_annotation)

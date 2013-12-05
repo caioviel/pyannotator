@@ -69,19 +69,19 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_icon">
     <attribute name="title">
-     <string>Notificação</string>
+     <string>Tipo de Alerta</string>
     </attribute>
     <widget class="QFrame" name="frame">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>20</y>
-       <width>681</width>
-       <height>151</height>
+       <y>10</y>
+       <width>341</width>
+       <height>271</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -94,7 +94,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>30</y>
+        <y>20</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -108,16 +108,16 @@
       </property>
       <property name="iconSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
      </widget>
      <widget class="QRadioButton" name="radio_no">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>30</y>
+        <x>200</x>
+        <y>20</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -131,16 +131,16 @@
       </property>
       <property name="iconSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
      </widget>
      <widget class="QRadioButton" name="radio_sexual">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>30</y>
+        <x>10</x>
+        <y>70</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -154,16 +154,16 @@
       </property>
       <property name="iconSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
      </widget>
      <widget class="QRadioButton" name="radio_violence">
       <property name="geometry">
        <rect>
-        <x>190</x>
-        <y>30</y>
+        <x>100</x>
+        <y>20</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -177,16 +177,16 @@
       </property>
       <property name="iconSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
      </widget>
      <widget class="QRadioButton" name="radio_yes">
       <property name="geometry">
        <rect>
-        <x>280</x>
-        <y>30</y>
+        <x>100</x>
+        <y>70</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -200,16 +200,16 @@
       </property>
       <property name="iconSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
      </widget>
      <widget class="QRadioButton" name="radio_personalized">
       <property name="geometry">
        <rect>
-        <x>530</x>
-        <y>30</y>
+        <x>200</x>
+        <y>70</y>
         <width>141</width>
         <height>71</height>
        </rect>
@@ -219,16 +219,16 @@
       </property>
       <property name="iconSize">
        <size>
-        <width>50</width>
-        <height>50</height>
+        <width>30</width>
+        <height>30</height>
        </size>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_choose_icon">
       <property name="geometry">
        <rect>
-        <x>520</x>
-        <y>100</y>
+        <x>180</x>
+        <y>130</y>
         <width>151</width>
         <height>41</height>
        </rect>
@@ -250,37 +250,21 @@
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>80</x>
         <y>10</y>
-        <width>66</width>
+        <width>161</width>
         <height>17</height>
        </rect>
       </property>
       <property name="text">
-       <string>Ícone:</string>
+       <string>Ícone de Interatividade</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QFrame" name="frame_2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>180</y>
-       <width>681</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
+        <y>190</y>
         <width>161</width>
         <height>31</height>
        </rect>
@@ -289,11 +273,64 @@
        <string>Ícone deve aparecer:</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>230</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Íconde deve ser exibido por:</string>
+      </property>
+     </widget>
      <widget class="QComboBox" name="cmb_icon_before">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>10</y>
+        <x>150</x>
+        <y>190</y>
+        <width>51</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>3</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>5</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>7</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>10</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>15</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="cmb_icon_duration">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>230</y>
         <width>51</width>
         <height>27</height>
        </rect>
@@ -332,8 +369,8 @@
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>10</y>
+        <x>210</x>
+        <y>190</y>
         <width>131</width>
         <height>31</height>
        </rect>
@@ -342,24 +379,11 @@
        <string>segundo(s) antes.</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_5">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>191</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Íconde deve ser exibido por:</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>40</y>
+        <x>260</x>
+        <y>230</y>
         <width>111</width>
         <height>31</height>
        </rect>
@@ -367,46 +391,6 @@
       <property name="text">
        <string>segundo(s).</string>
       </property>
-     </widget>
-     <widget class="QComboBox" name="cmb_icon_duration">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>40</y>
-        <width>51</width>
-        <height>27</height>
-       </rect>
-      </property>
-      <item>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>5</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>7</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>10</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>15</string>
-       </property>
-      </item>
      </widget>
     </widget>
     <widget class="QFrame" name="frame_3">
@@ -513,10 +497,142 @@
       </property>
      </widget>
     </widget>
+    <widget class="QFrame" name="frame_4">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>10</y>
+       <width>341</width>
+       <height>271</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QCheckBox" name="ckb_viber">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>171</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Alerta Vibratório</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>171</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_choose_icon_2">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>40</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Escolher Áudio</string>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/i/folder_open.png</normaloff>:/i/folder_open.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ckb_audio">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>141</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Alerta Sonoro</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_interaction">
+    <attribute name="title">
+     <string>Tipo Interação</string>
+    </attribute>
+    <widget class="QRadioButton" name="radio_skip">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>20</y>
+       <width>116</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Pular trecho</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radio_back">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>20</y>
+       <width>161</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Voltar 5 segundos</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radio_show">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>116</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Apenas exibir</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radio_back_to">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>20</y>
+       <width>231</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Voltar a um trecho específico</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_content">
     <attribute name="title">
-     <string>Mídias</string>
+     <string>Tipos de Mídias</string>
     </attribute>
    </widget>
    <widget class="QWidget" name="tab_behavior">
@@ -540,7 +656,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>60</y>
+       <y>90</y>
        <width>331</width>
        <height>22</height>
       </rect>
@@ -553,13 +669,13 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>90</y>
+       <y>120</y>
        <width>331</width>
        <height>22</height>
       </rect>
      </property>
      <property name="text">
-      <string>Permitir finalizar o contéudo adicional</string>
+      <string>Permitir finalizar o conteúdo complementar</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -569,7 +685,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>150</y>
+       <y>180</y>
        <width>331</width>
        <height>22</height>
       </rect>
@@ -582,7 +698,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>120</y>
+       <y>150</y>
        <width>331</width>
        <height>22</height>
       </rect>
@@ -594,11 +710,19 @@
       <bool>true</bool>
      </property>
     </widget>
-   </widget>
-   <widget class="QWidget" name="tab">
-    <attribute name="title">
-     <string>Page</string>
-    </attribute>
+    <widget class="QCheckBox" name="ckb_compulsory_2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>331</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Apresentar o conteúdo de forma interativa</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QPushButton" name="btn_cancel">
@@ -647,6 +771,13 @@
     </size>
    </property>
   </widget>
+  <zorder>tabs</zorder>
+  <zorder>lbl_begin_time</zorder>
+  <zorder>time_begin</zorder>
+  <zorder>textEdit</zorder>
+  <zorder>label</zorder>
+  <zorder>btn_cancel</zorder>
+  <zorder>btn_ok</zorder>
  </widget>
  <resources>
   <include location="icons.qrc"/>

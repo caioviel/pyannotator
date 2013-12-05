@@ -189,8 +189,6 @@
      <height>481</height>
     </rect>
    </property>
-   <zorder>btn_choose_video</zorder>
-   <zorder>btn_choose_video</zorder>
   </widget>
   <widget class="QFrame" name="frame_edit">
    <property name="geometry">
