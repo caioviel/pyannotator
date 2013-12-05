@@ -297,16 +297,6 @@
       </property>
       <item>
        <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
         <string>5</string>
        </property>
       </item>
@@ -335,16 +325,6 @@
         <height>27</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>1</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>3</string>
-       </property>
-      </item>
       <item>
        <property name="text">
         <string>5</string>
@@ -412,7 +392,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>40</y>
+        <y>130</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -438,7 +418,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>70</y>
+        <y>40</y>
         <width>221</width>
         <height>22</height>
        </rect>
@@ -451,7 +431,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>100</y>
+        <y>70</y>
         <width>181</width>
         <height>22</height>
        </rect>
@@ -464,7 +444,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>130</y>
+        <y>100</y>
         <width>201</width>
         <height>22</height>
        </rect>
@@ -571,6 +551,29 @@
        <string>Alerta Sonoro</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="btn_play_audio">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>40</y>
+        <width>51</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/i/button_blue_play.png</normaloff>:/i/button_blue_play.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>40</width>
+        <height>40</height>
+       </size>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_interaction">
@@ -627,6 +630,16 @@
      </property>
      <property name="text">
       <string>Voltar a um trecho específico</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="player_widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>691</width>
+       <height>481</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -771,6 +784,29 @@
     </size>
    </property>
   </widget>
+  <widget class="QPushButton" name="btn_preview">
+   <property name="geometry">
+    <rect>
+     <x>317</x>
+     <y>600</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Visualizar</string>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/i/button_blue_play.png</normaloff>:/i/button_blue_play.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>25</width>
+     <height>25</height>
+    </size>
+   </property>
+  </widget>
   <zorder>tabs</zorder>
   <zorder>lbl_begin_time</zorder>
   <zorder>time_begin</zorder>
@@ -778,6 +814,7 @@
   <zorder>label</zorder>
   <zorder>btn_cancel</zorder>
   <zorder>btn_ok</zorder>
+  <zorder>btn_preview</zorder>
  </widget>
  <resources>
   <include location="icons.qrc"/>
