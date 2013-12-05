@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ShowContent.ui'
 #
-# Created: Thu Dec  5 15:48:44 2013
+# Created: Thu Dec  5 17:41:17 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -179,6 +179,9 @@ class Ui_ShowContent(object):
         self.ckb_show_on_tv.setChecked(True)
         self.ckb_show_on_tv.setObjectName(_fromUtf8("ckb_show_on_tv"))
         self.tabs.addTab(self.tab_behavior, _fromUtf8(""))
+        self.tab = QtGui.QWidget()
+        self.tab.setObjectName(_fromUtf8("tab"))
+        self.tabs.addTab(self.tab, _fromUtf8(""))
         self.btn_cancel = QtGui.QPushButton(ShowContent)
         self.btn_cancel.setGeometry(QtCore.QRect(640, 600, 101, 41))
         icon6 = QtGui.QIcon()
@@ -195,7 +198,7 @@ class Ui_ShowContent(object):
         self.btn_ok.setObjectName(_fromUtf8("btn_ok"))
 
         self.retranslateUi(ShowContent)
-        self.tabs.setCurrentIndex(2)
+        self.tabs.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(ShowContent)
 
     def retranslateUi(self, ShowContent):
@@ -235,6 +238,7 @@ class Ui_ShowContent(object):
         self.ckb_show_on_mobile.setText(QtGui.QApplication.translate("ShowContent", "Enviar conteúdo para o celular", None, QtGui.QApplication.UnicodeUTF8))
         self.ckb_show_on_tv.setText(QtGui.QApplication.translate("ShowContent", "Exibir o conteúdo na TV", None, QtGui.QApplication.UnicodeUTF8))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_behavior), QtGui.QApplication.translate("ShowContent", "Comportamento", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab), QtGui.QApplication.translate("ShowContent", "Page", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_cancel.setText(QtGui.QApplication.translate("ShowContent", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_ok.setText(QtGui.QApplication.translate("ShowContent", "Ok", None, QtGui.QApplication.UnicodeUTF8))
 

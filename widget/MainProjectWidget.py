@@ -6,20 +6,25 @@ Created on Feb 3, 2013
 
 @author: caioviel
 '''
-import os
 from datetime import datetime
 import logging
 logger = logging.getLogger('pyannotator')
 logger.setLevel(logging.DEBUG)
 
-
+import model
 from model import Annotation
 from PyQt4 import QtGui, QtCore
 from PyQt4.phonon import Phonon
 from ui.ui_MainProjectWidget import Ui_MainProjectWidget
 from ui.ui_AnnotationListItem import Ui_AnnotationListItem
 from VideoPlayer import VideoPlayer
-import model
+import os
+import sys
+import getpass
+
+real_path, _ = os.path.split(os.path.realpath(__file__))
+home_directory = os.getenv('USERPROFILE') or os.getenv('HOME')
+username = getpass.getuser()
 
 
 class AnnotationListItem(QtGui.QWidget):
@@ -148,6 +153,7 @@ class MainProjectWidget(QtGui.QWidget):
         
         self.ui.btn_save_project.clicked.connect(self.save_project)
         self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
+        self.ui.btn_close_project.clicked.connect(self.close_project)
         
         self.ui.btn_ok.clicked.connect(self.save_edit)
         self.ui.btn_cancel.clicked.connect(self.cancel_edit)
@@ -169,6 +175,20 @@ class MainProjectWidget(QtGui.QWidget):
                 pass
             
         return False
+    
+    @QtCore.pyqtSlot()
+    def close_project(self):
+        reply = QtGui.QMessageBox.question(self, u"Fechando o projeto...", 
+                                           u"Tem certeza que deseja fechar este projeto?",
+                                           QtGui.QMessageBox.Yes|QtGui.QMessageBox.No);
+                                           
+        if reply == QtGui.QMessageBox.No:
+            return
+        from ProjectChooseWidget import ProjectChooseWidget
+        self._choose_widget = ProjectChooseWidget(real_path, home_directory, username)
+        self.close()
+        
+        
         
     
     @QtCore.pyqtSlot()
@@ -362,6 +382,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.player.stop()
         self.player.load_video( self.main_video_path )
         self.player.player.mediaObject().tick.connect(self.update_time_edit)
+        self.player.play()
 
 
 def test():

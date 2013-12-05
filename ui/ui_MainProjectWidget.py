@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/MainProjectWidget.ui'
 #
-# Created: Thu Dec  5 15:48:44 2013
+# Created: Thu Dec  5 17:41:17 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -40,7 +40,7 @@ class Ui_MainProjectWidget(object):
         self.btn_add_annotation.setIconSize(QtCore.QSize(40, 40))
         self.btn_add_annotation.setObjectName(_fromUtf8("btn_add_annotation"))
         self.frame_notes = QtGui.QFrame(MainProjectWidget)
-        self.frame_notes.setGeometry(QtCore.QRect(690, 10, 301, 641))
+        self.frame_notes.setGeometry(QtCore.QRect(690, 10, 301, 591))
         self.frame_notes.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_notes.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_notes.setObjectName(_fromUtf8("frame_notes"))
@@ -48,18 +48,18 @@ class Ui_MainProjectWidget(object):
         self.label.setGeometry(QtCore.QRect(10, 10, 131, 17))
         self.label.setObjectName(_fromUtf8("label"))
         self.list_notes = QtGui.QListWidget(self.frame_notes)
-        self.list_notes.setGeometry(QtCore.QRect(10, 30, 281, 601))
+        self.list_notes.setGeometry(QtCore.QRect(10, 30, 281, 551))
         self.list_notes.setObjectName(_fromUtf8("list_notes"))
         self.btn_generate_ncl = QtGui.QPushButton(MainProjectWidget)
         self.btn_generate_ncl.setEnabled(False)
-        self.btn_generate_ncl.setGeometry(QtCore.QRect(530, 610, 151, 41))
+        self.btn_generate_ncl.setGeometry(QtCore.QRect(680, 610, 151, 41))
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/notepad.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_generate_ncl.setIcon(icon2)
         self.btn_generate_ncl.setIconSize(QtCore.QSize(40, 40))
         self.btn_generate_ncl.setObjectName(_fromUtf8("btn_generate_ncl"))
         self.btn_save_project = QtGui.QPushButton(MainProjectWidget)
-        self.btn_save_project.setGeometry(QtCore.QRect(380, 610, 151, 41))
+        self.btn_save_project.setGeometry(QtCore.QRect(520, 610, 151, 41))
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/save.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btn_save_project.setIcon(icon3)
@@ -93,6 +93,13 @@ class Ui_MainProjectWidget(object):
         self.lbl_save_edit = QtGui.QLabel(self.frame_edit)
         self.lbl_save_edit.setGeometry(QtCore.QRect(20, 0, 131, 17))
         self.lbl_save_edit.setObjectName(_fromUtf8("lbl_save_edit"))
+        self.btn_close_project = QtGui.QPushButton(MainProjectWidget)
+        self.btn_close_project.setGeometry(QtCore.QRect(840, 610, 151, 41))
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/folder.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_close_project.setIcon(icon6)
+        self.btn_close_project.setIconSize(QtCore.QSize(40, 40))
+        self.btn_close_project.setObjectName(_fromUtf8("btn_close_project"))
 
         self.retranslateUi(MainProjectWidget)
         QtCore.QMetaObject.connectSlotsByName(MainProjectWidget)
@@ -107,5 +114,6 @@ class Ui_MainProjectWidget(object):
         self.btn_ok.setText(QtGui.QApplication.translate("MainProjectWidget", "Ok", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_cancel.setText(QtGui.QApplication.translate("MainProjectWidget", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_save_edit.setText(QtGui.QApplication.translate("MainProjectWidget", "Salvar alterações?", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_close_project.setText(QtGui.QApplication.translate("MainProjectWidget", "Fechar Projeto", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc

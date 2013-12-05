@@ -105,6 +105,7 @@ class TextContent(QtGui.QDialog):
                 
 
     def init_ui(self):
+        self.setFixedSize(self.size())
         self.layout_selector = LayoutSelector(parent=self.ui.layout_selection_holder)
         
         lbl_content = self.layout_selector.lbl_content

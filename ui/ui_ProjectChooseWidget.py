@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ProjectChooseWidget.ui'
 #
-# Created: Thu Dec  5 15:48:44 2013
+# Created: Thu Dec  5 17:41:17 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -36,6 +36,13 @@ class Ui_ProjectChooseWidget(object):
         self.btn_open_project.setIcon(icon)
         self.btn_open_project.setIconSize(QtCore.QSize(40, 40))
         self.btn_open_project.setObjectName(_fromUtf8("btn_open_project"))
+        self.btn_delete_project = QtGui.QPushButton(self.frame)
+        self.btn_delete_project.setGeometry(QtCore.QRect(10, 280, 161, 51))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/i/sub_blue_delete.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_delete_project.setIcon(icon1)
+        self.btn_delete_project.setIconSize(QtCore.QSize(40, 40))
+        self.btn_delete_project.setObjectName(_fromUtf8("btn_delete_project"))
         self.frame_2 = QtGui.QFrame(ProjectChooseWidget)
         self.frame_2.setGeometry(QtCore.QRect(370, 10, 351, 341))
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
@@ -58,9 +65,9 @@ class Ui_ProjectChooseWidget(object):
         self.txt_description_2.setObjectName(_fromUtf8("txt_description_2"))
         self.btn_create_project = QtGui.QPushButton(self.frame_2)
         self.btn_create_project.setGeometry(QtCore.QRect(177, 280, 161, 51))
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("../../../Downloads/file_upload.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.btn_create_project.setIcon(icon1)
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8("../../../Downloads/file_upload.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btn_create_project.setIcon(icon2)
         self.btn_create_project.setIconSize(QtCore.QSize(40, 40))
         self.btn_create_project.setObjectName(_fromUtf8("btn_create_project"))
         self.label_4 = QtGui.QLabel(self.frame_2)
@@ -74,6 +81,7 @@ class Ui_ProjectChooseWidget(object):
         ProjectChooseWidget.setWindowTitle(QtGui.QApplication.translate("ProjectChooseWidget", "Selecionado Projeto", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Projetos Recentes:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_open_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Abrir Projeto", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_delete_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Excluir Projecto", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Identificador:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Nome:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_create_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Criar Projeto", None, QtGui.QApplication.UnicodeUTF8))

@@ -26,15 +26,14 @@ class ProjectChooseWidget(QtGui.QWidget):
     def init_ui(self):
         self.ui.btn_create_project.setEnabled(False)
         self.ui.btn_open_project.setEnabled(False)
-        
+        self.ui.btn_delete_project.setEnabled(False)
+        self.ui.btn_delete_project.clicked.connect(self.delete_project)
         self.ui.btn_create_project.clicked.connect(self.create_project)
         self.ui.btn_open_project.clicked.connect(self.open_project)
         self.ui.lst_projects.itemSelectionChanged.connect(self.atualize_open_button)
         
         self.ui.txt_project_id.textChanged.connect(self.atualize_create_button)
         self.ui.txt_project_name.textChanged.connect(self.atualize_create_button)
-        
-        
         
         self.detect_projects()    
     
@@ -84,6 +83,7 @@ class ProjectChooseWidget(QtGui.QWidget):
     def atualize_open_button(self):
         #selected = self.ui.lst_projects.currentItem()
         self.ui.btn_open_project.setEnabled(True)
+        self.ui.btn_delete_project.setEnabled(True)
         
     @QtCore.pyqtSlot()
     def atualize_create_button(self):
@@ -114,6 +114,25 @@ class ProjectChooseWidget(QtGui.QWidget):
         
         self.width = MainProjectWidget(project)
         self.close()
+        
+    @QtCore.pyqtSlot()
+    def delete_project(self):
+        import shutil
+        selected = self.ui.lst_projects.currentItem()
+        print selected
+        project = selected._project
+        reply = QtGui.QMessageBox.question(self, u"Excluindo projeto...", 
+                                           u"Tem certeza que deseja excluir este projeto?",
+                                           QtGui.QMessageBox.Yes|QtGui.QMessageBox.No);
+                                           
+        if reply == QtGui.QMessageBox.No:
+            return
+        
+        directory = os.path.join(self.home_directory, self.PROJECTS_DIRECTORY, project.id)
+        shutil.rmtree(directory, ignore_errors=True)
+        
+        self.ui.lst_projects.clear()
+        self.detect_projects()()
 
     
     @QtCore.pyqtSlot()
