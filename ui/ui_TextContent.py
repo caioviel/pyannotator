@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/TextContent.ui'
 #
-# Created: Thu Dec  5 04:36:14 2013
+# Created: Thu Dec  5 15:48:44 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -113,7 +113,7 @@ class Ui_TextContent(object):
         self.btn_font_color.setText(QtGui.QApplication.translate("TextContent", "Mudar", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_bg_color.setText(QtGui.QApplication.translate("TextContent", "Mudar", None, QtGui.QApplication.UnicodeUTF8))
         self.ckb_transparency.setText(QtGui.QApplication.translate("TextContent", "Fundo Transparente", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_end_time.setText(QtGui.QApplication.translate("TextContent", "Tempo de Termino:", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_end_time.setText(QtGui.QApplication.translate("TextContent", "Tempo de Término:", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_begin_time.setText(QtGui.QApplication.translate("TextContent", "Tempo de Início:", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_duration.setText(QtGui.QApplication.translate("TextContent", "Duração (segundos):", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_ok.setText(QtGui.QApplication.translate("TextContent", "Ok", None, QtGui.QApplication.UnicodeUTF8))

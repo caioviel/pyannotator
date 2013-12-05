@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/InformationAnnotationWidget.ui'
 #
-# Created: Thu Dec  5 04:36:14 2013
+# Created: Thu Dec  5 15:48:44 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -182,6 +182,6 @@ class Ui_InformationAnnotationWidget(object):
         self.btn_save.setText(QtGui.QApplication.translate("InformationAnnotationWidget", "Salvar", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_cancel.setText(QtGui.QApplication.translate("InformationAnnotationWidget", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
 
-from PyQt4 import phonon
 from PyQt4 import QtWebKit
+from PyQt4 import phonon
 import icons_rc

@@ -24,8 +24,6 @@ class ImageContent(QtGui.QDialog):
         self.init_ui()
         self.load_content()
         
-        
-        
     def get_result(self):
         return self.result
             

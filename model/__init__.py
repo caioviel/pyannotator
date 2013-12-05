@@ -364,8 +364,7 @@ class Text(Media):
     ALIGN_RIGHT = 2
 
     def __init__(self, myid, filename, showtime, duration=5):
-        super(Text, self).__init__(myid, filename, showtime, 
-                                   showtime, Media.TEXT)
+        super(Text, self).__init__(myid, filename, showtime, Media.TEXT)
         
         self.duration = duration
         self.bondaries = None
@@ -429,7 +428,7 @@ class Text(Media):
                                             json_object['Media']['font_color'][3])
             
         if json_object['Media'].has_key('bg_color'):
-            text.font_color = QtGui.QColor(json_object['Media']['bg_color'][0],
+            text.bg_color = QtGui.QColor(json_object['Media']['bg_color'][0],
                                             json_object['Media']['bg_color'][1],
                                             json_object['Media']['bg_color'][2],
                                             json_object['Media']['bg_color'][3])
@@ -463,19 +462,6 @@ class Text(Media):
             
         if self.resize_main_video is not None:
             json_object['Media']['resize_main_video'] = self.resize_main_video.to_json()
-            
-        
-        # Text specific
-        self.text = None
-        self.font = None
-        self.fontSize = None
-        self.bold = None
-        self.italic = None
-        self.underlined = None
-        self.font_color = None
-        self.bg_color = None
-        self.bg_transparency = False
-        self.alignment = None
         
         if self.duration is not None:
             json_object['Media']['text'] = unicode(self.text)

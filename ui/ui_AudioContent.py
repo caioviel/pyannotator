@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AudioContent.ui'
 #
-# Created: Thu Dec  5 04:36:13 2013
+# Created: Thu Dec  5 15:48:44 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -76,7 +76,7 @@ class Ui_AudioContent(object):
         AudioContent.setWindowTitle(QtGui.QApplication.translate("AudioContent", "Conteúdo em Áudio", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_begin_time.setText(QtGui.QApplication.translate("AudioContent", "Tempo de Início:", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_duration.setText(QtGui.QApplication.translate("AudioContent", "Duração (segundos):", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_end_time.setText(QtGui.QApplication.translate("AudioContent", "Tempo de Termino:", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_end_time.setText(QtGui.QApplication.translate("AudioContent", "Tempo de Término:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_choose_audio.setText(QtGui.QApplication.translate("AudioContent", "Escolher Áudio", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_ok.setText(QtGui.QApplication.translate("AudioContent", "Ok", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_cancel.setText(QtGui.QApplication.translate("AudioContent", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))

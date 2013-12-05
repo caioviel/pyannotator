@@ -37,7 +37,7 @@ class ShowContent(QtGui.QDialog):
         if self.annotation.interaction is not None:
             show_content = self.annotation.interaction
             self.ui.ckb_compulsory.setChecked(show_content.compulsory)
-            self.ui.ckb_allows_end_content.setChecked(show_content.compulsory)
+            self.ui.ckb_allows_end_content.setChecked(show_content.allow_end_content)
             self.ui.ckb_show_on_tv.setChecked(show_content.tv)
             self.ui.ckb_show_on_mobile.setChecked(show_content.mobile)
             self.ui.ckb_pause_main_video.setChecked(show_content.pause_main_video)
@@ -115,6 +115,8 @@ class ShowContent(QtGui.QDialog):
         self.ui.radio_tl.setChecked(True)
         self.ui.btn_choose_icon.setEnabled(False)
         
+        self.ui.tabs.setCurrentIndex(0)
+        
         
         layout = QtGui.QHBoxLayout()
         self.ui.tab_content.setLayout(layout)
@@ -182,15 +184,15 @@ class ShowContent(QtGui.QDialog):
         icon.bondaries = self.get_icon_bondaries()
         
         if self.ui.radio_bl.isChecked():
-            icon.position == model.Icon.BOT_LEFT
+            icon.position = model.Icon.BOT_LEFT
         elif self.ui.radio_br.isChecked():
-            icon.position == model.Icon.BOT_RIGHT
+            icon.position = model.Icon.BOT_RIGHT
         elif self.ui.radio_tl.isChecked():
-            icon.position == model.Icon.TOP_LEFT
+            icon.position = model.Icon.TOP_LEFT
         elif self.ui.radio_tr.isChecked():
-            icon.position == model.Icon.TOP_RIGHT
+            icon.position = model.Icon.TOP_RIGHT
         elif self.ui.radio_free_position.isChecked():
-            icon.position == model.Icon.PERSONALIZED
+            icon.position = model.Icon.PERSONALIZED
         
         show_content.icon = icon
         

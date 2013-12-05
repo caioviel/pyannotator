@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/VideoContent.ui'
 #
-# Created: Thu Dec  5 04:36:14 2013
+# Created: Thu Dec  5 15:48:45 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,18 +82,18 @@ class Ui_VideoContent(object):
         self.btn_cancel.setObjectName(_fromUtf8("btn_cancel"))
 
         self.retranslateUi(VideoContent)
-        self.tabs.setCurrentIndex(2)
+        self.tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(VideoContent)
 
     def retranslateUi(self, VideoContent):
         VideoContent.setWindowTitle(QtGui.QApplication.translate("VideoContent", "Conteúdo em Vídeo", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_choose_video.setText(QtGui.QApplication.translate("VideoContent", "Escolher Vídeo", None, QtGui.QApplication.UnicodeUTF8))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_content), QtGui.QApplication.translate("VideoContent", "Conteúdo", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_position), QtGui.QApplication.translate("VideoContent", "Posição", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabs.setTabText(self.tabs.indexOf(self.tab_behavior), QtGui.QApplication.translate("VideoContent", "Comportamento", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_position), QtGui.QApplication.translate("VideoContent", "Posição do Vídeo", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabs.setTabText(self.tabs.indexOf(self.tab_behavior), QtGui.QApplication.translate("VideoContent", "Comportamento do Vídeo", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_begin_time.setText(QtGui.QApplication.translate("VideoContent", "Tempo de Início:", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_duration.setText(QtGui.QApplication.translate("VideoContent", "Duração (segundos):", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_end_time.setText(QtGui.QApplication.translate("VideoContent", "Tempo de Termino:", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_end_time.setText(QtGui.QApplication.translate("VideoContent", "Tempo de Término:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_ok.setText(QtGui.QApplication.translate("VideoContent", "Ok", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_cancel.setText(QtGui.QApplication.translate("VideoContent", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
 

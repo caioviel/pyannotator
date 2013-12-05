@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ImageContent.ui'
 #
-# Created: Thu Dec  5 04:36:13 2013
+# Created: Thu Dec  5 15:48:44 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -74,7 +74,7 @@ class Ui_ImageContent(object):
         self.btn_cancel.setText(QtGui.QApplication.translate("ImageContent", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_duration.setText(QtGui.QApplication.translate("ImageContent", "Duração (segundos):", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_ok.setText(QtGui.QApplication.translate("ImageContent", "Ok", None, QtGui.QApplication.UnicodeUTF8))
-        self.lbl_end_time.setText(QtGui.QApplication.translate("ImageContent", "Tempo de Termino:", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_end_time.setText(QtGui.QApplication.translate("ImageContent", "Tempo de Término:", None, QtGui.QApplication.UnicodeUTF8))
         self.lbl_begin_time.setText(QtGui.QApplication.translate("ImageContent", "Tempo de Início:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_choose_image.setText(QtGui.QApplication.translate("ImageContent", "Escolher Imagem", None, QtGui.QApplication.UnicodeUTF8))
 
