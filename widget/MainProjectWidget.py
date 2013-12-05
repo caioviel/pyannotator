@@ -50,32 +50,14 @@ class AnnotationListItem(QtGui.QWidget):
         self.pop_menu.addAction(action)
         self.pop_menu.addSeparator()
         
-        if self.annotation.interaction is None:
-            sub_menu = QtGui.QMenu(u"Definir Interação", self)
-            self.pop_menu.addMenu(sub_menu)
-            
-            
-            action = QtGui.QAction(u'Exibir conteúdo', self)
-            action.triggered.connect(self.main_widget.show_content_widget)
-            sub_menu.addAction(action)
-            sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
-            sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
-            sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
-        else:
-            action = QtGui.QAction(u'Editar exibir conteúdo', self)
+        if self.annotation.interaction is None:            
+            action = QtGui.QAction(u'Inserir CMC', self)
             action.triggered.connect(self.main_widget.show_content_widget)
             self.pop_menu.addAction(action)
-            
-            sub_menu = QtGui.QMenu(u"Alterar Interação", self)
-            self.pop_menu.addMenu(sub_menu)
-            
-            
-            #action = QtGui.QAction(u'Exibir conteúdo', self)
-            #action.triggered.connect(self.main_widget.show_content_widget)
-            #sub_menu.addAction(action)
-            sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
-            sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
-            sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
+        else:
+            action = QtGui.QAction(u'Editar CMC', self)
+            action.triggered.connect(self.main_widget.show_content_widget)
+            self.pop_menu.addAction(action)
         
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         #self.connect(self.connect(self.button, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.on_context_menu)
