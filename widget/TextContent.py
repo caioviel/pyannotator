@@ -29,9 +29,10 @@ class TextContent(QtGui.QDialog):
         self.align_array = [QtCore.Qt.AlignLeft, QtCore.Qt.AlignCenter, QtCore.Qt.AlignRight]
         self.text_alligment = QtCore.Qt.AlignCenter
         
-        self.bg_color = QtGui.QColor(QtCore.Qt.white)
-        self.font_color = QtGui.QColor(QtCore.Qt.black)
+        self.bg_color = QtGui.QColor(QtCore.Qt.black)
+        self.font_color = QtGui.QColor(QtCore.Qt.yellow)
         self.current_font = self.ui.textEdit.font()
+        self.current_font.setPointSize(20)
         self.transparency_bg = False
         self.text_content = ""
         
@@ -110,6 +111,7 @@ class TextContent(QtGui.QDialog):
         
         lbl_content = self.layout_selector.lbl_content
         lbl_content.resize(self.layout_selector.width(),50)
+        lbl_content.move(8,344)
         self.update_text()
         self.ui.cmb_alligment.setCurrentIndex(1)
         
@@ -258,7 +260,7 @@ class TextContent(QtGui.QDialog):
                                        "color: rgb"+str(self.font_color.getRgb())+";")
         
         if self.ui.textEdit.toPlainText() == "":
-            lbl_content.setText(u"Conteúdo Adicional")
+            lbl_content.setText(u"Conteúdo Complementar")
         else:
             lbl_content.setText(self.ui.textEdit.toPlainText())
         
