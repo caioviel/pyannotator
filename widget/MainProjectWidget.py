@@ -60,7 +60,9 @@ class AnnotationListItem(QtGui.QWidget):
         self.pop_menu.addMenu(sub_menu)
         
         
-        sub_menu.addAction(QtGui.QAction(u'Exibir conteúdo', self))
+        action = QtGui.QAction(u'Exibir conteúdo', self)
+        action.triggered.connect(self.main_widget.show_content_widget)
+        sub_menu.addAction(action)
         sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
         sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
         sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
@@ -223,6 +225,16 @@ class MainProjectWidget(QtGui.QWidget):
         annotation = self.ui.list_notes.itemWidget(item).annotation
         if self.project.remove_annotation(annotation):
             self.annotation_list_chaged.emit()
+            
+            
+    @QtCore.pyqtSlot()
+    def show_content_widget(self):
+        item = self.ui.list_notes.currentItem()
+        annotation = self.ui.list_notes.itemWidget(item).annotation
+        
+        from ShowContent import ShowContent
+        widget = ShowContent(self.project, annotation, self)
+        widget.exec_()
         
     
     @QtCore.pyqtSlot()

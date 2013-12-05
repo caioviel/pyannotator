@@ -11,12 +11,20 @@ HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
 from LayoutSelector import *
 
 class ShowContent(QtGui.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, project=None, annotation=None, parent=None):
         super(ShowContent, self).__init__(parent)
+        self.project = project
+        self.annotation = annotation
+        
         self.ui = Ui_ShowContent()
         self.ui.setupUi(self)
         
         self.init_ui()
+        
+        self.result = None
+        
+    def get_result(self):
+        return self.result
         
     def init_ui(self):
         self.setFixedSize(self.size())
