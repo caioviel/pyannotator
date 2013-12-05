@@ -126,14 +126,32 @@ class Media(object):
     TEXT = 4
     SLIDES = 5 
     
-    def __init__(self, myid, filename, showtime):
+    def __init__(self, myid, filename, showtime, mtype=IMAGE):
         self.id = myid
         self.filename = filename
+        self.type = mtype
         
         #time configurations
         self.showtime = showtime
         self.begintime = None
         self.duration = None
+        
+    @staticmethod
+    def parse_json(json_object):
+        mtype = json_object['Media']['type']
+        if mtype == 'AUDIO':
+            return Audio.parse_json(json_object)
+        elif mtype == 'VIDEO':
+            return Video.parse_json(json_object)
+        elif mtype == 'IMAGE':
+            return Image.parse_json(json_object)
+        elif mtype == 'TEXT':
+            return Text.parse_json(json_object)
+        elif mtype == 'SLIDES':
+            return Slides.parse_json(json_object)
+    
+    def to_json(self):
+        pass
         
 CONTENT_TYPES = {Media.AUDIO : u'Áudio (*.wav *.mp3 *.ogg *.oga)',
                  Media.VIDEO : u'Vídeo (*.avi *.mp4 *.ogg *.webm *.mpeg)',
@@ -147,6 +165,30 @@ class Bondaries(object):
         self.left = left
         self.width = width
         self.height = height
+        self.screen_width = -1
+        self.screen_height =  -1
+        
+    @staticmethod
+    def parse_json(json_object):
+        bound = Bondaries()
+        
+        bound.top = json_object['Boundaries']['top']
+        bound.left = json_object['Boundaries']['left']
+        bound.width = json_object['Boundaries']['width']
+        bound.height = json_object['Boundaries']['height']
+        bound.screen_width = json_object['Boundaries']['screen_width']
+        bound.screen_height = json_object['Boundaries']['screen_height']
+        
+        return bound
+    
+    def to_json(self):
+        json_object = {'Boundaries' : {'top' : self.top,
+                                      'left' : self.left,
+                                      'width' : self.width,
+                                      'height' : self.height,
+                                      'screen_width' : self.screen_width,
+                                      'screen_height' : self.screen_height}}
+        return json_object
         
     def __str__(self):
         return str((self.left, self.top, self.width, self.height))
@@ -154,21 +196,182 @@ class Bondaries(object):
         
 class Audio(Media):
     def __init__(self, myid, filename, showtime):
-        super(Audio, self).__init__(myid, filename, showtime)
+        super(Audio, self).__init__(myid, filename, 
+                                    showtime, Media.AUDIO)
+        
         self.main_video_volume = None
         self.media_volume = None
         
+    @staticmethod
+    def parse_json(json_object):
+        myid = json_object['Media']['id']
+        filename = json_object['Media']['filename']
+        showtime = json_object['Media']['showtime']
+        audio = Audio(myid, filename, showtime)
+        
+        if json_object['Media'].has_key('duration'):
+            audio.duration = json_object['Media']['duration']
+     
+        if json_object['Media'].has_key('begintime'):
+            audio.begintime = json_object['Media']['begintime']
+            
+        if json_object['Media'].has_key('media_volume'):
+            audio.media_volume = json_object['Media']['media_volume']
+            
+        if json_object['Media'].has_key('main_video_volume'):
+            audio.main_video_volume = json_object['Media']['main_video_volume']
+            
+        return audio
+    
+    def to_json(self):
+        json_object = {'Media' : {'type' : 'AUDIO',
+                                  'id' : self.id,
+                                  'filename' : self.filename,
+                                  'showtime' : self.showtime}}
+        
+        if self.duration is not None:
+            json_object['Media']['duration'] = self.duration
+            
+        if self.begintime is not None:
+            json_object['Media']['begintime'] = self.begintime
+            
+        if self.media_volume is not None:
+            json_object['Media']['media_volume'] = self.media_volume
+            
+        if self.main_video_volume is not None:
+            json_object['Media']['main_video_volume'] = self.main_video_volume
+            
+        return json_object
+        
 class Video(Media):
     def __init__(self, myid, filename, showtime):
-        super(Video, self).__init__(myid, filename, showtime)
+        super(Video, self).__init__(myid, filename, 
+                                    showtime, Media.VIDEO)
+        
         self.bondaries = None
         self.resize_main_video = None
         self.main_video_volume = None
         self.media_volume = None
+        
+    @staticmethod
+    def parse_json(json_object):
+        myid = json_object['Media']['id']
+        filename = json_object['Media']['filename']
+        showtime = json_object['Media']['showtime']
+        video = Video(myid, filename, showtime)
+        
+        if json_object['Media'].has_key('duration'):
+            video.duration = json_object['Media']['duration']
+     
+        if json_object['Media'].has_key('begintime'):
+            video.begintime = json_object['Media']['begintime']
+            
+        if json_object['Media'].has_key('media_volume'):
+            video.media_volume = json_object['Media']['media_volume']
+            
+        if json_object['Media'].has_key('main_video_volume'):
+            video.main_video_volume = json_object['Media']['main_video_volume']
+            
+        if json_object['Media'].has_key('bondaries'):
+            video.bondaries = Bondaries.parse_json(json_object['Media']['bondaries'])
+            
+        if json_object['Media'].has_key('resize_main_video'):
+            video.resize_main_video = Bondaries.parse_json(json_object['Media']['resize_main_video'])
+            
+        return video
+    
+    def to_json(self):
+        json_object = {'Media' : {'type' : 'VIDEO',
+                                  'id' : self.id,
+                                  'filename' : self.filename,
+                                  'showtime' : self.showtime}}
+        
+        if self.duration is not None:
+            json_object['Media']['duration'] = self.duration
+            
+        if self.begintime is not None:
+            json_object['Media']['begintime'] = self.begintime
+            
+        if self.media_volume is not None:
+            json_object['Media']['media_volume'] = self.media_volume
+            
+        if self.main_video_volume is not None:
+            json_object['Media']['main_video_volume'] = self.main_video_volume
+            
+        if self.bondaries is not None:
+            json_object['Media']['bondaries'] = self.bondaries.to_json()
+            
+        if self.resize_main_video is not None:
+            json_object['Media']['resize_main_video'] = self.resize_main_video.to_json()
+            
+        return json_object
+            
+class Image(Media):
+    def __init__(self, myid, filename, showtime, duration=5):
+        super(Image, self).__init__(myid, filename, 
+                                    showtime, Media.IMAGE)
+        
+        self.duration = duration
+        self.bondaries = None
+        self.resize_main_video = None
+        
+    @staticmethod
+    def parse_json(json_object):
+        myid = json_object['Media']['id']
+        filename = json_object['Media']['filename']
+        showtime = json_object['Media']['showtime']
+        image = Video(myid, filename, showtime)
+        
+        if json_object['Media'].has_key('duration'):
+            image.duration = json_object['Media']['duration']
+     
+        if json_object['Media'].has_key('begintime'):
+            image.begintime = json_object['Media']['begintime']
+            
+        if json_object['Media'].has_key('bondaries'):
+            image.bondaries = Bondaries.parse_json(json_object['Media']['bondaries'])
+            
+        if json_object['Media'].has_key('resize_main_video'):
+            image.resize_main_video = Bondaries.parse_json(json_object['Media']['resize_main_video'])
+            
+        return image
+    
+    def to_json(self):
+        json_object = {'Media' : {'type' : 'IMAGE',
+                                  'id' : self.id,
+                                  'filename' : self.filename,
+                                  'showtime' : self.showtime}}
+        
+        if self.duration is not None:
+            json_object['Media']['duration'] = self.duration
+            
+        if self.begintime is not None:
+            json_object['Media']['begintime'] = self.begintime
+            
+        if self.media_volume is not None:
+            json_object['Media']['media_volume'] = self.media_volume
+            
+        if self.main_video_volume is not None:
+            json_object['Media']['main_video_volume'] = self.main_video_volume
+            
+        if self.bondaries is not None:
+            json_object['Media']['bondaries'] = self.bondaries.to_json()
+            
+        if self.resize_main_video is not None:
+            json_object['Media']['resize_main_video'] = self.resize_main_video.to_json()
+            
+        return json_object
+
 
 class Text(Media):
+    ALIGN_LEFT = 1
+    ALIGN_RIGHT = 2
+    ALIGN_CENTER = 3
+
     def __init__(self, myid, filename, showtime, duration=5):
-        super(Text, self).__init__(myid, filename, showtime)
+        super(Text, self).__init__(myid, filename, showtime, 
+                                   showtime, Media.TEXT)
+        
         self.duration = duration
         self.bondaries = None
         self.resize_main_video = None
@@ -177,24 +380,157 @@ class Text(Media):
         self.fontSize = None
         self.bold = None
         self.italic = None
-        self.sublimed = None
+        self.underlined = None
         self.font_color = None
         self.bg_color = None
         self.bg_transparency = False
-        self.alling = False
+        self.alignment = None
+        
+    @staticmethod
+    def parse_json(json_object):
+        myid = json_object['Media']['id']
+        filename = json_object['Media']['filename']
+        showtime = json_object['Media']['showtime']
+        text = Text(myid, filename, showtime)
+        
+        if json_object['Media'].has_key('duration'):
+            text.duration = json_object['Media']['duration']
+     
+        if json_object['Media'].has_key('begintime'):
+            text.begintime = json_object['Media']['begintime']
+            
+        if json_object['Media'].has_key('bondaries'):
+            text.bondaries = Bondaries.parse_json(json_object['Media']['bondaries'])
+            
+        if json_object['Media'].has_key('resize_main_video'):
+            text.resize_main_video = Bondaries.parse_json(json_object['Media']['resize_main_video'])
+            
+        #Text specifics
+        if json_object['Media'].has_key('text'):
+            text.text = json_object['Media']['text']
+        
+        if json_object['Media'].has_key('font'):
+            text.font = json_object['Media']['font']
+            
+        if json_object['Media'].has_key('fontSize'):
+            text.fontSize = json_object['Media']['fontSize']
+            
+        if json_object['Media'].has_key('bold'):
+            text.bold = json_object['Media']['bold']
+            
+        if json_object['Media'].has_key('italic'):
+            text.italic = json_object['Media']['italic']
+            
+        if json_object['Media'].has_key('underlined'):
+            text.underlined = json_object['Media']['underlined']
+            
+        if json_object['Media'].has_key('bg_transparency'):
+            text.bg_transparency = json_object['Media']['bg_transparency']
+        
+        if json_object['Media'].has_key('font_color'):
+            text.font_color = QtGui.QColor(json_object['Media']['font_color'][0],
+                                            json_object['Media']['font_color'][1],
+                                            json_object['Media']['font_color'][2],
+                                            json_object['Media']['font_color'][3])
+            
+        if json_object['Media'].has_key('bg_color'):
+            text.font_color = QtGui.QColor(json_object['Media']['bg_color'][0],
+                                            json_object['Media']['bg_color'][1],
+                                            json_object['Media']['bg_color'][2],
+                                            json_object['Media']['bg_color'][3])
+            
+        if json_object['Media'].has_key('alignment'):
+            align_str = json_object['Media']['alignment']
+            if align_str == 'ALIGN_LEFT':
+                text.alignment = Text.ALIGN_LEFT
+            elif align_str == 'ALIGN_RIGHT':
+                text.alignment = Text.ALIGN_RIGHT
+            elif align_str == 'ALIGN_CENTER':
+                text.alignment = Text.ALIGN_CENTER
+            
+            
+        return text
+    
+    def to_json(self):
+        json_object = {'Media' : {'type' : 'TEXT',
+                                  'id' : self.id,
+                                  'filename' : self.filename,
+                                  'showtime' : self.showtime}}
+        
+        if self.duration is not None:
+            json_object['Media']['duration'] = self.duration
+            
+        if self.begintime is not None:
+            json_object['Media']['begintime'] = self.begintime
+            
+        if self.bondaries is not None:
+            json_object['Media']['bondaries'] = self.bondaries.to_json()
+            
+        if self.resize_main_video is not None:
+            json_object['Media']['resize_main_video'] = self.resize_main_video.to_json()
+            
+        
+        # Text specific
+        self.text = None
+        self.font = None
+        self.fontSize = None
+        self.bold = None
+        self.italic = None
+        self.underlined = None
+        self.font_color = None
+        self.bg_color = None
+        self.bg_transparency = False
+        self.alignment = None
+        
+        if self.duration is not None:
+            json_object['Media']['text'] = unicode(self.text)
+            
+        if self.font is not None:
+            json_object['Media']['font'] = unicode(self.font)
+            
+        if self.fontSize is not None:
+            json_object['Media']['fontSize'] = self.fontSize
+            
+        if self.bold is not None:
+            json_object['Media']['bold'] = self.bold
+            
+        if self.italic is not None:
+            json_object['Media']['italic'] = self.italic
+            
+        if self.underlined is not None:
+            json_object['Media']['underlined'] = self.underlined
+            
+        if self.bg_transparency is not None:
+            json_object['Media']['bg_transparency'] = self.bg_transparency
+            
+        if self.alignment is not None:
+            if self.alignment == Text.ALIGN_CENTER:
+                json_object['Media']['alignment'] = 'ALIGN_CENTER'
+            elif self.alignment == Text.ALIGN_LEFT:
+                json_object['Media']['alignment'] = 'ALIGN_LEFT'
+            elif self.alignment == Text.ALIGN_RIGHT:
+                json_object['Media']['alignment'] = 'ALIGN_RIGHT'
+                
+        if self.font_color is not None:
+            json_object['Media']['font_color'] = [self.font_color.red(),
+                                                  self.font_color.green(),
+                                                  self.font_color.blue(),
+                                                  self.font_color.alpha()]
+            
+        if self.bg_color is not None:
+            json_object['Media']['bg_color'] = [self.bg_color.red(),
+                                                self.bg_color.green(),
+                                                self.bg_color.blue(),
+                                                self.bg_color.alpha()]
+            
+        return json_object
         
         
-
-class Image(Media):
-    def __init__(self, myid, filename, showtime, duration=5):
-        super(Image, self).__init__(myid, filename, showtime)
-        self.duration = duration
-        self.bondaries = None
-        self.resize_main_video = None
-
 class Slides(Media):
     def __init__(self, myid, filename, showtime):
-        super(Slides, self).__init__(myid, filename, showtime)
+        super(Slides, self).__init__(myid, filename, 
+                                     showtime, Media.SLIDES)
+        
         self.slides = []
         self.transition_time = 2
         self.auto_transition = True
@@ -210,16 +546,88 @@ class Slides(Media):
             self.slides.insert(position, image)
         
 class Icon(object):
-    #Colocar as imagens aqui no icone como variaveis
+    INFO = 1
+    VIOLENCE = 2
+    SEXUAL = 3
+    YES = 4
+    NO = 5
+    
     
     def __init__(self, image=None, relative_time=None, duration_time=None):
         self.image = image
         self.relative_time = relative_time
         self.duration_time = duration_time
         self.bondaries = None
+        
+    @staticmethod
+    def parse_json(json_object):
+        icon = Icon()
+        image = json_object['Icon']['image']
+        if image == 'INFO':
+            icon.image = Icon.INFO
+        elif image == 'VIOLENCE':
+            icon.image = Icon.VIOLENCE
+        elif image == 'SEXUAL':
+            icon.image = Icon.SEXUAL
+        elif image == 'YES':
+            icon.image = Icon.YES
+        elif image == 'NO':
+            icon.image = Icon.NO
+        
+        if json_object['Icon'].has_key('relative_time'):
+            icon.relative_time = json_object['Icon']['relative_time']
+            
+        if json_object['Icon'].has_key('duration_time'):
+            icon.duration_time = json_object['Icon']['duration_time']
+            
+        if json_object['Icon'].has_key('bondaries'):
+            icon.bondaries = Bondaries.parse_json(json_object['Icon']['bondaries'])
+            
+        return icon
+    
+    def to_json(self):
+        json_oject = {'Icon' : {}}
+        if self.image == Icon.VIOLENCE:
+            json_oject['icon']['image'] = 'VIOLENCE'
+        elif self.image == Icon.SEXUAL:
+            json_oject['icon']['image'] = 'SEXUAL'
+        elif self.image == Icon.YES:
+            json_oject['icon']['image'] = 'YES'
+        elif self.image == Icon.NO:
+            json_oject['icon']['image'] = 'NO'
+        elif self.image == Icon.INFO:
+            json_oject['icon']['image'] = 'INFO'
+        else:
+            json_oject['icon']['image'] = self.image
+            
+        if self.relative_time is not None:
+            json_oject['icon']['relative_time'] = self.relative_time
+            
+        if self.duration_time is not None:
+            json_oject['icon']['duration_time'] = self.duration_time
+            
+        if self.bondaries is not None:
+            json_oject['icon']['bondaries'] = self.bondaries.to_json()
+            
+        return json_oject
+        
 
 class Interaction(object):
     def __init__(self):
+        pass
+    
+    @staticmethod
+    def parse_json(json_object):
+        if json_object.has_key('ShowContent'):
+            return ShowContent.parse_json(json_object)
+        elif json_object.has_key('Skip'):
+            return Skip.parse_json(json_object)
+        elif json_object.has_key('Replay'):
+            return Replay.parse_json(json_object)
+        elif json_object.has_key('Poll'):
+            return Poll.parse_json(json_object)
+    
+    def to_json(self):
         pass
 
 class ShowContent(Interaction):
@@ -233,7 +641,40 @@ class ShowContent(Interaction):
         self.tv = True
         self.mobile = False
         
+    @staticmethod
+    def parse_json(json_object):
+        sc = ShowContent()
+        sc.compulsory = json_object['ShowContent']['compulsory']
+        sc.pause_main_video = json_object['ShowContent']['pause_main_video']
+        sc.allow_end_content = json_object['ShowContent']['allow_end_content']
+        sc.tv = json_object['ShowContent']['tv']
+        sc.mobile = json_object['ShowContent']['mobile']
         
+        if json_object['ShowContent'].has_key('icon'):
+            sc.icon = Icon.parse_json(json_object['ShowContent']['icon'])
+            
+        if json_object['ShowContent'].has_key('contents'):
+            for content in json_object['ShowContent']['contents']:
+                sc.add_content(Media.parse_json(content))
+        
+        return sc
+    
+    def to_json(self):
+        json_object = {'ShowContent' : {'compulsory' : self.compulsory,
+                                        'pause_main_video' : self.pause_main_video,
+                                        'allow_end_content' : self.allow_end_content,
+                                        'tv' : self.tv,
+                                        'mobile' : self.mobile,
+                                        }}
+        if self.icon is not None:
+            json_object['ShowContent']['icon'] = self.icon.to_json()
+            
+            
+        json_object['ShowContent']['contents'] = []
+        for content in self.contents:
+            json_object['ShowContent']['contents'].append(content.to_json())
+            
+        return json_object
         
     def add_content(self, content):
         if not isinstance(content, Media):

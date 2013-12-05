@@ -4,13 +4,15 @@ from PyQt4 import QtGui, QtCore
 
 
 def copy_to_directory(project, path):
-    filename = os.path.split(path)[1]
-    print filename
     media_directory = os.path.join(unicode(project.directory), "medias")
-    print media_directory
     
     if not os.path.exists(media_directory):
         os.mkdir(media_directory)
+        
+    directory, filename = os.path.split(path)
+    
+    if directory == media_directory:
+        return path
     
     final_path = os.path.join(media_directory, filename)
     count = 2

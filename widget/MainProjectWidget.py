@@ -21,28 +21,17 @@ from ui.ui_AnnotationListItem import Ui_AnnotationListItem
 from VideoPlayer import VideoPlayer
 import model
 
-def get_media_icon(media_type):
-    #TODO: add icon for slides
-    if media_type == model.Media.VIDEO:
-        return QtGui.QPixmap(":/m/video.png")
-    elif media_type == model.Media.AUDIO:
-        return QtGui.QPixmap(":/m/audio.png")
-    elif media_type == model.Media.TEXT:
-        return QtGui.QPixmap(":/m/plain_text.png")
-    elif media_type == model.Media.IMAGE:
-        return QtGui.QPixmap(":/m/image.png")
-
 
 class AnnotationListItem(QtGui.QWidget):
     def __init__(self, annotation, main_widget, parent=None):
         super(AnnotationListItem, self).__init__(parent)
+        self.annotation = annotation
         self.ui = Ui_AnnotationListItem()
         self.ui.setupUi(self)
         self.main_widget = main_widget
         
         self.init_ui()
         
-        self.annotation = annotation
         self.load_annotation()
         
     def init_ui(self):
@@ -56,16 +45,32 @@ class AnnotationListItem(QtGui.QWidget):
         self.pop_menu.addAction(action)
         self.pop_menu.addSeparator()
         
-        sub_menu = QtGui.QMenu(u"Definir Interação", self)
-        self.pop_menu.addMenu(sub_menu)
-        
-        
-        action = QtGui.QAction(u'Exibir conteúdo', self)
-        action.triggered.connect(self.main_widget.show_content_widget)
-        sub_menu.addAction(action)
-        sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
-        sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
-        sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
+        if self.annotation.interaction is None:
+            sub_menu = QtGui.QMenu(u"Definir Interação", self)
+            self.pop_menu.addMenu(sub_menu)
+            
+            
+            action = QtGui.QAction(u'Exibir conteúdo', self)
+            action.triggered.connect(self.main_widget.show_content_widget)
+            sub_menu.addAction(action)
+            sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
+            sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
+            sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
+        else:
+            action = QtGui.QAction(u'Editar exibir conteúdo', self)
+            action.triggered.connect(self.main_widget.show_content_widget)
+            self.pop_menu.addAction(action)
+            
+            sub_menu = QtGui.QMenu(u"Alterar Interação", self)
+            self.pop_menu.addMenu(sub_menu)
+            
+            
+            #action = QtGui.QAction(u'Exibir conteúdo', self)
+            #action.triggered.connect(self.main_widget.show_content_widget)
+            #sub_menu.addAction(action)
+            sub_menu.addAction(QtGui.QAction(u'Pular Cena', self))
+            sub_menu.addAction(QtGui.QAction(u'Retroceder Cena', self))
+            sub_menu.addAction(QtGui.QAction(u'Inserir Enquete', self))
         
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         #self.connect(self.connect(self.button, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.on_context_menu)
@@ -235,6 +240,7 @@ class MainProjectWidget(QtGui.QWidget):
         from ShowContent import ShowContent
         widget = ShowContent(self.project, annotation, self)
         widget.exec_()
+        self.update_annotation_list()
         
     
     @QtCore.pyqtSlot()

@@ -34,14 +34,69 @@ class ShowContent(QtGui.QDialog):
             self.ui.time_begin.setTime(self.annotation.annotation_time)
             self.ui.textEdit.append(self.annotation.description)
             
-        if self.interaction is not None:
-            pass
+        if self.annotation.interaction is not None:
+            show_content = self.annotation.interaction
+            self.ui.ckb_compulsory.setChecked(show_content.compulsory)
+            self.ui.ckb_allows_end_content.setChecked(show_content.compulsory)
+            self.ui.ckb_show_on_tv.setChecked(show_content.tv)
+            self.ui.ckb_show_on_mobile.setChecked(show_content.mobile)
+            self.ui.ckb_pause_main_video.setChecked(show_content.pause_main_video)
+            
+            if show_content.icon.image == model.Icon.INFO:
+                self.ui.radio_info.setChecked(True)
+            elif show_content.icon.image == model.Icon.SEXUAL:
+                self.ui.radio_sexual.setChecked(True)
+            elif show_content.icon.image == model.Icon.VIOLENCE:
+                self.ui.radio_violence.setChecked(True)
+            elif show_content.icon.image == model.Icon.YES:
+                self.ui.radio_yes.setChecked(True)
+            elif show_content.icon.image == model.Icon.NO:
+                self.ui.radio_no.setChecked(True)
+            else:
+                self.ui.radio_personalized.setChecked(True)
+                self.icon_path = show_content.icon.image
+                self.ui.radio_personalized.setIcon(QtGui.QIcon(self.icon_path))
+                
+            self.set_icon_boundaries(show_content.icon.bondaries)
+            
+            before_str = str(show_content.icon.relative_time)
+            for index in xrange(self.ui.cmb_icon_before.count()):
+                str_index = str(self.ui.cmb_icon_before.itemText(index))
+                if before_str == str_index:
+                    self.ui.cmb_icon_before.setCurrentIndex(index)
+                    break
+                
+            duration_str = str(show_content.icon.duration_time)
+            for index in xrange(self.ui.cmb_icon_duration.count()):
+                str_index = str(self.ui.cmb_icon_duration.itemText(index))
+                if duration_str == str_index:
+                    self.ui.cmb_icon_duration.setCurrentIndex(index)
+                    break
+                
+            for content in show_content.contents:
+                self.add_media_widget.add_media_item(content)
+                
+            self.add_media_widget.update_media_list()
         
     def get_result(self):
         return self.result
     
+    def set_icon_boundaries(self, bound):
+        self.lbl_icon.move(bound.left, bound.top)
+        self.lbl_icon.resize(bound.width, bound.height)
+    
     def get_icon_bondaries(self):
-        pass
+        bound = Bondaries()
+        qpoint = self.lbl_icon.pos()
+        qsize = self.lbl_icon.size()
+        bound.width = qsize.width()
+        bound.height = qsize.height()
+        bound.left = qpoint.x()
+        bound.top = qpoint.y()
+        qsize = self.lbl_screen.size()
+        bound.screen_width, bound.screen_height = qsize.width(), qsize.height()
+        print bound
+        return bound
         
     def init_ui(self):
         self.setFixedSize(self.size())
@@ -52,7 +107,7 @@ class ShowContent(QtGui.QDialog):
         
         layout = QtGui.QHBoxLayout()
         self.ui.tab_content.setLayout(layout)
-        self.add_media_widget = AddMediaWidget()
+        self.add_media_widget = AddMediaWidget(self.project, self.annotation)
         layout.addWidget(self.add_media_widget)
         
         self.ui.radio_personalized.toggled.connect(self.personalized_choosed)
@@ -90,30 +145,40 @@ class ShowContent(QtGui.QDialog):
         show_content = model.ShowContent()
         show_content.compulsory =  self.ui.ckb_compulsory.isChecked()
         show_content.allow_end_content = self.ui.ckb_allows_end_content.isChecked()
-        show_content.tv = self.ui.ckb_show_on_tv
-        show_content.mobile = self.ui.ckb_show_on_mobile
-        show_content.pause_main_video = self.ui.ckb_pause_main_video
+        show_content.tv = self.ui.ckb_show_on_tv.isChecked()
+        show_content.mobile = self.ui.ckb_show_on_mobile.isChecked()
+        show_content.pause_main_video = self.ui.ckb_pause_main_video.isChecked()
         
         icon = model.Icon()
-        self.icon_path = util.copy_to_directory(self.project, self.icon_path)
-        icon.image = self.icon_path
-        icon.relative_time = int(self.ui.cmb_icon_before.itemText(0))
-        icon.duration_time = int(self.ui.cmb_icon_duration.itemText(0))
+        if self.ui.radio_personalized.isChecked():
+            self.icon_path = util.copy_to_directory(self.project, unicode(self.icon_path))
+            icon.image = self.icon_path
+        elif self.ui.radio_info.isChecked():
+            icon.image = model.Icon.INFO
+        elif self.ui.radio_sexual.isChecked():
+            icon.image = model.Icon.SEXUAL
+        elif self.ui.radio_violence.isChecked():
+            icon.image = model.Icon.VIOLENCE
+        elif self.ui.radio_yes.isChecked():
+            icon.image = model.Icon.YES
+        elif self.ui.radio_no.isChecked():
+            icon.image = model.Icon.NO
             
+        icon.relative_time = int(self.ui.cmb_icon_before.itemText(
+                                            self.ui.cmb_icon_before.currentIndex()))
+        icon.duration_time = int(self.ui.cmb_icon_duration.itemText(
+                                            self.ui.cmb_icon_duration.currentIndex()))
+        icon.bondaries = self.get_icon_bondaries()
         
+        show_content.icon = icon
         
-        filename = unicode(self.ui.txt_media_name.toPlainText())
-        #finalpath = util.copy_to_directory(self.project, filename)
-        finalpath = filename
-        showtime = util.qtime_to_sec(self.ui.time_begin.time())
-        duration = util.qtime_to_sec(self.ui.time_end.time()) - showtime
-        image_content = model.Image(filename, finalpath, showtime, duration)
-        image_content.bondaries = self.layout_selector.get_content_bondaries()
-        
-        if self.layout_selector.is_main_video_resized():
-            image_content.resize_main_video = self.layout_selector.get_main_video_bondaries()
+        for media in self.add_media_widget.medias:
+            show_content.add_content(media)
             
-        self.result = image_content
+        self.annotation.description = unicode(self.ui.textEdit.toPlainText())
+        self.annotation.interaction = show_content
+        
+        self.result = show_content
         
         self.close()
     

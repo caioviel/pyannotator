@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/MediaListItem.ui'
 #
-# Created: Wed Dec  4 23:42:36 2013
+# Created: Thu Dec  5 04:36:14 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,15 +24,15 @@ class Ui_MediaListItem(object):
         self.lbl_content_icon.setPixmap(QtGui.QPixmap(_fromUtf8(":/m/audio.png")))
         self.lbl_content_icon.setScaledContents(True)
         self.lbl_content_icon.setObjectName(_fromUtf8("lbl_content_icon"))
-        self.label_2 = QtGui.QLabel(MediaListItem)
-        self.label_2.setGeometry(QtCore.QRect(50, 10, 181, 31))
-        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.lbl_description = QtGui.QLabel(MediaListItem)
+        self.lbl_description.setGeometry(QtCore.QRect(50, 10, 181, 31))
+        self.lbl_description.setObjectName(_fromUtf8("lbl_description"))
 
         self.retranslateUi(MediaListItem)
         QtCore.QMetaObject.connectSlotsByName(MediaListItem)
 
     def retranslateUi(self, MediaListItem):
         MediaListItem.setWindowTitle(QtGui.QApplication.translate("MediaListItem", "Mídia", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("MediaListItem", "De 00:00:00 até 00:00:00", None, QtGui.QApplication.UnicodeUTF8))
+        self.lbl_description.setText(QtGui.QApplication.translate("MediaListItem", "De 00:00:00 até 00:00:00", None, QtGui.QApplication.UnicodeUTF8))
 
 import icons_rc

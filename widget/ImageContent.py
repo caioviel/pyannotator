@@ -9,9 +9,10 @@ import util
 HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
 
 class ImageContent(QtGui.QDialog):
-    def __init__(self, project=None, content=None, parent=None):
+    def __init__(self, project=None, annotation=None, content=None, parent=None):
         super(ImageContent, self).__init__(parent)
         self.project = project
+        self.annotation = annotation
         self.content = content
         self.result = None
         
@@ -19,16 +20,36 @@ class ImageContent(QtGui.QDialog):
         self.ui.setupUi(self)
         #self.lbl_image = self.ui.lbl_image
         #TODO:
-        if content is not None:
-            self.load_content()
         
         self.init_ui()
+        self.load_content()
+        
+        
         
     def get_result(self):
         return self.result
             
     def load_content(self):
-        pass
+        if self.annotation is not None:
+            self.ui.time_begin.setTime(self.annotation.annotation_time)
+            
+        if self.content is not None:
+            begin = util.sec_to_qtime(self.content.showtime)
+            
+            self.ui.time_begin.setTime(begin)
+            
+            self.ui.time_end.setTime(begin.addSecs(self.content.duration))
+            
+            if self.content.filename is not None:
+                self.layout_selector.load_image(self.content.filename)
+            
+            if self.content.bondaries is not None:
+                self.layout_selector.set_content_bondaires(
+                                            self.content.bondaries)
+            
+            if self.content.resize_main_video is not None:
+                self.layout_selector.set_main_video_bondaries(
+                                            self.content.resize_main_video)
         
     def init_ui(self):
         self.setFixedSize(self.size())

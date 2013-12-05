@@ -107,6 +107,7 @@ class LayoutSelector(QtGui.QWidget):
         bound.height = qsize.height()
         bound.left = qpoint.x() - self.base_pos[0]
         bound.top = qpoint.y() - self.base_pos[1]
+        bound.screen_width, bound.screen_height = self.base_size
         
         return bound
     
@@ -118,8 +119,21 @@ class LayoutSelector(QtGui.QWidget):
         bound.height = qsize.height()
         bound.left = qpoint.x() - self.base_pos[0]
         bound.top = qpoint.y() - self.base_pos[1]
+        bound.screen_width, bound.screen_height = self.base_size
         
         return bound
+    
+    def set_content_bondaires(self, bound):
+        self.lbl_content.resize(bound.width, bound.height)
+        self.lbl_content.move(bound.left + self.base_pos[0],
+                                 bound.top + self.base_pos[1])
+    
+    def set_main_video_bondaries(self, bound):
+        self.lbl_main_video.resize(bound.width, bound.height)
+        self.lbl_main_video.move(bound.left + self.base_pos[0],
+                                 bound.top + self.base_pos[1])
+        
+        
     
     
     @QtCore.pyqtSlot()
