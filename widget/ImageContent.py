@@ -41,6 +41,7 @@ class ImageContent(QtGui.QDialog):
             self.ui.time_end.setTime(begin.addSecs(self.content.duration))
             
             if self.content.filename is not None:
+                self.ui.txt_media_name.appendPlainText(self.content.filename)
                 self.layout_selector.load_image(self.content.filename)
             
             if self.content.bondaries is not None:
@@ -81,8 +82,7 @@ class ImageContent(QtGui.QDialog):
     @QtCore.pyqtSlot()
     def ok_pressed(self):
         filename = unicode(self.ui.txt_media_name.toPlainText())
-        #finalpath = util.copy_to_directory(self.project, filename)
-        finalpath = filename
+        finalpath = util.copy_to_directory(self.project, filename)
         showtime = util.qtime_to_sec(self.ui.time_begin.time())
         duration = util.qtime_to_sec(self.ui.time_end.time()) - showtime
         image_content = model.Image(filename, finalpath, showtime, duration)

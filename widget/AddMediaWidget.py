@@ -89,6 +89,9 @@ class AddMediaWidget(QtGui.QDialog):
         elif content.type == model.Media.IMAGE:
             myclass = ImageContent(self.project, self.annotation, 
                                    content, self)
+            
+            self.medias.remove(content)
+            self.medias.append(myclass.result)
             myclass.exec_()
         elif content.type == model.Media.TEXT:
             myclass = TextContent(self.project, self.annotation, 

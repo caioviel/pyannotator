@@ -57,6 +57,17 @@ class ShowContent(QtGui.QDialog):
                 self.icon_path = show_content.icon.image
                 self.ui.radio_personalized.setIcon(QtGui.QIcon(self.icon_path))
                 
+            if show_content.icon.position == model.Icon.BOT_LEFT:
+                self.ui.radio_bl.setChecked(True)
+            elif show_content.icon.position == model.Icon.BOT_RIGHT:
+                self.ui.radio_br.setChecked(True)
+            elif show_content.icon.position == model.Icon.TOP_LEFT:
+                self.ui.radio_tl.setChecked(True)
+            elif show_content.icon.position == model.Icon.TOP_RIGHT:
+                self.ui.radio_tr.setChecked(True)
+            elif show_content.icon.position == model.Icon.PERSONALIZED:
+                self.ui.radio_free_position.setChecked(True)
+                
             self.set_icon_boundaries(show_content.icon.bondaries)
             
             before_str = str(show_content.icon.relative_time)
@@ -169,6 +180,17 @@ class ShowContent(QtGui.QDialog):
         icon.duration_time = int(self.ui.cmb_icon_duration.itemText(
                                             self.ui.cmb_icon_duration.currentIndex()))
         icon.bondaries = self.get_icon_bondaries()
+        
+        if self.ui.radio_bl.isChecked():
+            icon.position == model.Icon.BOT_LEFT
+        elif self.ui.radio_br.isChecked():
+            icon.position == model.Icon.BOT_RIGHT
+        elif self.ui.radio_tl.isChecked():
+            icon.position == model.Icon.TOP_LEFT
+        elif self.ui.radio_tr.isChecked():
+            icon.position == model.Icon.TOP_RIGHT
+        elif self.ui.radio_free_position.isChecked():
+            icon.position == model.Icon.PERSONALIZED
         
         show_content.icon = icon
         

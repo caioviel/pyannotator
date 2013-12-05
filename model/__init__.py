@@ -320,7 +320,7 @@ class Image(Media):
         myid = json_object['Media']['id']
         filename = json_object['Media']['filename']
         showtime = json_object['Media']['showtime']
-        image = Video(myid, filename, showtime)
+        image = Image(myid, filename, showtime)
         
         if json_object['Media'].has_key('duration'):
             image.duration = json_object['Media']['duration']
@@ -348,11 +348,6 @@ class Image(Media):
         if self.begintime is not None:
             json_object['Media']['begintime'] = self.begintime
             
-        if self.media_volume is not None:
-            json_object['Media']['media_volume'] = self.media_volume
-            
-        if self.main_video_volume is not None:
-            json_object['Media']['main_video_volume'] = self.main_video_volume
             
         if self.bondaries is not None:
             json_object['Media']['bondaries'] = self.bondaries.to_json()
@@ -552,12 +547,19 @@ class Icon(object):
     YES = 4
     NO = 5
     
+    TOP_LEFT = 6
+    TOP_RIGHT = 7
+    BOT_LEFT = 8
+    BOT_RIGHT = 9
+    PERSONALIZED = 10
+    
     
     def __init__(self, image=None, relative_time=None, duration_time=None):
         self.image = image
         self.relative_time = relative_time
         self.duration_time = duration_time
         self.bondaries = None
+        self.position = None
         
     @staticmethod
     def parse_json(json_object):
@@ -583,31 +585,56 @@ class Icon(object):
         if json_object['Icon'].has_key('bondaries'):
             icon.bondaries = Bondaries.parse_json(json_object['Icon']['bondaries'])
             
+        if json_object['Icon'].has_key('position'):
+            position = json_object['Icon']['position']
+            if position == "TOP_LEFT":
+                icon.position = Icon.TOP_LEFT
+            elif position == 'TOP_RIGHT':
+                icon.position = Icon.TOP_RIGHT
+            elif position == 'BOT_LEFT':
+                icon.position = Icon.BOT_LEFT
+            elif position == 'BOT_RIGHT':
+                icon.position = Icon.BOT_RIGHT
+            elif position == 'PERSONALIZED':
+                icon.position = Icon.PERSONALIZED
+                
         return icon
     
     def to_json(self):
         json_oject = {'Icon' : {}}
         if self.image == Icon.VIOLENCE:
-            json_oject['icon']['image'] = 'VIOLENCE'
+            json_oject['Icon']['image'] = 'VIOLENCE'
         elif self.image == Icon.SEXUAL:
-            json_oject['icon']['image'] = 'SEXUAL'
+            json_oject['Icon']['image'] = 'SEXUAL'
         elif self.image == Icon.YES:
-            json_oject['icon']['image'] = 'YES'
+            json_oject['Icon']['image'] = 'YES'
         elif self.image == Icon.NO:
-            json_oject['icon']['image'] = 'NO'
+            json_oject['Icon']['image'] = 'NO'
         elif self.image == Icon.INFO:
-            json_oject['icon']['image'] = 'INFO'
+            json_oject['Icon']['image'] = 'INFO'
         else:
-            json_oject['icon']['image'] = self.image
+            json_oject['Icon']['image'] = self.image
             
         if self.relative_time is not None:
-            json_oject['icon']['relative_time'] = self.relative_time
+            json_oject['Icon']['relative_time'] = self.relative_time
             
         if self.duration_time is not None:
-            json_oject['icon']['duration_time'] = self.duration_time
+            json_oject['Icon']['duration_time'] = self.duration_time
             
         if self.bondaries is not None:
-            json_oject['icon']['bondaries'] = self.bondaries.to_json()
+            json_oject['Icon']['bondaries'] = self.bondaries.to_json()
+            
+        if self.position is not None:
+            if self.position == Icon.TOP_LEFT:
+                json_oject['Icon']['position'] = 'TOP_LEFT'
+            elif self.position == Icon.TOP_RIGHT:
+                json_oject['Icon']['position'] = 'TOP_RIGHT'
+            elif self.position == Icon.BOT_LEFT:
+                json_oject['Icon']['position'] = 'BOT_LEFT'
+            elif self.position == Icon.BOT_RIGHT:
+                json_oject['Icon']['position'] = 'BOT_RIGHT'
+            elif self.position == Icon.PERSONALIZED:
+                json_oject['Icon']['position'] = 'PERSONALIZED'
             
         return json_oject
         

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from plugins import PluginsManager
 from PyQt4 import QtGui
 from widget.ProjectChooseWidget import ProjectChooseWidget
 import os
