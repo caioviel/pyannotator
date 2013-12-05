@@ -69,7 +69,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab_icon">
     <attribute name="title">
@@ -523,7 +523,7 @@
     <attribute name="title">
      <string>Comportamento</string>
     </attribute>
-    <widget class="QCheckBox" name="ckb_pause_main_video">
+    <widget class="QCheckBox" name="ckb_compulsory">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -536,7 +536,7 @@
       <string>Apresentar o conteúdo de forma compulsória</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ckb_compulsory_2">
+    <widget class="QCheckBox" name="ckb_pause_main_video">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -549,7 +549,7 @@
       <string>Pausar o vídeo principal</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ckb_end_conent_button">
+    <widget class="QCheckBox" name="ckb_allows_end_content">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -565,7 +565,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ckb_pause_main_video_2">
+    <widget class="QCheckBox" name="ckb_show_on_mobile">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -578,7 +578,7 @@
       <string>Enviar conteúdo para o celular</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ckb_pause_main_video_3">
+    <widget class="QCheckBox" name="ckb_show_on_tv">
      <property name="geometry">
       <rect>
        <x>40</x>

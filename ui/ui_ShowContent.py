@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ShowContent.ui'
 #
-# Created: Sat Nov 30 10:23:06 2013
+# Created: Wed Dec  4 23:42:37 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -161,23 +161,23 @@ class Ui_ShowContent(object):
         self.tabs.addTab(self.tab_content, _fromUtf8(""))
         self.tab_behavior = QtGui.QWidget()
         self.tab_behavior.setObjectName(_fromUtf8("tab_behavior"))
+        self.ckb_compulsory = QtGui.QCheckBox(self.tab_behavior)
+        self.ckb_compulsory.setGeometry(QtCore.QRect(40, 30, 331, 22))
+        self.ckb_compulsory.setObjectName(_fromUtf8("ckb_compulsory"))
         self.ckb_pause_main_video = QtGui.QCheckBox(self.tab_behavior)
-        self.ckb_pause_main_video.setGeometry(QtCore.QRect(40, 30, 331, 22))
+        self.ckb_pause_main_video.setGeometry(QtCore.QRect(40, 60, 331, 22))
         self.ckb_pause_main_video.setObjectName(_fromUtf8("ckb_pause_main_video"))
-        self.ckb_compulsory_2 = QtGui.QCheckBox(self.tab_behavior)
-        self.ckb_compulsory_2.setGeometry(QtCore.QRect(40, 60, 331, 22))
-        self.ckb_compulsory_2.setObjectName(_fromUtf8("ckb_compulsory_2"))
-        self.ckb_end_conent_button = QtGui.QCheckBox(self.tab_behavior)
-        self.ckb_end_conent_button.setGeometry(QtCore.QRect(40, 90, 331, 22))
-        self.ckb_end_conent_button.setChecked(True)
-        self.ckb_end_conent_button.setObjectName(_fromUtf8("ckb_end_conent_button"))
-        self.ckb_pause_main_video_2 = QtGui.QCheckBox(self.tab_behavior)
-        self.ckb_pause_main_video_2.setGeometry(QtCore.QRect(40, 150, 331, 22))
-        self.ckb_pause_main_video_2.setObjectName(_fromUtf8("ckb_pause_main_video_2"))
-        self.ckb_pause_main_video_3 = QtGui.QCheckBox(self.tab_behavior)
-        self.ckb_pause_main_video_3.setGeometry(QtCore.QRect(40, 120, 331, 22))
-        self.ckb_pause_main_video_3.setChecked(True)
-        self.ckb_pause_main_video_3.setObjectName(_fromUtf8("ckb_pause_main_video_3"))
+        self.ckb_allows_end_content = QtGui.QCheckBox(self.tab_behavior)
+        self.ckb_allows_end_content.setGeometry(QtCore.QRect(40, 90, 331, 22))
+        self.ckb_allows_end_content.setChecked(True)
+        self.ckb_allows_end_content.setObjectName(_fromUtf8("ckb_allows_end_content"))
+        self.ckb_show_on_mobile = QtGui.QCheckBox(self.tab_behavior)
+        self.ckb_show_on_mobile.setGeometry(QtCore.QRect(40, 150, 331, 22))
+        self.ckb_show_on_mobile.setObjectName(_fromUtf8("ckb_show_on_mobile"))
+        self.ckb_show_on_tv = QtGui.QCheckBox(self.tab_behavior)
+        self.ckb_show_on_tv.setGeometry(QtCore.QRect(40, 120, 331, 22))
+        self.ckb_show_on_tv.setChecked(True)
+        self.ckb_show_on_tv.setObjectName(_fromUtf8("ckb_show_on_tv"))
         self.tabs.addTab(self.tab_behavior, _fromUtf8(""))
         self.btn_cancel = QtGui.QPushButton(ShowContent)
         self.btn_cancel.setGeometry(QtCore.QRect(640, 600, 101, 41))
@@ -195,7 +195,7 @@ class Ui_ShowContent(object):
         self.btn_ok.setObjectName(_fromUtf8("btn_ok"))
 
         self.retranslateUi(ShowContent)
-        self.tabs.setCurrentIndex(0)
+        self.tabs.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(ShowContent)
 
     def retranslateUi(self, ShowContent):
@@ -229,11 +229,11 @@ class Ui_ShowContent(object):
         self.radio_free_position.setText(QtGui.QApplication.translate("ShowContent", "Personalizado", None, QtGui.QApplication.UnicodeUTF8))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_icon), QtGui.QApplication.translate("ShowContent", "Notificação", None, QtGui.QApplication.UnicodeUTF8))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_content), QtGui.QApplication.translate("ShowContent", "Mídias", None, QtGui.QApplication.UnicodeUTF8))
-        self.ckb_pause_main_video.setText(QtGui.QApplication.translate("ShowContent", "Apresentar o conteúdo de forma compulsória", None, QtGui.QApplication.UnicodeUTF8))
-        self.ckb_compulsory_2.setText(QtGui.QApplication.translate("ShowContent", "Pausar o vídeo principal", None, QtGui.QApplication.UnicodeUTF8))
-        self.ckb_end_conent_button.setText(QtGui.QApplication.translate("ShowContent", "Permitir finalizar o contéudo adicional", None, QtGui.QApplication.UnicodeUTF8))
-        self.ckb_pause_main_video_2.setText(QtGui.QApplication.translate("ShowContent", "Enviar conteúdo para o celular", None, QtGui.QApplication.UnicodeUTF8))
-        self.ckb_pause_main_video_3.setText(QtGui.QApplication.translate("ShowContent", "Exibir o conteúdo na TV", None, QtGui.QApplication.UnicodeUTF8))
+        self.ckb_compulsory.setText(QtGui.QApplication.translate("ShowContent", "Apresentar o conteúdo de forma compulsória", None, QtGui.QApplication.UnicodeUTF8))
+        self.ckb_pause_main_video.setText(QtGui.QApplication.translate("ShowContent", "Pausar o vídeo principal", None, QtGui.QApplication.UnicodeUTF8))
+        self.ckb_allows_end_content.setText(QtGui.QApplication.translate("ShowContent", "Permitir finalizar o contéudo adicional", None, QtGui.QApplication.UnicodeUTF8))
+        self.ckb_show_on_mobile.setText(QtGui.QApplication.translate("ShowContent", "Enviar conteúdo para o celular", None, QtGui.QApplication.UnicodeUTF8))
+        self.ckb_show_on_tv.setText(QtGui.QApplication.translate("ShowContent", "Exibir o conteúdo na TV", None, QtGui.QApplication.UnicodeUTF8))
         self.tabs.setTabText(self.tabs.indexOf(self.tab_behavior), QtGui.QApplication.translate("ShowContent", "Comportamento", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_cancel.setText(QtGui.QApplication.translate("ShowContent", "Cancelar", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_ok.setText(QtGui.QApplication.translate("ShowContent", "Ok", None, QtGui.QApplication.UnicodeUTF8))

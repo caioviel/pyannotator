@@ -316,8 +316,8 @@ class MainProjectWidget(QtGui.QWidget):
     
     @QtCore.pyqtSlot(QtCore.QTime)
     def editing_time(self, time):
-        if self.is_editing_time:
-            total_time = self.ui.video_player.mediaObject().totalTime()
+        '''if self.is_editing_time:
+            total_time = self.player.player.mediaObject().totalTime()
             max_time = QtCore.QTime(0,0,0).addMSecs(total_time)
             self.ui.time_edit.setTimeRange(QtCore.QTime(0,0,0), max_time)
             
@@ -326,7 +326,8 @@ class MainProjectWidget(QtGui.QWidget):
             msec = time.minute() + msec*60
             msec = time.second() + msec*60
             msec = msec*1000 + time.msec()
-            self.ui.video_player.seek(msec)
+            self.ui.video_player.seek(msec)'''
+        pass
             
             
     def timer_focus_in(self):

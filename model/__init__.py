@@ -212,7 +212,7 @@ class Slides(Media):
 class Icon(object):
     #Colocar as imagens aqui no icone como variaveis
     
-    def __init__(self, image, relative_time, duration_time):
+    def __init__(self, image=None, relative_time=None, duration_time=None):
         self.image = image
         self.relative_time = relative_time
         self.duration_time = duration_time
