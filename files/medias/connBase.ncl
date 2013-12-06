@@ -20,6 +20,11 @@
 					<simpleAction role="start" max="unbounded" qualifier="par" />
 				</causalConnector>
 				
+				<causalConnector id="onBeginStart">
+					<simpleCondition role="onBegin" />
+					<simpleAction role="start" max="unbounded" qualifier="par" />
+				</causalConnector>
+				
 				<causalConnector id="onSelectionResumeStopStart">
 					<simpleCondition role="onSelection" />
 					<compoundAction operator="seq">
@@ -257,6 +262,31 @@
 				<simpleAction role="abort" max="unbounded" qualifier="seq" />
 			</compoundAction>
       		</causalConnector>
+      		
+
+      		
+      		<causalConnector id="onKeySelectionSetStop">
+      				<connectorParam name="theKey"/>
+					<simpleCondition role="onSelection" key="$theKey"/>
+					<connectorParam name="setValue"/>
+					<compoundAction operator="seq">
+						<simpleAction role="set" value="$setValue" max="unbounded" qualifier="seq"/>
+						<simpleAction role="stop" max="unbounded" qualifier="seq" />
+					</compoundAction>
+			</causalConnector>
+			
+			
+			<causalConnector id="onBeginTestStart">
+        			<connectorParam name="testValue"/>
+        			<compoundCondition operator="and">
+         				<simpleCondition role="onBegin"/>
+         				<assessmentStatement comparator="eq">
+            				<attributeAssessment role="propertyType" eventType="attribution" attributeType="nodeProperty"/>
+            				<valueAssessment value="$testValue"/>
+          				</assessmentStatement>		
+        			</compoundCondition>
+        			<simpleAction role="start" max="unbounded" qualifier="par"/>
+      			</causalConnector>
 </connectorBase>
 
 </head>

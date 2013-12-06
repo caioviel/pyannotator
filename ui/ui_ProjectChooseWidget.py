@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ProjectChooseWidget.ui'
 #
-# Created: Fri Dec  6 06:24:27 2013
+# Created: Fri Dec  6 07:06:18 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -81,7 +81,7 @@ class Ui_ProjectChooseWidget(object):
         ProjectChooseWidget.setWindowTitle(QtGui.QApplication.translate("ProjectChooseWidget", "Selecionado Projeto", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Projetos Recentes:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_open_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Abrir Projeto", None, QtGui.QApplication.UnicodeUTF8))
-        self.btn_delete_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Excluir Projecto", None, QtGui.QApplication.UnicodeUTF8))
+        self.btn_delete_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Excluir Projeto", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Identificador:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Nome:", None, QtGui.QApplication.UnicodeUTF8))
         self.btn_create_project.setText(QtGui.QApplication.translate("ProjectChooseWidget", "Criar Projeto", None, QtGui.QApplication.UnicodeUTF8))

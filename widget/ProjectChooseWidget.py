@@ -25,6 +25,7 @@ class ProjectChooseWidget(QtGui.QWidget):
         self.show()
         
     def init_ui(self):
+        self.setFixedSize(self.size())
         self.ui.btn_create_project.setEnabled(False)
         self.ui.btn_open_project.setEnabled(False)
         self.ui.btn_delete_project.setEnabled(False)

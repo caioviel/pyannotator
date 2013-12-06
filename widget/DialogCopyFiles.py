@@ -20,6 +20,7 @@ class DialogCopyFiles(QtGui.QDialog, threading.Thread):
         self.timer = QtCore.QTimer(self)
         self.timer.setInterval(200)
         self.timer.timeout.connect(self.update_bar)
+        self.setFixedSize(self.size())
     
     @QtCore.pyqtSlot()
     def update_bar(self):
@@ -27,7 +28,12 @@ class DialogCopyFiles(QtGui.QDialog, threading.Thread):
     
     def run(self):
         self.timer.start()
-        shutil.copy(self.src, self.dst)
+        try:
+            shutil.copy(self.src, self.dst)
+            print 'copy finished'
+        except:
+            print 'error copying'
+        self.timer.stop()
         self.close()
         
 def main():

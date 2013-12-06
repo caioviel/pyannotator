@@ -84,7 +84,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Excluir Projecto</string>
+     <string>Excluir Projeto</string>
     </property>
     <property name="icon">
      <iconset resource="icons.qrc">

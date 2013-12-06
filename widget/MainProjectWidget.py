@@ -106,10 +106,26 @@ class MainProjectWidget(QtGui.QWidget):
     
     #@QtCore.pyqtSlot(int)
     #def on_video_seek(self, point):
+    
+    def closeEvent(self, event):
+        reply = QtGui.QMessageBox.question(self, u"Fechando o projeto...", 
+                                           u"Tem certeza que deseja fechar este projeto?",
+                                           QtGui.QMessageBox.Yes|QtGui.QMessageBox.No);
+                                           
+        if reply == QtGui.QMessageBox.No:
+            event.ignore()
+        else:
+            from ProjectChooseWidget import ProjectChooseWidget
+            self._choose_widget = ProjectChooseWidget(real_path, home_directory, username)
+            event.accept()
+        #from ProjectChooseWidget import ProjectChooseWidget
+        #self._choose_widget = ProjectChooseWidget(real_path, home_directory, username)
+        
         
         
     def init_ui(self):
         self.setWindowTitle(u'Projeto - ' + self.project.name)
+        self.setFixedSize(self.size())
         
         player_holder = self.ui.player_widget
         layout = QtGui.QVBoxLayout()
@@ -162,14 +178,6 @@ class MainProjectWidget(QtGui.QWidget):
     
     @QtCore.pyqtSlot()
     def close_project(self):
-        reply = QtGui.QMessageBox.question(self, u"Fechando o projeto...", 
-                                           u"Tem certeza que deseja fechar este projeto?",
-                                           QtGui.QMessageBox.Yes|QtGui.QMessageBox.No);
-                                           
-        if reply == QtGui.QMessageBox.No:
-            return
-        from ProjectChooseWidget import ProjectChooseWidget
-        self._choose_widget = ProjectChooseWidget(real_path, home_directory, username)
         self.close()
         
         
@@ -187,6 +195,7 @@ class MainProjectWidget(QtGui.QWidget):
         
         import json
         myfile.write(json.dumps(json_object, indent=4, sort_keys=True))
+        QtGui.QMessageBox.information(self, u'Salvando projeto...', u'O projeto foi salvo com sucesso.')
         
     
     @QtCore.pyqtSlot()
@@ -232,6 +241,13 @@ class MainProjectWidget(QtGui.QWidget):
     def delete_annotation(self):
         item = self.ui.list_notes.currentItem()
         annotation = self.ui.list_notes.itemWidget(item).annotation
+        reply = QtGui.QMessageBox.question(self, u"Deletando anotação...", 
+                                           u"Tem certeza que excluir esta anotação?",
+                                           QtGui.QMessageBox.Yes|QtGui.QMessageBox.No);
+                                           
+        if reply == QtGui.QMessageBox.No:
+            return
+        
         if self.project.remove_annotation(annotation):
             self.annotation_list_chaged.emit()
             
@@ -284,6 +300,8 @@ class MainProjectWidget(QtGui.QWidget):
         self.ui.btn_generate_ncl.setVisible(True)
         self.ui.txt_description.setText("")
         self.annotation_list_chaged.emit()
+        
+        QtGui.QMessageBox.information(self, u'Salvando anotação...', u'A anotação foi salva com sucesso.', QtGui.QMessageBox.Ok)
     
         
     @QtCore.pyqtSlot()
@@ -303,6 +321,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.project.add_annotation(annotation)
         self.ui.txt_description.setText("")
         self.annotation_list_chaged.emit()
+        QtGui.QMessageBox.information(self, u'Adicionando anotação...', u'A anotação foi adicionada com sucesso.', QtGui.QMessageBox.Ok)
         
         
         
@@ -359,7 +378,7 @@ class MainProjectWidget(QtGui.QWidget):
         import util
         
         
-        self.main_video_path = util.copy_to_directory(self.project, unicode(path))           
+        self.main_video_path = util.copy_with_dialog(self.project, unicode(path))           
         self.ui.txt_main_video.clear()
         self.ui.txt_main_video.appendPlainText(self.main_video_path)
         

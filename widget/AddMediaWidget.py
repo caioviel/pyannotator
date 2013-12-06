@@ -72,10 +72,14 @@ class AddMediaWidget(QtGui.QDialog):
     def delete_media(self):
         item = self.ui.lst_medias.currentItem()
         content = self.ui.lst_medias.itemWidget(item).content
-        print 'conteudo', content
-        print 'lista', self.medias
+        reply = QtGui.QMessageBox.question(self, u"Excluindo mídia...", 
+                                           u"Tem certeza que deseja excluir está mídia?",
+                                           QtGui.QMessageBox.Yes|QtGui.QMessageBox.No);
+                                           
+        if reply == QtGui.QMessageBox.No:
+            return
+        
         self.medias.remove(content)
-        print 'lista', self.medias
         self.update_media_list()
         
     @QtCore.pyqtSlot()
