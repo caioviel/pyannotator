@@ -62,9 +62,12 @@ class NclGenerator():
             mid = "slides" + str(media_count)
             
         media = Media(mid, self.get_media_path(content.filename))
-        if content.bondaries is not None:
-            media.add_anchor(NodeProperty("bounds", 
-                                          self.get_bounds_value(content.bondaries)))
+        try:
+            if content.bondaries is not None:
+                media.add_anchor(NodeProperty("bounds", 
+                                              self.get_bounds_value(content.bondaries)))
+        except:
+            pass
             
         if content.duration is not None:
             media.add_anchor(NodeProperty("explicitDur", 
@@ -139,6 +142,7 @@ class NclGenerator():
                 self.ncldoc.add_link(link)
 
     def dump_file(self, filename):
+        self.generate_ncl()
         self.ncldoc.dump_file(filename)
         
     def add_icon(self, ann):
@@ -189,7 +193,6 @@ def main():
     project = model.AnnotationProject.parse_json(json.loads(json_str))
     project.directory = '/home/caioviel/AnnotationProjects/testeNCL'
     nclgen = NclGenerator(project, GenerationOptions())
-    nclgen.generate_ncl()
     nclgen.dump_file('/home/caioviel/AnnotationProjects/testeNCL/medias/main.ncl')
 
 if __name__ == "__main__":

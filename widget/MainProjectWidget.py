@@ -153,6 +153,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.ui.btn_save_project.clicked.connect(self.save_project)
         self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
         self.ui.btn_close_project.clicked.connect(self.close_project)
+        #self.ui.btn_generate_ncl.setEnabled(True)
         
         self.ui.btn_ok.clicked.connect(self.save_edit)
         self.ui.btn_cancel.clicked.connect(self.cancel_edit)
@@ -204,7 +205,12 @@ class MainProjectWidget(QtGui.QWidget):
     
     @QtCore.pyqtSlot()
     def generate_ncl(self):
-        raise NotImplementedError()   
+        import generation
+        nclgenerator = generation.NclGenerator(self.project, 
+                                               generation.GenerationOptions())
+        
+        nclgenerator.dump_file(os.path.join(self.project.directory, 
+                                            'medias', 'main.ncl'))
         
     @QtCore.pyqtSlot()
     def update_annotation_list(self):
