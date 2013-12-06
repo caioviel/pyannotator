@@ -1,0 +1,29 @@
+<html>
+<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>Teste PyAnnotator</title>
+		
+		<!-- Styles -->
+		<link rel="stylesheet" type="text/css" href="webncl/css/webncl.css" />
+		<link rel="stylesheet" type="text/css" href="webncl/css/remotecontrol.css" />	
+		<!-- Bibliotecas -->
+		<script type="text/javascript" src="webncl/js/amq_jquery_adapter.js"></script>
+		<script type="text/javascript" src="webncl/js/amq.js"></script>
+		<script type="text/javascript" src="webncl/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="webncl/js/popcorn.js"></script>
+		<script type="text/javascript" src="webncl/js/lua+parser.min.js"></script>
+		<script type="text/javascript" src="webncl/js/webncl.js"></script>  
+</head>
+
+
+<body>
+		<div id="myPlayer" style="position:relative;width:1280px;height:720px"></div>
+		<div id="areaRemoteControl" style="left:1300px"></div>
+	
+		<script>		
+			var player = new WebNclPlayer("main.ncl","myPlayer");
+			var controler1 = new RemoteControl(player,"areaRemoteControl", ['interactive', 'multimedia', 'colorful']);
+		</script>
+	</script>
+</body>
+</html>

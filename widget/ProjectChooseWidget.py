@@ -7,6 +7,7 @@ import os
 from ui.ui_ProjectChooseWidget import Ui_ProjectChooseWidget
 from MainProjectWidget import MainProjectWidget
 import model
+import shutil
 from datetime import datetime
 
 class ProjectChooseWidget(QtGui.QWidget):
@@ -108,9 +109,24 @@ class ProjectChooseWidget(QtGui.QWidget):
             self.ui.txt_project_id.setFocus()
             return
         
-        os.mkdir(project_directory)
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        
+        files_path = os.path.join(os.path.split(current_path)[0], 'files')
+        print files_path
+        
+        shutil.copytree(files_path, project_directory)
+        
+        
         project = model.AnnotationProject(str(project_id), str(project_name), None, str(description), datetime.now(), self.username)
         project.directory = project_directory
+        
+        project.last_modification = datetime.now()
+        project_path = os.path.join(unicode(project_directory), 'project.json')
+        json_object = project.to_json()
+        myfile = open(project_path, "w")
+        
+        import json
+        myfile.write(json.dumps(json_object, indent=4, sort_keys=True))
         
         self.width = MainProjectWidget(project)
         self.close()
