@@ -1,6 +1,7 @@
 import shutil
 import os
 from PyQt4 import QtGui, QtCore
+from widget.DialogCopyFiles import DialogCopyFiles
 
 
 def copy_to_directory(project, path):
@@ -23,8 +24,9 @@ def copy_to_directory(project, path):
         final_path = os.path.join(media_directory, final_path)
         count = count + 1
     
-    print final_path
-    shutil.copy(path, final_path)
+    dialog = DialogCopyFiles(path, final_path)
+    dialog.start()
+    dialog.exec_()
     return final_path
 
 def qtime_to_sec(qtime):
@@ -43,6 +45,3 @@ def sec_to_qtime(sec):
     qtime.setHMS(hour, _min, sec)
     return qtime
         
-                          
-    
-    

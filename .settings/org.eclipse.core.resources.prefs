@@ -14,6 +14,7 @@ encoding//ui/ui_WaitingDialog.py=utf-8
 encoding//widget/AddMediaWidget.py=utf-8
 encoding//widget/AudioContent.py=utf-8
 encoding//widget/AudioPlayer.py=utf-8
+encoding//widget/DialogCopyFiles.py=utf-8
 encoding//widget/ImageContent.py=utf-8
 encoding//widget/LayoutSelector.py=utf-8
 encoding//widget/MainProjectWidget.py=utf-8
