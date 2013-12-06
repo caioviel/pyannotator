@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>763</width>
-    <height>647</height>
+    <height>755</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,11 +65,11 @@
      <x>20</x>
      <y>60</y>
      <width>721</width>
-     <height>531</height>
+     <height>641</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_icon">
     <attribute name="title">
@@ -79,7 +79,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>10</y>
+       <y>40</y>
        <width>341</width>
        <height>271</height>
       </rect>
@@ -377,7 +377,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>280</y>
+       <y>360</y>
        <width>681</width>
        <height>211</height>
       </rect>
@@ -481,7 +481,7 @@
      <property name="geometry">
       <rect>
        <x>360</x>
-       <y>10</y>
+       <y>40</y>
        <width>341</width>
        <height>271</height>
       </rect>
@@ -505,17 +505,10 @@
        <string>Alerta Vibratório</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>10</y>
-        <width>171</width>
-        <height>27</height>
-       </rect>
+     <widget class="QPushButton" name="btn_choose_audio">
+      <property name="enabled">
+       <bool>false</bool>
       </property>
-     </widget>
-     <widget class="QPushButton" name="btn_choose_icon_2">
       <property name="geometry">
        <rect>
         <x>150</x>
@@ -543,7 +536,7 @@
        <rect>
         <x>20</x>
         <y>10</y>
-        <width>141</width>
+        <width>121</width>
         <height>21</height>
        </rect>
       </property>
@@ -552,6 +545,9 @@
       </property>
      </widget>
      <widget class="QPushButton" name="btn_play_audio">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -572,6 +568,25 @@
         <width>40</width>
         <height>40</height>
        </size>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="txt_sound">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>10</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="tabChangesFocus">
+       <bool>false</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -636,10 +651,141 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>50</y>
        <width>691</width>
        <height>481</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QTimeEdit" name="time_media">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>530</y>
+       <width>91</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_current_time">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>510</y>
+       <width>91</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Tempo atual:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_skip">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>510</y>
+       <width>121</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Trecho do pulo:</string>
+     </property>
+    </widget>
+    <widget class="QTimeEdit" name="time_skip_point">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>530</y>
+       <width>91</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTimeEdit" name="time_back_point">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>530</y>
+       <width>91</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_back_point">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>510</y>
+       <width>121</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Trecho para voltar:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbl_back_limite">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>510</y>
+       <width>191</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Final do trecho para voltar:</string>
+     </property>
+    </widget>
+    <widget class="QTimeEdit" name="time_back_limite">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>530</y>
+       <width>91</width>
+       <height>27</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_skip">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>560</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Usar tempo atual</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_back_point">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>560</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Usar tempo atual</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_back_limite">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>560</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Usar tempo atual</string>
      </property>
     </widget>
    </widget>
@@ -723,7 +869,7 @@
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QCheckBox" name="ckb_compulsory_2">
+    <widget class="QCheckBox" name="ckb_interactive">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -742,7 +888,7 @@
    <property name="geometry">
     <rect>
      <x>640</x>
-     <y>600</y>
+     <y>710</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -765,7 +911,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>600</y>
+     <y>710</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -788,7 +934,7 @@
    <property name="geometry">
     <rect>
      <x>317</x>
-     <y>600</y>
+     <y>710</y>
      <width>111</width>
      <height>41</height>
     </rect>

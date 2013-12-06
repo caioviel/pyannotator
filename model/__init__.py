@@ -637,31 +637,69 @@ class Interaction(object):
             return Skip.parse_json(json_object)
         elif json_object.has_key('Replay'):
             return Replay.parse_json(json_object)
-        elif json_object.has_key('Poll'):
-            return Poll.parse_json(json_object)
+        #elif json_object.has_key('Poll'):
+        #    return Poll.parse_json(json_object)
     
     def to_json(self):
         pass
 
 class ShowContent(Interaction):
+    SHOW_CONTENT = 0
+    SKIP = 1
+    BACK_5 = 2
+    BACK_TO = 2
+    
     def __init__(self):
         super(ShowContent, self).__init__()
         self.contents = []
         self.icon = None
         self.compulsory = False
+        self.interactive = False
         self.pause_main_video = False
         self.allow_end_content = True
         self.tv = True
         self.mobile = False
+        self.interaction_type = ShowContent.SHOW_CONTENT
+        self.skip_point = None
+        self.back_point = None
+        self.back_limite = None
+        self.sound_alert = None
+        self.viber_alert = False
         
     @staticmethod
     def parse_json(json_object):
         sc = ShowContent()
         sc.compulsory = json_object['ShowContent']['compulsory']
+        sc.interactive = json_object['ShowContent']['interactive']
         sc.pause_main_video = json_object['ShowContent']['pause_main_video']
         sc.allow_end_content = json_object['ShowContent']['allow_end_content']
         sc.tv = json_object['ShowContent']['tv']
+        sc.viber_alert = json_object['ShowContent']['viber_alert']
         sc.mobile = json_object['ShowContent']['mobile']
+        inttype =  json_object['ShowContent']['interaction_type']
+        
+        if inttype == 'SHOW_CONTENT':
+            sc.interaction_type = ShowContent.SHOW_CONTENT
+        elif inttype == 'SKIP':
+            sc.interaction_type = ShowContent.SKIP
+        elif inttype == 'BACK_5':
+            sc.interaction_type = ShowContent.BACK_5
+        elif inttype == 'BACK_TO':
+            sc.interaction_type = ShowContent.BACK_TO
+            
+            
+        if json_object['ShowContent'].has_key('sound_alert'):
+            sc.sound_alert = json_object['ShowContent']['sound_alert']
+            
+        if json_object['ShowContent'].has_key('skip_point'):
+            sc.skip_point = json_object['ShowContent']['skip_point']
+            
+        if json_object['ShowContent'].has_key('back_point'):
+            sc.back_point = json_object['ShowContent']['back_point']
+            
+        if json_object['ShowContent'].has_key('back_limite'):
+            sc.back_limite = json_object['ShowContent']['back_limite']
+        
         
         if json_object['ShowContent'].has_key('icon'):
             sc.icon = Icon.parse_json(json_object['ShowContent']['icon'])
@@ -678,14 +716,39 @@ class ShowContent(Interaction):
                                         'allow_end_content' : self.allow_end_content,
                                         'tv' : self.tv,
                                         'mobile' : self.mobile,
+                                        'interactive' : self.interactive,
+                                        'viber_alert' : self.viber_alert
                                         }}
         if self.icon is not None:
             json_object['ShowContent']['icon'] = self.icon.to_json()
+            
+        if self.sound_alert is not None:
+            json_object['ShowContent']['sound_alert'] = self.sound_alert
             
             
         json_object['ShowContent']['contents'] = []
         for content in self.contents:
             json_object['ShowContent']['contents'].append(content.to_json())
+            
+            
+        if self.interaction_type == ShowContent.SHOW_CONTENT:
+            json_object['ShowContent']['interaction_type'] = 'SHOW_CONTENT'
+        elif self.interaction_type == ShowContent.SKIP:
+            json_object['ShowContent']['interaction_type'] = 'SKIP'
+        elif self.interaction_type == ShowContent.BACK_5:
+            json_object['ShowContent']['interaction_type'] = 'BACK_5'
+        elif self.interaction_type == ShowContent.BACK_TO:
+            json_object['ShowContent']['interaction_type'] = 'BACK_TO'
+
+    
+        if self.skip_point is not None:
+            json_object['ShowContent']['skip_point'] = self.skip_point
+            
+        if self.back_limite is not None:
+            json_object['ShowContent']['back_limite'] = self.back_limite
+            
+        if self.back_point is not None:
+            json_object['ShowContent']['back_point'] = self.back_point
             
         return json_object
         
@@ -714,7 +777,7 @@ class ShowContent(Interaction):
         return u"Conteúdo"
 
                         
-class Skip(Interaction):
+class Skip(ShowContent):
     @property
     def type(self):
         return "Skip"
@@ -724,16 +787,16 @@ class Skip(Interaction):
     def pt_type(self):
         return u"Pular"
 
-class Poll(Interaction):
+'''class Poll(Interaction):
     @property
     def type(self):
         return "Poll"
         
     @property
     def pt_type(self):
-        return u"Enquete"
+        return u"Enquete"'''
 
-class Replay(Interaction):
+class Replay(ShowContent):
     @property
     def type(self):
         return "Replay"

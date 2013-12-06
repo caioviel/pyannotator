@@ -141,6 +141,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.ui.btn_ok.clicked.connect(self.save_edit)
         self.ui.btn_cancel.clicked.connect(self.cancel_edit)
         
+        
     def load_project(self):
         project = self.project
         if project.main_media:
