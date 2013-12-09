@@ -9,6 +9,7 @@ from MainProjectWidget import MainProjectWidget
 import model
 import shutil
 from datetime import datetime
+import logging
 
 class ProjectChooseWidget(QtGui.QWidget):
     PROJECTS_DIRECTORY = "AnnotationProjects"
@@ -55,11 +56,11 @@ class ProjectChooseWidget(QtGui.QWidget):
                     try:
                         f = codecs.open(project_file, "r", "utf-8")
                         json_str = f.read()                        
-                        project = model.AnnotationProject.parse_json(json.loads(json_str))
+                        project = model.AnnotationProject.parse_json(json.loads(json_str), file_path)
                         #project = model.AnnotationProject('id', 'name', 'main_media', 'description', 'modification', 'username')
                         existent_projects.append(project)
                     except:
-                        print 'Problems reading the file', project_file
+                        logging.exception('Problems reading the file: %s' % project_file)
                     
                     
         #TODO: Order the projects by last modification

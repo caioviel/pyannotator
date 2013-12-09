@@ -17,7 +17,7 @@ class MySlider(Phonon.SeekSlider):
         
 
 
-class VideoPlayer(QtGui.QDialog):
+class VideoPlayer(QtGui.QWidget):
     def __init__(self, video_source=None, begin_time=None, end_time=None, parent=None):
         super(VideoPlayer, self).__init__(parent)
         self.ui = Ui_VideoPlayer()

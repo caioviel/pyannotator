@@ -1,5 +1,8 @@
 from lxml import etree as ET
 
+def clear():
+    NclEntity.IDS = {}
+
 class ImportedBase:
     RULE_BASE = 0
     TRANSITION_BASE = 1

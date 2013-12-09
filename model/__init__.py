@@ -3,8 +3,13 @@
 
 import sys
 import json
+import os
 from PyQt4 import QtGui, QtCore
 #from PySide import QtCore
+
+
+def adjust_path(old_path, directory):
+    return os.path.join(directory, "medias", os.path.split(old_path)[1])
 
 
 class AnnotationProject(object):
@@ -19,14 +24,18 @@ class AnnotationProject(object):
         self.annotations = []
         
     @staticmethod
-    def parse_json(json_object):
+    def parse_json(json_object, directory=None):
         project =  AnnotationProject(json_object['AnnotationProject']['id'],
                                          json_object['AnnotationProject']['name'],
                                          json_object['AnnotationProject']['main_media'],
                                          json_object['AnnotationProject']['description'])
         
+        
+        if directory is not None and project.main_media is not None:
+            project.main_media = adjust_path(project.main_media, directory)
+        
         for json_ann in json_object['AnnotationProject']['annotations']:
-            project.add_annotation(Annotation.parse_json(json_ann))
+            project.add_annotation(Annotation.parse_json(json_ann, directory))
             
         return project
     
@@ -81,14 +90,14 @@ class Annotation(object):
         self.interaction = None
         
     @staticmethod
-    def parse_json(json_object):
+    def parse_json(json_object, directory=None):
         ann =  Annotation(json_object['Annotation']['id'],
                               json_object['Annotation']['description'])
         
         
         ann.annotation_time = QtCore.QTime.fromString(json_object['Annotation']['annotation_time'])
         if json_object['Annotation'].has_key('interaction'):
-            ann.interaction = Interaction.parse_json(json_object['Annotation']['interaction'])
+            ann.interaction = Interaction.parse_json(json_object['Annotation']['interaction'], directory)
         
         return ann
     
@@ -137,18 +146,24 @@ class Media(object):
         self.duration = None
         
     @staticmethod
-    def parse_json(json_object):
+    def parse_json(json_object, directory=None):
         mtype = json_object['Media']['type']
+        media = None
         if mtype == 'AUDIO':
-            return Audio.parse_json(json_object)
+            media = Audio.parse_json(json_object)
         elif mtype == 'VIDEO':
-            return Video.parse_json(json_object)
+            media = Video.parse_json(json_object)
         elif mtype == 'IMAGE':
-            return Image.parse_json(json_object)
+            media = Image.parse_json(json_object)
         elif mtype == 'TEXT':
-            return Text.parse_json(json_object)
+            media = Text.parse_json(json_object)
         elif mtype == 'SLIDES':
-            return Slides.parse_json(json_object)
+            media = Slides.parse_json(json_object)
+        
+        if directory is not None and media.filename is not None:
+            media.filename = adjust_path(media.filename, directory)
+            
+        return media
     
     def to_json(self):
         pass
@@ -548,7 +563,7 @@ class Icon(object):
         self.position = None
         
     @staticmethod
-    def parse_json(json_object):
+    def parse_json(json_object, directory=None):
         icon = Icon()
         image = json_object['Icon']['image']
         if image == 'INFO':
@@ -561,6 +576,8 @@ class Icon(object):
             icon.image = Icon.YES
         elif image == 'NO':
             icon.image = Icon.NO
+        else:
+            icon.image = adjust_path(image, directory)
         
         if json_object['Icon'].has_key('relative_time'):
             icon.relative_time = json_object['Icon']['relative_time']
@@ -630,9 +647,9 @@ class Interaction(object):
         pass
     
     @staticmethod
-    def parse_json(json_object):
+    def parse_json(json_object, directory):
         if json_object.has_key('ShowContent'):
-            return ShowContent.parse_json(json_object)
+            return ShowContent.parse_json(json_object, directory)
         elif json_object.has_key('Skip'):
             return Skip.parse_json(json_object)
         elif json_object.has_key('Replay'):
@@ -647,7 +664,7 @@ class ShowContent(Interaction):
     SHOW_CONTENT = 0
     SKIP = 1
     BACK_5 = 2
-    BACK_TO = 2
+    BACK_TO = 3
     
     def __init__(self):
         super(ShowContent, self).__init__()
@@ -665,9 +682,10 @@ class ShowContent(Interaction):
         self.back_limite = None
         self.sound_alert = None
         self.viber_alert = False
+        self.button = "GREEN"
         
     @staticmethod
-    def parse_json(json_object):
+    def parse_json(json_object, directory):
         sc = ShowContent()
         sc.compulsory = json_object['ShowContent']['compulsory']
         sc.interactive = json_object['ShowContent']['interactive']
@@ -689,7 +707,7 @@ class ShowContent(Interaction):
             
             
         if json_object['ShowContent'].has_key('sound_alert'):
-            sc.sound_alert = json_object['ShowContent']['sound_alert']
+            sc.sound_alert = adjust_path(json_object['ShowContent']['sound_alert'], directory)
             
         if json_object['ShowContent'].has_key('skip_point'):
             sc.skip_point = json_object['ShowContent']['skip_point']
@@ -699,14 +717,17 @@ class ShowContent(Interaction):
             
         if json_object['ShowContent'].has_key('back_limite'):
             sc.back_limite = json_object['ShowContent']['back_limite']
+            
+        if json_object['ShowContent'].has_key('button'):
+            sc.button = json_object['ShowContent']['button']
         
         
         if json_object['ShowContent'].has_key('icon'):
-            sc.icon = Icon.parse_json(json_object['ShowContent']['icon'])
+            sc.icon = Icon.parse_json(json_object['ShowContent']['icon'], directory)
             
         if json_object['ShowContent'].has_key('contents'):
             for content in json_object['ShowContent']['contents']:
-                sc.add_content(Media.parse_json(content))
+                sc.add_content(Media.parse_json(content, directory))
         
         return sc
     
@@ -749,6 +770,9 @@ class ShowContent(Interaction):
             
         if self.back_point is not None:
             json_object['ShowContent']['back_point'] = self.back_point
+            
+        if self.button is not None:
+            json_object['ShowContent']['button'] = self.button
             
         return json_object
         

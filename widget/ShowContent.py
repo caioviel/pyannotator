@@ -27,6 +27,8 @@ class ShowContent(QtGui.QDialog):
         self.init_ui()
         self.audio_path = None
         
+        self.buttons = ["RED", "GREEN", "BLUE", "YELLOW"]
+        
         self.load_annotation()
         
         
@@ -78,6 +80,10 @@ class ShowContent(QtGui.QDialog):
                 self.ui.radio_personalized.setChecked(True)
                 self.icon_path = show_content.icon.image
                 self.ui.radio_personalized.setIcon(QtGui.QIcon(self.icon_path))
+                self.ui.cmb_button.setEnabled(True)
+                if show_content.button is not None:
+                    self.ui.cmb_button.setCurrentIndex(self.buttons.index(\
+                                                        show_content.button))
                 
             if show_content.icon.position == model.Icon.BOT_LEFT:
                 self.ui.radio_bl.setChecked(True)
@@ -209,13 +215,14 @@ class ShowContent(QtGui.QDialog):
         self.ui.btn_ok.clicked.connect(self.ok_pressed)
         self.ui.btn_cancel.clicked.connect(self.cancel_pressed)
         
-        player_holder = self.ui.player_widget
-        layout = QtGui.QVBoxLayout()
-        self.player = VideoPlayer()
-        layout.addWidget(self.player)
-        player_holder.setLayout(layout)
+        #player_holder = self.ui.player_widget
+        #layout = QtGui.QVBoxLayout()
+        self.player = VideoPlayer(parent=self.ui.player_widget)
+        #layout.addWidget(self.player)
+        #self.ui.tab_interaction.setLayout(layout)
         self.player.load_video(self.project.main_media)
         self.player.player.mediaObject().tick.connect(self.update_time_edit)
+        #self.player.move(50,0)
         
         
         self.ui.radio_show.toggled.connect(self.selected_show)
@@ -367,16 +374,22 @@ class ShowContent(QtGui.QDialog):
         if self.ui.radio_personalized.isChecked():
             self.icon_path = util.copy_to_directory(self.project, unicode(self.icon_path))
             icon.image = self.icon_path
+            show_content.button = str(self.ui.cmb_button.currentText())
         elif self.ui.radio_info.isChecked():
             icon.image = model.Icon.INFO
+            show_content.button = "GREEN"
         elif self.ui.radio_sexual.isChecked():
             icon.image = model.Icon.SEXUAL
+            show_content.button = "RED"
         elif self.ui.radio_violence.isChecked():
             icon.image = model.Icon.VIOLENCE
+            show_content.button = "RED"
         elif self.ui.radio_yes.isChecked():
             icon.image = model.Icon.YES
+            show_content.button = "GREEN"
         elif self.ui.radio_no.isChecked():
             icon.image = model.Icon.NO
+            show_content.button = "RED"
             
         icon.relative_time = int(self.ui.cmb_icon_before.itemText(
                                             self.ui.cmb_icon_before.currentIndex()))
@@ -410,6 +423,9 @@ class ShowContent(QtGui.QDialog):
         self.annotation.description = unicode(self.ui.textEdit.toPlainText())
         self.annotation.interaction = show_content
         
+        self.annotation.annotation_time = self.ui.time_begin.time()
+        self.annotation.description = self.ui.textEdit.toPlainText()
+        
         if self.ui.radio_show.isChecked():
             show_content.interaction_type = model.ShowContent.SHOW_CONTENT         
         elif self.ui.radio_skip.isChecked():
@@ -418,9 +434,10 @@ class ShowContent(QtGui.QDialog):
         elif self.ui.radio_back.isChecked():
             show_content.interaction_type = model.ShowContent.BACK_5
         elif self.ui.radio_back_to.isChecked():
+            print 'back_to'
             show_content.interaction_type = model.ShowContent.BACK_TO
-            show_content.back_point = util.qtime_to_sec(self.ui.time_skip_point.time())
-            show_content.back_limite = util.qtime_to_sec(self.ui.time_skip_point.time())
+            show_content.back_point = util.qtime_to_sec(self.ui.time_back_point.time())
+            show_content.back_limite = util.qtime_to_sec(self.ui.time_back_limite.time())
         
         
         self.result = show_content

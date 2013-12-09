@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>763</width>
-    <height>755</height>
+    <height>681</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,11 +65,11 @@
      <x>20</x>
      <y>60</y>
      <width>721</width>
-     <height>641</height>
+     <height>571</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_icon">
     <attribute name="title">
@@ -79,9 +79,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>40</y>
+       <y>10</y>
        <width>341</width>
-       <height>271</height>
+       <height>261</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -94,7 +94,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>10</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -117,7 +117,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>20</y>
+        <y>10</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -140,7 +140,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>70</y>
+        <y>50</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -163,7 +163,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>20</y>
+        <y>10</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -186,7 +186,7 @@
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>70</y>
+        <y>50</y>
         <width>116</width>
         <height>71</height>
        </rect>
@@ -209,7 +209,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>70</y>
+        <y>50</y>
         <width>141</width>
         <height>71</height>
        </rect>
@@ -227,8 +227,8 @@
      <widget class="QPushButton" name="btn_choose_icon">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>130</y>
+        <x>10</x>
+        <y>120</y>
         <width>151</width>
         <height>41</height>
        </rect>
@@ -277,7 +277,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>230</y>
+        <y>220</y>
         <width>191</width>
         <height>31</height>
        </rect>
@@ -320,7 +320,7 @@
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>230</y>
+        <y>220</y>
         <width>51</width>
         <height>27</height>
        </rect>
@@ -363,7 +363,7 @@
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>230</y>
+        <y>220</y>
         <width>111</width>
         <height>31</height>
        </rect>
@@ -372,12 +372,55 @@
        <string>segundo(s).</string>
       </property>
      </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>130</y>
+        <width>66</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Botão:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="cmb_button">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>120</y>
+        <width>78</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>RED</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>GREEN</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>BLUE</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>YELLOW</string>
+       </property>
+      </item>
+     </widget>
     </widget>
     <widget class="QFrame" name="frame_3">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>360</y>
+       <y>280</y>
        <width>681</width>
        <height>211</height>
       </rect>
@@ -481,9 +524,9 @@
      <property name="geometry">
       <rect>
        <x>360</x>
-       <y>40</y>
+       <y>10</y>
        <width>341</width>
-       <height>271</height>
+       <height>261</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -496,7 +539,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>140</y>
+        <y>110</y>
         <width>171</width>
         <height>22</height>
        </rect>
@@ -599,7 +642,7 @@
      <property name="geometry">
       <rect>
        <x>160</x>
-       <y>20</y>
+       <y>10</y>
        <width>116</width>
        <height>22</height>
       </rect>
@@ -612,7 +655,7 @@
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>20</y>
+       <y>10</y>
        <width>161</width>
        <height>22</height>
       </rect>
@@ -625,7 +668,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>10</y>
        <width>116</width>
        <height>22</height>
       </rect>
@@ -638,7 +681,7 @@
      <property name="geometry">
       <rect>
        <x>480</x>
-       <y>20</y>
+       <y>10</y>
        <width>231</width>
        <height>22</height>
       </rect>
@@ -651,9 +694,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>30</y>
        <width>691</width>
-       <height>481</height>
+       <height>451</height>
       </rect>
      </property>
     </widget>
@@ -661,9 +704,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>530</y>
+       <y>500</y>
        <width>91</width>
-       <height>27</height>
+       <height>31</height>
       </rect>
      </property>
     </widget>
@@ -671,7 +714,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>510</y>
+       <y>480</y>
        <width>91</width>
        <height>17</height>
       </rect>
@@ -683,8 +726,8 @@
     <widget class="QLabel" name="lbl_skip">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>510</y>
+       <x>120</x>
+       <y>480</y>
        <width>121</width>
        <height>17</height>
       </rect>
@@ -696,29 +739,29 @@
     <widget class="QTimeEdit" name="time_skip_point">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>530</y>
+       <x>120</x>
+       <y>500</y>
        <width>91</width>
-       <height>27</height>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QTimeEdit" name="time_back_point">
      <property name="geometry">
       <rect>
-       <x>360</x>
-       <y>530</y>
+       <x>320</x>
+       <y>500</y>
        <width>91</width>
-       <height>27</height>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QLabel" name="lbl_back_point">
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>510</y>
-       <width>121</width>
+       <x>320</x>
+       <y>480</y>
+       <width>191</width>
        <height>17</height>
       </rect>
      </property>
@@ -730,7 +773,7 @@
      <property name="geometry">
       <rect>
        <x>520</x>
-       <y>510</y>
+       <y>480</y>
        <width>191</width>
        <height>17</height>
       </rect>
@@ -742,50 +785,50 @@
     <widget class="QTimeEdit" name="time_back_limite">
      <property name="geometry">
       <rect>
-       <x>560</x>
-       <y>530</y>
+       <x>520</x>
+       <y>500</y>
        <width>91</width>
-       <height>27</height>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_skip">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>560</y>
-       <width>141</width>
-       <height>41</height>
+       <x>220</x>
+       <y>500</y>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Usar tempo atual</string>
+      <string>Usar tempo</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_back_point">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>560</y>
-       <width>141</width>
-       <height>41</height>
+       <x>420</x>
+       <y>500</y>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Usar tempo atual</string>
+      <string>Usar tempo</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_back_limite">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>560</y>
-       <width>141</width>
-       <height>41</height>
+       <x>620</x>
+       <y>500</y>
+       <width>91</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Usar tempo atual</string>
+      <string>Usar tempo</string>
      </property>
     </widget>
    </widget>
@@ -888,7 +931,7 @@
    <property name="geometry">
     <rect>
      <x>640</x>
-     <y>710</y>
+     <y>640</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -911,7 +954,7 @@
    <property name="geometry">
     <rect>
      <x>530</x>
-     <y>710</y>
+     <y>640</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -934,7 +977,7 @@
    <property name="geometry">
     <rect>
      <x>317</x>
-     <y>710</y>
+     <y>640</y>
      <width>111</width>
      <height>41</height>
     </rect>

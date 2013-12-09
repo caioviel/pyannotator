@@ -12,14 +12,11 @@ logger = logging.getLogger('pyannotator')
 logger.setLevel(logging.DEBUG)
 
 import model
-from model import Annotation
 from PyQt4 import QtGui, QtCore
-from PyQt4.phonon import Phonon
 from ui.ui_MainProjectWidget import Ui_MainProjectWidget
 from ui.ui_AnnotationListItem import Ui_AnnotationListItem
 from VideoPlayer import VideoPlayer
 import os
-import sys
 import getpass
 
 real_path, _ = os.path.split(os.path.realpath(__file__))
@@ -153,7 +150,7 @@ class MainProjectWidget(QtGui.QWidget):
         self.ui.btn_save_project.clicked.connect(self.save_project)
         self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
         self.ui.btn_close_project.clicked.connect(self.close_project)
-        #self.ui.btn_generate_ncl.setEnabled(True)
+        self.ui.btn_generate_ncl.setEnabled(True)
         
         self.ui.btn_ok.clicked.connect(self.save_edit)
         self.ui.btn_cancel.clicked.connect(self.cancel_edit)
@@ -209,8 +206,17 @@ class MainProjectWidget(QtGui.QWidget):
         nclgenerator = generation.NclGenerator(self.project, 
                                                generation.GenerationOptions())
         
+        print self.project.directory
         nclgenerator.dump_file(os.path.join(self.project.directory, 
                                             'medias', 'main.ncl'))
+        
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        
+        src = os.path.join(os.path.split(current_path)[0], 'files', 'medias', "connBase.ncl")
+        dst = os.path.join(self.project_diretory, "medias", "connBase.ncl")
+        import shutil
+        
+        shutil.copy(src, dst)
         
     @QtCore.pyqtSlot()
     def update_annotation_list(self):
@@ -312,6 +318,12 @@ class MainProjectWidget(QtGui.QWidget):
         
     @QtCore.pyqtSlot()
     def add_annotation(self):
+        if unicode(self.ui.txt_description.toPlainText()) == "":
+            QtGui.QMessageBox.warning(self, u"Adicionando Anotação...",
+                                      u"Por favor, entre com os detalhes da sua anotação.", 
+                                      buttons=QtGui.QMessageBox.Ok)
+            return
+        
         self.player.pause()
         print self.ui.time_edit.time()
         annotation = model.Annotation(self.project.generate_annotation_id(), 
