@@ -270,7 +270,7 @@ class MainProjectWidget(QtGui.QWidget):
         annotation = self.ui.list_notes.itemWidget(item).annotation
         
         from ShowContent import ShowContent
-        widget = ShowContent(self.project, annotation, self)
+        widget = ShowContent(self.project, annotation, parent=self)
         widget.exec_()
         self.update_annotation_list()
         

@@ -24,5 +24,6 @@ encoding//widget/TextContent.py=utf-8
 encoding//widget/VideoContent.py=utf-8
 encoding//widget/VideoPlayer.py=utf-8
 encoding//widget/VolumeControl.py=utf-8
+encoding/browser.py=utf-8
 encoding/generate_ui.py=utf-8
 encoding/main.py=utf-8

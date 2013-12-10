@@ -214,6 +214,7 @@ class ShowContent(QtGui.QDialog):
         
         self.ui.btn_ok.clicked.connect(self.ok_pressed)
         self.ui.btn_cancel.clicked.connect(self.cancel_pressed)
+        self.ui.btn_preview.clicked.connect(self.preview)
         
         #player_holder = self.ui.player_widget
         #layout = QtGui.QVBoxLayout()
@@ -443,6 +444,18 @@ class ShowContent(QtGui.QDialog):
         self.result = show_content
         
         self.close()
+        
+    @QtCore.pyqtSlot()
+    def preview(self):
+        import subprocess as sp
+        
+        parent = self.parent()
+        print (parent)
+        parent.generate_ncl()
+        html = os.path.join(self.project.directory, "index.html")
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        script_path = os.path.join(os.path.split(current_path)[0], 'browser.py')
+        sp.Popen(['python', script_path, html])
     
     @QtCore.pyqtSlot()
     def cancel_pressed(self):

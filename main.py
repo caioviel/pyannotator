@@ -33,6 +33,12 @@ def create_project_directory():
 if __name__ == "__main__":
     create_project_directory()
     
+  
+    
     app = QtGui.QApplication(sys.argv)
     widget = ProjectChooseWidget(real_path, home_directory, username)
-    sys.exit(app.exec_())
+    ret = app.exec_()
+    
+    del widget
+    del app
+    sys.exit(ret)
