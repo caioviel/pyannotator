@@ -69,7 +69,7 @@ class LayoutSelector(QtGui.QWidget):
         self.lbl_main_video.setText(u"Vídeo Principal")
         
         
-        self.lbl_content = MovebleLabel(u"Contéudo Adicional", self)
+        self.lbl_content = MovebleLabel(u"Conteúdo Complementar", self)
         self.lbl_content.resize(200, 150)
         self.lbl_content.move(*self.base_pos)
         self.lbl_content.setStyleSheet('background-color: rgb(255, 255, 0);\
@@ -80,7 +80,7 @@ class LayoutSelector(QtGui.QWidget):
         self.lbl_content.setMinimumSize(1, 1)
         self.lbl_content.setAlignment(QtCore.Qt.AlignCenter)
         self.lbl_content.setWordWrap(True)
-        self.lbl_content.setText(u"Contéudo Adicional")
+        self.lbl_content.setText(u"Conteúdo Complementar")
         
         self.btn_reset_position = QtGui.QPushButton(u"Resetar Posição", self)
         self.btn_reset_position.clicked.connect(self.reset_position)
