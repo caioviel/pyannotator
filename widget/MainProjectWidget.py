@@ -149,6 +149,7 @@ class MainProjectWidget(QtGui.QWidget):
         
         self.ui.btn_save_project.clicked.connect(self.save_project)
         self.ui.btn_generate_ncl.clicked.connect(self.generate_ncl)
+        self.ui.btn_generate_ncl.setText(u"Gerar e Exibir")
         self.ui.btn_close_project.clicked.connect(self.close_project)
         self.ui.btn_generate_ncl.setEnabled(True)
         
@@ -203,20 +204,33 @@ class MainProjectWidget(QtGui.QWidget):
     @QtCore.pyqtSlot()
     def generate_ncl(self):
         import generation
-        nclgenerator = generation.NclGenerator(self.project, 
-                                               generation.GenerationOptions())
+        try:
+            nclgenerator = generation.NclGenerator(self.project, 
+                                                   generation.GenerationOptions())
+            
+            print self.project.directory
+            nclgenerator.dump_file(os.path.join(self.project.directory, 
+                                                'medias', 'main.ncl'))
+            
+            current_path = os.path.dirname(os.path.realpath(__file__))
+            
+            src = os.path.join(os.path.split(current_path)[0], 'files', 'medias', "connBase.ncl")
+            dst = os.path.join(self.project_diretory, "medias", "connBase.ncl")
+            import shutil
+            
+            shutil.copy(src, dst)
+        except:
+            logging.exception('Error Generating the NCL')
+            QtGui.QMessageBox.warning(self, u'Gerando NCL', u"Aconteceu um erro ao gerar o documento multimídia", QtGui.QMessageBox.Ok)
+            return
+            
+        QtGui.QMessageBox.information(self, u'Gerando NCL', u"Documento multimídia gerado com sucesso ", QtGui.QMessageBox.Ok)
         
-        print self.project.directory
-        nclgenerator.dump_file(os.path.join(self.project.directory, 
-                                            'medias', 'main.ncl'))
-        
+        import subprocess as sp
+        html = os.path.join(self.project.directory, "index.html")
         current_path = os.path.dirname(os.path.realpath(__file__))
-        
-        src = os.path.join(os.path.split(current_path)[0], 'files', 'medias', "connBase.ncl")
-        dst = os.path.join(self.project_diretory, "medias", "connBase.ncl")
-        import shutil
-        
-        shutil.copy(src, dst)
+        script_path = os.path.join(os.path.split(current_path)[0], 'browser.py')
+        sp.Popen(['python', script_path, html])
         
     @QtCore.pyqtSlot()
     def update_annotation_list(self):

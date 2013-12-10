@@ -10,6 +10,7 @@ from AudioPlayer import AudioPlayer
 import model
 import os
 import util
+import logging
 
 HOME_DIRECTORY = os.getenv('USERPROFILE') or os.getenv('HOME')
 from LayoutSelector import *
@@ -127,8 +128,10 @@ class ShowContent(QtGui.QDialog):
                 self.ui.radio_back_to.setChecked(True)
                 self.ui.time_back_point.setTime(util.sec_to_qtime(show_content.back_point))
                 self.ui.time_back_limite.setTime(util.sec_to_qtime(show_content.back_limite))
-                
+            
+            self.ui.btn_preview.setEnabled(True)
             self.add_media_widget.update_media_list()
+            
             
     @QtCore.pyqtSlot(int)
     def update_time_edit(self, time):
@@ -215,6 +218,7 @@ class ShowContent(QtGui.QDialog):
         self.ui.btn_ok.clicked.connect(self.ok_pressed)
         self.ui.btn_cancel.clicked.connect(self.cancel_pressed)
         self.ui.btn_preview.clicked.connect(self.preview)
+        self.ui.btn_preview.setEnabled(False)
         
         #player_holder = self.ui.player_widget
         #layout = QtGui.QVBoxLayout()
@@ -237,6 +241,7 @@ class ShowContent(QtGui.QDialog):
         
         self.ui.time_media.timeChanged.connect(self.editing_time)
         self.ui.time_media.installEventFilter(self)
+        self.ui.time_media.setEnabled(False)
         
         self.ui.radio_show.setChecked(True)
         
@@ -447,11 +452,33 @@ class ShowContent(QtGui.QDialog):
         
     @QtCore.pyqtSlot()
     def preview(self):
-        import subprocess as sp
+        import generation
+        try:
+            begintime = util.qtime_to_sec(self.annotation.annotation_time)
+            begintime = begintime - int(self.ui.cmb_icon_before.currentText()) - 3
+            
+            nclgenerator = generation.NclGenerator(self.project, 
+                                                   generation.GenerationOptions())
+            
+            print self.project.directory
+            nclgenerator.dump_file(os.path.join(self.project.directory, 
+                                                'medias', 'main.ncl'),
+                                   begintime)
+            
+            current_path = os.path.dirname(os.path.realpath(__file__))
+            
+            src = os.path.join(os.path.split(current_path)[0], 'files', 'medias', "connBase.ncl")
+            dst = os.path.join(self.project.directory, "medias", "connBase.ncl")
+            import shutil
+            
+            shutil.copy(src, dst)
+        except:
+            logging.exception('Error Generating the NCL')
+            QtGui.QMessageBox.warning(self, u'Gerando NCL', u"Aconteceu um erro ao gerar o documento multimídia", QtGui.QMessageBox.Ok)
+            return
+            
         
-        parent = self.parent()
-        print (parent)
-        parent.generate_ncl()
+        import subprocess as sp
         html = os.path.join(self.project.directory, "index.html")
         current_path = os.path.dirname(os.path.realpath(__file__))
         script_path = os.path.join(os.path.split(current_path)[0], 'browser.py')

@@ -32,7 +32,7 @@ class NclGenerator():
         self.media_count = 1
         self.ncldoc = None
         
-    def generate_ncl(self):
+    def generate_ncl(self, begin_time = None):
         self.ncldoc = NclDocument(self.project.id)
         
         self.ncldoc.add_imported_connector_base(
@@ -42,7 +42,7 @@ class NclGenerator():
             
         self.generate_descriptors()
             
-        self.generate_body()
+        self.generate_body(begin_time)
     
     
     def get_media_path(self, name):
@@ -104,7 +104,7 @@ class NclGenerator():
         descriptor = Descriptor("dScreen", region="rgScreen")
         self.ncldoc.descriptor_base.append(descriptor)
     
-    def generate_body(self):
+    def generate_body(self, begintime):
         self.mainVideo = Media('mainVideo', 
                           src=self.get_media_path(self.project.main_media), 
                           descriptor="dScreen")
@@ -114,7 +114,13 @@ class NclGenerator():
         
         self.ncldoc.add_node(self.mainVideo)
         
-        port = Port("pMainVideo", component=self.mainVideo)
+        if begintime is not None:
+            self.mainVideo.add_anchor(Area("beginArea", begin=begintime))
+        else:
+            self.mainVideo.add_anchor(Area("beginArea", begin=0))
+            
+        
+        port = Port("pMainVideo", component=self.mainVideo, interface="beginArea")
         self.ncldoc.add_anchor(port)
         
         
@@ -352,8 +358,8 @@ class NclGenerator():
 
                 
 
-    def dump_file(self, filename):
-        self.generate_ncl()
+    def dump_file(self, filename, begintime=None):
+        self.generate_ncl(begintime)
         self.ncldoc.dump_file(filename)
         
     def add_icon(self, ann):
