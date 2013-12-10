@@ -25,6 +25,7 @@ class ShowContent(QtGui.QDialog):
         
         self.ui = Ui_ShowContent()
         self.ui.setupUi(self)
+        self.ui.btn_preview.setVisible(False)
         self.init_ui()
         self.audio_path = None
         

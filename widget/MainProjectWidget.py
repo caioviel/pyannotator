@@ -56,6 +56,9 @@ class AnnotationListItem(QtGui.QWidget):
             action = QtGui.QAction(u'Editar CMC', self)
             action.triggered.connect(self.main_widget.show_content_widget)
             self.pop_menu.addAction(action)
+            action = QtGui.QAction(u'Visualizar', self)
+            action.triggered.connect(self.main_widget.visualize_annotation)
+            self.pop_menu.addAction(action)
         
         self.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         #self.connect(self.connect(self.button, QtCore.SIGNAL('customContextMenuRequested(const QPoint&)'), self.on_context_menu)
@@ -298,6 +301,43 @@ class MainProjectWidget(QtGui.QWidget):
         widget = ShowContent(self.project, annotation, parent=self)
         widget.exec_()
         self.update_annotation_list()
+        
+    @QtCore.pyqtSlot()
+    def visualize_annotation(self):   
+        item = self.ui.list_notes.currentItem()
+        annotation = self.ui.list_notes.itemWidget(item).annotation
+        import util
+        import generation
+        try:
+            begintime = util.qtime_to_sec(annotation.annotation_time)
+            begintime = begintime - annotation.interaction.icon.relative_time - 3
+            
+            nclgenerator = generation.NclGenerator(self.project, 
+                                                   generation.GenerationOptions())
+            
+            print self.project.directory
+            nclgenerator.dump_file(os.path.join(self.project.directory, 
+                                                'medias', 'main.ncl'),
+                                   begintime)
+            
+            current_path = os.path.dirname(os.path.realpath(__file__))
+            
+            src = os.path.join(os.path.split(current_path)[0], 'files', 'medias', "connBase.ncl")
+            dst = os.path.join(self.project.directory, "medias", "connBase.ncl")
+            import shutil
+            
+            shutil.copy(src, dst)
+        except:
+            logging.exception('Error Generating the NCL')
+            QtGui.QMessageBox.warning(self, u'Gerando NCL', u"Aconteceu um erro ao gerar o documento multimídia", QtGui.QMessageBox.Ok)
+            return
+            
+        
+        import subprocess as sp
+        html = os.path.join(self.project.directory, "index.html")
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        script_path = os.path.join(os.path.split(current_path)[0], 'browser.py')
+        sp.Popen(['python', script_path, html])
         
     
     @QtCore.pyqtSlot()
