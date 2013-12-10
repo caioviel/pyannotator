@@ -78,7 +78,8 @@ class ProjectChooseWidget(QtGui.QWidget):
         while found_files.count(candidate_id) > 0:
             candidate_index += 1
             candidate_id = 'myProject' + str(candidate_index)
-            
+        
+        self.ui.txt_project_id.clear()
         self.ui.txt_project_id.appendPlainText(candidate_id)
 
                 
