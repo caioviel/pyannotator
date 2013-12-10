@@ -203,6 +203,17 @@ class MainProjectWidget(QtGui.QWidget):
     
     @QtCore.pyqtSlot()
     def generate_ncl(self):
+        print self.main_video_path
+        self.project.main_media = self.main_video_path
+        #from datetime import datetime
+        self.project.last_modification = datetime.now()
+        project_path = os.path.join(unicode(self.project_diretory), 'project.json')
+        json_object = self.project.to_json()
+        myfile = open(project_path, "w")
+        
+        import json
+        myfile.write(json.dumps(json_object, indent=4, sort_keys=True))
+        
         import generation
         try:
             nclgenerator = generation.NclGenerator(self.project, 
@@ -404,7 +415,10 @@ class MainProjectWidget(QtGui.QWidget):
                                                  model.CONTENT_TYPES[model.Media.VIDEO])
         
         print path
-        if path == None:
+        if path is None:
+            return
+        
+        if not os.path.exists(path):
             return
         
         import util
