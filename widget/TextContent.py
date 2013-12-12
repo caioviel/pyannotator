@@ -107,14 +107,18 @@ class TextContent(QtGui.QDialog):
 
     def init_ui(self):
         self.setFixedSize(self.size())
+        self.ui.lbl_bg_color.setStyleSheet("background-color: rgb"+str(self.bg_color.getRgb())+";")
+        self.ui.lbl_font_color.setStyleSheet("background-color: rgb"+str(self.font_color.getRgb())+";")
+        
         self.layout_selector = LayoutSelector(parent=self.ui.layout_selection_holder)
         
         lbl_content = self.layout_selector.lbl_content
-        lbl_content.resize(self.layout_selector.width(),50)
-        lbl_content.move(8,344)
+        lbl_content.resize(self.layout_selector.lbl_screen.width(),50)
+        lbl_content.move(8,360)
         self.update_text()
         self.ui.cmb_alligment.setCurrentIndex(1)
         
+        self.ui.ckb_transparency.setEnabled(False)
         self.ui.btn_bg_color.clicked.connect(self.select_bg_color)
         self.ui.btn_font_color.clicked.connect(self.select_font_color)
         self.ui.btn_Font.clicked.connect(self.select_font)
@@ -215,7 +219,8 @@ class TextContent(QtGui.QDialog):
     def reset_layout(self):
         self.layout_selector.reset_position()
         lbl_content = self.layout_selector.lbl_content
-        lbl_content.resize(self.layout_selector.width(),50)
+        lbl_content.resize(self.layout_selector.lbl_screen.width(),50)
+        lbl_content.move(8,360)
 
     @QtCore.pyqtSlot()
     def select_bg_color(self):

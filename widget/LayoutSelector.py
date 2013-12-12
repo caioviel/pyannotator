@@ -133,9 +133,6 @@ class LayoutSelector(QtGui.QWidget):
         self.lbl_main_video.move(bound.left + self.base_pos[0],
                                  bound.top + self.base_pos[1])
         
-        
-    
-    
     @QtCore.pyqtSlot()
     def reset_position(self):
         print self.is_main_video_resized()
