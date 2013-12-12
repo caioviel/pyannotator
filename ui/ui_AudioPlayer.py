@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AudioPlayer.ui'
 #
-# Created: Fri Dec  6 07:06:17 2013
+# Created: Thu Dec 12 11:39:06 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/TextContent.ui'
 #
-# Created: Fri Dec  6 07:06:18 2013
+# Created: Thu Dec 12 11:39:07 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -72,7 +72,7 @@ class Ui_TextContent(object):
         self.time_begin.setGeometry(QtCore.QRect(120, 10, 91, 31))
         self.time_begin.setObjectName(_fromUtf8("time_begin"))
         self.layout_selection_holder = QtGui.QWidget(TextContent)
-        self.layout_selection_holder.setGeometry(QtCore.QRect(20, 280, 700, 394))
+        self.layout_selection_holder.setGeometry(QtCore.QRect(10, 273, 741, 411))
         self.layout_selection_holder.setObjectName(_fromUtf8("layout_selection_holder"))
         self.btn_ok = QtGui.QPushButton(TextContent)
         self.btn_ok.setGeometry(QtCore.QRect(520, 690, 101, 41))
@@ -89,7 +89,7 @@ class Ui_TextContent(object):
         self.btn_cancel.setIconSize(QtCore.QSize(25, 25))
         self.btn_cancel.setObjectName(_fromUtf8("btn_cancel"))
         self.btn_reset_layout = QtGui.QPushButton(TextContent)
-        self.btn_reset_layout.setGeometry(QtCore.QRect(20, 680, 131, 31))
+        self.btn_reset_layout.setGeometry(QtCore.QRect(20, 690, 131, 31))
         self.btn_reset_layout.setObjectName(_fromUtf8("btn_reset_layout"))
         self.label_4 = QtGui.QLabel(TextContent)
         self.label_4.setGeometry(QtCore.QRect(180, 200, 101, 31))
