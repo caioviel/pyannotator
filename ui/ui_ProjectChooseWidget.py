@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/ProjectChooseWidget.ui'
 #
-# Created: Thu Dec 12 14:16:50 2013
+# Created: Thu Dec 12 14:19:18 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!

@@ -4,7 +4,8 @@
 from PyQt4 import QtGui, QtCore
 import os
 
-from ui.ui_ProjectChooseWidget import Ui_ProjectChooseWidget
+from ui.ui_ProjectChooseWidget import  Ui_ProjectChooseWidget
+#from ui.ui_ProjectChooseWidget import Ui_ProjectChooseWidget
 from MainProjectWidget import MainProjectWidget
 import model
 import shutil
