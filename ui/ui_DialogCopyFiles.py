@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/DialogCopyFiles.ui'
 #
-# Created: Thu Dec 12 11:39:06 2013
+# Created: Thu Dec 12 14:16:49 2013
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
