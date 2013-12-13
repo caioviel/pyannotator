@@ -139,13 +139,13 @@ class NclGenerator():
                     
     def media_type(self, content):
         if content.type == model.Media.AUDIO:
-            return "audio"
+            return "AUDIO"
         elif content.type == model.Media.TEXT:
-            return "txt"
+            return "TEXT"
         elif content.type == model.Media.VIDEO:
-            return "video"
+            return "VIDEO"
         elif content.type == model.Media.IMAGE:
-            return 'img'
+            return 'IMAGE'
     
     def generate_show_content(self, ann):
         medias = []

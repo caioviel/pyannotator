@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#HTTP_DIRECTORY = "/home/caioviel/public_html"
-HTTP_DIRECTORY = "c:/www"
+HTTP_DIRECTORY = "/home/caioviel/public_html"
+#HTTP_DIRECTORY = "c:/www"
 HTTP_PORT = 80
 IP_ADDRESS = "192.168.98.198"
+#IP_ADDRESS = "192.168.98.138"
+BROKER_ADDRESS = "192.168.98.138"
 BROKER_STOMP = 61613
 BROKER_WEB = 61614
 CONTROL_TOPIC = '/topic/control'
@@ -40,7 +42,7 @@ def generate_html(table, broker_add, broker_port, topic):
     
     
     html_code = u'\nBROKER_ADDRESS = "ws://' + broker_add + ':' + str(broker_port)+ '";\n'
-    html_code += u'DESTINATION = "' + CONTROL_TOPIC + '";\n'
+    html_code += u'DESTINATION = "' + topic + '";\n'
     if len(table) > 0:
         html_code += u'mobile_nodes = {\n'
         for key, value in table.items():
@@ -95,11 +97,11 @@ def put_url(project):
                     shutil.copy(content.filename, fullpath_ascii)
                 
                 content.url = url_path_base + filaname_ascii
-                print 'url:', content.url
+                #print 'url:', content.url
                 
 def create_text_file(content):
     filename = content.filename[:content.filename.find('.')] + '.txt'
-    print filename
+    #print filename
     f = codecs.open(filename, "w", "utf-8")
     f.write(content.text)
     return filename
@@ -108,7 +110,7 @@ def create_text_file(content):
 def publish_project(project, session):
     json_object = project.to_json()
     json_str = json.dumps(json_object)
-    print json_str
+    #print json_str
     session.send_message(json_str)
     
 
@@ -117,7 +119,7 @@ def create_lua_file():
 
 def main():
     import uuid
-    session = communication.CommSession(address=IP_ADDRESS, 
+    session = communication.CommSession(address=BROKER_ADDRESS, 
                               port=BROKER_STOMP, 
                               destination=CONTROL_TOPIC)
     session.connect()
@@ -125,10 +127,10 @@ def main():
     project = load_project()
     project.id = str(uuid.uuid4())
     
-    print 'project loaded'
+    #print 'project loaded'
     
     filename = get_ncl_file_name()
-    print 'NCL Filename:', filename
+    #print 'NCL Filename:', filename
     
     options = generation.GenerationOptions()
     options.width = 1024
@@ -144,7 +146,7 @@ def main():
     
     put_url(project)
     
-    generate_html(ncl_generator.lua_table, IP_ADDRESS, BROKER_WEB, PRESENTATION_TOPIC)
+    generate_html(ncl_generator.lua_table, BROKER_ADDRESS, BROKER_WEB, PRESENTATION_TOPIC)
     
     publish_project(project, session)
     

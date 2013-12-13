@@ -40,7 +40,7 @@ class CommSession:
             self._conn.set_listener('listener', self._listener)
             self._conn.start()
             self._conn.connect(wait=True)
-            self._conn.subscribe(destination=self.dest, ack='auto')
+            self._conn.subscribe(destination=self.dest, ack='auto', id=1)
             logger.info("Connected!")
         except:
             logger.exception("Error on connecting to broker.")
@@ -56,7 +56,7 @@ class CommSession:
         
     def send_message(self, message):
         logger.debug('Sending Message.')
-        self._conn.send(message, destination=self.dest)
+        self._conn.send(body=message, destination=self.dest)
         
         
 def test():
