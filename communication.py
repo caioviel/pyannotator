@@ -20,7 +20,7 @@ class CommSession:
     def __init__(self, address='localhost', port=61613, destination="test", username=None, password=None):
         self.address = address
         self.port= port
-        self.destination = destination
+        self.dest = destination
         self.username = username
         self.password = password
         self._listener = None
@@ -29,7 +29,7 @@ class CommSession:
         self._listener = listener
         
     def connect(self):
-        logger.info("Connecting to broker: %s:%d%s", self.address, self.port, self.destination)
+        logger.info("Connecting to broker: %s:%d%s", self.address, self.port, self.dest)
         try:
             if self.password != None and self.username != None:
                 self._conn = stomp.Connection(host_and_ports=[ (self.address, self.port) ], 
@@ -40,7 +40,7 @@ class CommSession:
             self._conn.set_listener('listener', self._listener)
             self._conn.start()
             self._conn.connect(wait=True)
-            self._conn.subscribe(destination=self.destination, ack='auto')
+            self._conn.subscribe(destination=self.dest, ack='auto')
             logger.info("Connected!")
         except:
             logger.exception("Error on connecting to broker.")
@@ -56,7 +56,7 @@ class CommSession:
         
     def send_message(self, message):
         logger.debug('Sending Message.')
-        self._conn.send(message, destination=self.destination)
+        self._conn.send(message, destination=self.dest)
         
         
 def test():
