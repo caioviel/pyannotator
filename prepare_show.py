@@ -117,7 +117,7 @@ def main():
     
     options = generation.GenerationOptions()
     options.width = 1024
-    options.height = 768
+    options.height = 576
     #options.broker_address = IP_ADDRESS
     #options.broker_port = BROKER_STOMP
     #options.topic = PRESENTATION_TOPIC
