@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-HTTP_DIRECTORY = "/home/caioviel/public_html"
-#HTTP_DIRECTORY = "c:/www"
+#HTTP_DIRECTORY = "/home/caioviel/public_html"
+HTTP_DIRECTORY = "c:/www"
 HTTP_PORT = 80
 IP_ADDRESS = "192.168.98.198"
 #IP_ADDRESS = "192.168.98.138"
