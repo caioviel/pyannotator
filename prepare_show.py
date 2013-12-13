@@ -47,7 +47,7 @@ def generate_html(table, broker_add, broker_port, topic):
             html_code += '"' + key + '" : ["' + value[0] + '", "' + value[1] + '"],\n'
         html_code += "};\n\n\n"
     else: 
-        html_code += "'mobile_nodes = {};\n\n\n"
+        html_code += "mobile_nodes = {};\n\n\n"
     
     html_full = header + html_code + footer
     html_name = os.path.join(HTTP_DIRECTORY, 'project', 'exibition.html')
