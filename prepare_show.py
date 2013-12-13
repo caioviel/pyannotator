@@ -21,9 +21,10 @@ import model
 import time
 import json
 import shutil
+import codecs
 
 def generate_html(table, broker_add, broker_port, topic):
-    import codecs
+    
                             
     current_path = os.path.dirname(os.path.realpath(__file__))
     files_path = os.path.join(current_path, 'files')
@@ -81,6 +82,9 @@ def put_url(project):
     for ann in project.annotations:
         if ann.interaction is not None:
             for content in ann.interaction.contents:
+                if content.type == model.Media.TEXT:
+                    content.filename = filename = create_text_file(content)
+                
                 dir, filename = os.path.split(content.filename)
                 filaname_ascii = remove_accents(filename)
                 fullpath_ascii = os.path.join(dir, filaname_ascii)
@@ -89,6 +93,14 @@ def put_url(project):
                 
                 content.url = url_path_base + filaname_ascii
                 print 'url:', content.url
+                
+def create_text_file(content):
+    filename = content.filename[:content.filename.find('.')] + '.txt'
+    print filename
+    f = codecs.open(filename, "w", "utf-8")
+    f.write(content.text)
+    return filename
+    
 
 def publish_project(project, session):
     json_object = project.to_json()
