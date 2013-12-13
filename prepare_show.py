@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-HTTP_DIRECTORY = "/home/caioviel/public_html"
+#HTTP_DIRECTORY = "/home/caioviel/public_html"
+HTTP_DIRECTORY = "c:/www"
 HTTP_PORT = 80
-IP_ADDRESS = "192.168.98.138"
+IP_ADDRESS = "192.168.98.198"
 BROKER_STOMP = 61613
 BROKER_WEB = 61614
 CONTROL_TOPIC = '/topic/control'
@@ -143,11 +144,11 @@ def main():
     
     generate_html(ncl_generator.lua_table, IP_ADDRESS, BROKER_WEB, PRESENTATION_TOPIC)
     
-    #publish_project(project, session)
+    publish_project(project, session)
     
-    #while True:
-    #    print 'running...'
-    #    time.sleep(5)
+    while True:
+        print 'running...'
+        time.sleep(5)
         
         
         
