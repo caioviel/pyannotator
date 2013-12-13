@@ -1,0 +1,46 @@
+m = Stomp.client(BROKER_ADDRESS);
+		player = 0;
+		onconnect = function() {
+			m.subscribe(DESTINATION, function(message) {
+				var teste = $.parseJSON(message.body);
+            });
+			
+			console.log('teste new stomp'); 
+			var json = undefined;
+        };
+
+		player = new WebNclPlayer("medias/main.ncl","playerDiv");
+		m.connect("admin", "admin", onconnect); 
+		
+		player.addListener(function(ret) {
+			values = mobile_nodes[ret.nodeId];
+			
+			if (!values)
+				return;
+			
+			//console.log(ret);
+			var message = 0; 
+			if (ret.event == "start") {
+				message =  {
+				"media_name": values[0],
+				"type": values[1],
+				"action":"show"
+				}
+			
+			} else if (ret.event == "stop") {
+				message =  {
+				"media_name": values[0],
+				"type": values[1],
+				"action":"hide"
+				}
+			} else {
+				return;
+			}
+			
+			console.log(message);
+			
+			m.send(DESTINATION,null, JSON.stringify(message));
+		}, ['node']);    
+        </script>
+</body>
+</html>

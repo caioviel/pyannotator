@@ -9,7 +9,15 @@ from PyQt4 import QtGui, QtCore
 
 
 def adjust_path(old_path, directory):
-    return os.path.join(directory, "medias", os.path.split(old_path)[1])
+    if "\\" in old_path:
+        import ntpath
+        _, filename = ntpath.split(old_path)
+    else:
+        _, filename = os.path.split(old_path)
+        
+    print filename
+    
+    return os.path.join(directory, "medias", filename)
 
 
 class AnnotationProject(object):
@@ -139,6 +147,7 @@ class Media(object):
         self.id = myid
         self.filename = filename
         self.type = mtype
+        self.url = None
         
         #time configurations
         self.showtime = showtime
@@ -162,6 +171,13 @@ class Media(object):
         
         if directory is not None and media.filename is not None:
             media.filename = adjust_path(media.filename, directory)
+            
+        if "\\" in media.id:
+            import ntpath
+            _, media.id = ntpath.split(media.id)
+        else:
+            _, media.id = os.path.split(media.id)
+            
             
         return media
     
@@ -236,6 +252,9 @@ class Audio(Media):
         if json_object['Media'].has_key('main_video_volume'):
             audio.main_video_volume = json_object['Media']['main_video_volume']
             
+        if json_object['Media'].has_key('url'):
+            audio.url = json_object['Media']['url']
+            
         return audio
     
     def to_json(self):
@@ -255,6 +274,9 @@ class Audio(Media):
             
         if self.main_video_volume is not None:
             json_object['Media']['main_video_volume'] = self.main_video_volume
+            
+        if self.url is not None:
+            json_object['Media']['url'] = self.url
             
         return json_object
         
@@ -293,6 +315,9 @@ class Video(Media):
         if json_object['Media'].has_key('resize_main_video'):
             video.resize_main_video = Bondaries.parse_json(json_object['Media']['resize_main_video'])
             
+        if json_object['Media'].has_key('url'):
+            video.url = json_object['Media']['url']
+            
         return video
     
     def to_json(self):
@@ -318,6 +343,9 @@ class Video(Media):
             
         if self.resize_main_video is not None:
             json_object['Media']['resize_main_video'] = self.resize_main_video.to_json()
+            
+        if self.url is not None:
+            json_object['Media']['url'] = self.url
             
         return json_object
             
@@ -349,6 +377,9 @@ class Image(Media):
         if json_object['Media'].has_key('resize_main_video'):
             image.resize_main_video = Bondaries.parse_json(json_object['Media']['resize_main_video'])
             
+        if json_object['Media'].has_key('url'):
+            image.url = json_object['Media']['url']
+            
         return image
     
     def to_json(self):
@@ -369,6 +400,9 @@ class Image(Media):
             
         if self.resize_main_video is not None:
             json_object['Media']['resize_main_video'] = self.resize_main_video.to_json()
+            
+        if self.url is not None:
+            json_object['Media']['url'] = self.url
             
         return json_object
 
@@ -456,6 +490,9 @@ class Text(Media):
                 text.alignment = Text.ALIGN_RIGHT
             elif align_str == 'ALIGN_CENTER':
                 text.alignment = Text.ALIGN_CENTER
+                
+        if json_object['Media'].has_key('url'):
+            text.url = json_object['Media']['url']
             
             
         return text
@@ -518,6 +555,9 @@ class Text(Media):
                                                 self.bg_color.green(),
                                                 self.bg_color.blue(),
                                                 self.bg_color.alpha()]
+            
+        if self.url is not None:
+            json_object['Media']['url'] = self.url
             
         return json_object
         

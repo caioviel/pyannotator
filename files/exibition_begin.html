@@ -19,27 +19,3 @@
 <body>
 	<div id="playerDiv" style="position:relative;width:1024px;height:768px; margin: 0 auto;"></div>   
         <script>
-		BROKER_ADDRESS = "ws://192.168.98.136:61614"
-		DESTINATION = "/topic/pilotage";
-		
-		m = Stomp.client(BROKER_ADDRESS);
-		player = 0;
-		onconnect = function() {
-			m.subscribe(destination, function(message) {
-				var teste = $.parseJSON(message.body);
-            });
-			
-			console.log('teste new stomp'); 
-			var json = undefined;
-        };
-
-		player = new WebNclPlayer("medias/main.ncl","playerDiv");
-		m.connect("admin", "admin", onconnect); 
-		
-		player.addListener(function(ret) {
-			console.log(ret);
-			m.send(DESTINATION,null, JSON.stringify(ret));
-		}, ['node']);    
-        </script>
-</body>
-</html>

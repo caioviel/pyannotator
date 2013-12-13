@@ -9,6 +9,10 @@ class GenerationOptions(object):
     def __init__(self):
         self.width = 1280 
         self.height = 720
+        self.broker_address = None
+        self.broker_port = None
+        self.topic = None
+        
 
 class NclGenerator():
     show_content_id = 1
@@ -31,6 +35,7 @@ class NclGenerator():
         self.show_content_id = 1
         self.media_count = 1
         self.ncldoc = None
+        self.lua_table = {}
         
     def generate_ncl(self, begin_time = None):
         self.ncldoc = NclDocument(self.project.id)
@@ -114,6 +119,9 @@ class NclGenerator():
         
         self.ncldoc.add_node(self.mainVideo)
         
+        #self.lua = Media("lua", src="lua.lua")
+        #self.ncldoc.add_node(self.lua)
+        
         if begintime is not None:
             self.mainVideo.add_anchor(Area("beginArea", begin=begintime))
         else:
@@ -128,6 +136,16 @@ class NclGenerator():
             if ann.interaction is not None:
                 if isinstance(ann.interaction, model.ShowContent):
                     self.generate_show_content(ann)
+                    
+    def media_type(self, content):
+        if content.type == model.Media.AUDIO:
+            return "audio"
+        elif content.type == model.Media.TEXT:
+            return "txt"
+        elif content.type == model.Media.VIDEO:
+            return "video"
+        elif content.type == model.Media.IMAGE:
+            return 'img'
     
     def generate_show_content(self, ann):
         medias = []
@@ -333,6 +351,27 @@ class NclGenerator():
                     self.ncldoc.add_link(link)
             except:
                 pass
+            
+        if ann.interaction.mobile:
+            for c, m, a in medias:
+                #area_id = "area_" + c.id
+                #area = Area(area_id)
+                #self.lua.add_anchor(area)
+                
+                self.lua_table[m.id] = (c.id, self.media_type(c))
+                
+                #link = Link(xconnector="conn#onBeginStart")
+                #link.add_bind(Bind(role="onBegin", component=m))
+                #link.add_bind(Bind(role="start", component=self.lua,
+                #                   interface=area))
+                #self.ncldoc.add_link(link)
+                        
+                #link = Link(xconnector="conn#onEndStop")
+                #link.add_bind(Bind(role="onEnd", component=m))
+                #link.add_bind(Bind(role="stop", component=self.lua,
+                #                   interface=area))
+                #self.ncldoc.add_link(link)
+            
             
         if ann.interaction.pause_main_video == True:
             for c, m, a in medias:
